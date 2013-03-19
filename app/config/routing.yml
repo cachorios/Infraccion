@@ -1,0 +1,4 @@
+foto_manager:
+    resource: "@FotoManagerBundle/Resources/config/routing.yml"
+    prefix:   /
+

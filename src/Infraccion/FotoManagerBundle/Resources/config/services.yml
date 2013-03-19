@@ -1,0 +1,7 @@
+parameters:
+#    foto_manager.example.class: Infraccion\FotoManagerBundle\Example
+
+services:
+#    foto_manager.example:
+#        class: %foto_manager.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
