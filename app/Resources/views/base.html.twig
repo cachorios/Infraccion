@@ -20,7 +20,11 @@
     <![endif]-->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
-<body>
+
+
+{% block body %}
+<body id="{% block id '' %}">
+
 <div class="container-fluid nopadding">
     <div class="row-fluid">
         <div class="span12">
@@ -57,30 +61,12 @@
 <div class="container-fluid" id="container">
     <div class="row-fluid">
         <div class="span2 leftmenu">
-            <ul class="nav">
-                <li class="active"><a href="index-2.html"><span class="ico"><i class="icon-home"></i></span><span class="text">Dashboard</span></a></li>
-                <li><a href="forms.html"><span class="ico"><i class="icon-edit"></i></span><span class="text">Forms</span></a></li>
-                <li><a href="typography.html"><span class="ico"><i class="icon-bold"></i></span><span class="text">Typography</span></a></li>
-                <li><a href="tables.html"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Tables</span></a></li>
-                <li><a href="charts.html"><span class="ico"><i class="icon-signal"></i></span><span class="text">Charts</span></a></li>
-                <li><a href="components.html"><span class="ico"><i class="icon-inbox"></i></span><span class="text">Components</span></a></li>
-                <li><a href="interface-elements.html"><span class="ico"><i class="icon-tasks"></i></span><span class="text">Interface elements</span></a></li>
-                <li><a href="grid.html"><span class="ico"><i class="icon-th"></i></span><span class="text">Grid</span></a></li>
-                <li><a href="calendar.html"><span class="ico"><i class="icon-calendar"></i></span><span class="text">Calendar</span></a></li>
-                <li>
-                    <a href="#"><span class="ico"><i class="icon-align-justify"></i></span><span class="text">Submenu test</span><span class="indicator"></span></a>
-                    <ul>
-                        <li><a href="#"><span class="ico"><i class="icon-tint"></i></span><span class="text">Submenu One</span></a></li>
-                        <li><a href="#"><span class="ico"><i class="icon-leaf"></i></span><span class="text">Submenu Two</span></a></li>
-                        <li><a href="#"><span class="ico"><i class="icon-fire"></i></span><span class="text">Submenu Three</span></a></li>
-                    </ul>
-                </li>
-            </ul>
+            {% include ':include:leftmenu.html.twig' %}
         </div>
         <div class="span10" id="content">
-            {% block body %}
-                content!
-            {% endblock %}
+            {% block page %}
+                contenido
+            {% endblock page %}
 
         </div>
 
@@ -101,5 +87,6 @@
 {% block javascripts %}{% endblock %}
 
 </body>
+{% endblock body %}
 
 </html>
