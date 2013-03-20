@@ -1,0 +1,43 @@
+{% extends "::base.html.twig" %}
+{% form_theme form with ['FotoManagerBundle:Form:fields.html.twig', 'LarUtilsBundle:Form:fields.html.twig' ] %}
+{% block page %}
+
+    {% embed 'box.html.twig' with {'box_titulo': 'Subir Fotografias' } %}
+        {% block box_contenido %}
+            <div class="row-fluid">
+                <div class="span4">
+                    <form class="form-horizontal" method="post" action="#" name="register_form" id="register_form" novalidate="novalidate">
+
+                        {{ form_row(form.path) }}
+                        {{ form_row(form.foto) }}
+                    </form>
+                </div>
+                <div class="span8">
+                    <div id="fotoUp">
+                    </div>
+                </div>
+            </div>
+
+            {#<script>#}
+
+                {#$("#uploadify-uploadfoto_foto").uploadify('settings', 'onUploadStart', function(file){#}
+                    {#alert("aaaaaaaa");#}
+                    {#//$("#file_upload").uploadify("settings", "pathOrigen", $('').val());#}
+
+                    {#//$("#uploadfoto_foto").attr('value', data);#}
+                    {#//foto_img = "/infraccion/web/uploads/" + data ;#}
+                    {#//$("#foto").html('<img class="img-rounded" alt="foto" src="'+foto_img+'">');#}
+                {#});#}
+            {#</script>#}
+
+        {% endblock box_contenido %}
+        {% block upload_dify_script %}
+            $("#uploadify-uploadfoto_foto").uploadify('settings', 'onUploadStart', function(file){
+            alert("aaaaaaaa");
+
+            });
+        {% endblock upload_dify_script %}
+    {% endembed  %}
+
+{% endblock page %}
+

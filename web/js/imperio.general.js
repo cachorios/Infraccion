@@ -121,19 +121,19 @@ $(document).ready(function(){
     
     // Functions...
     function iconmenu(){
-        $('.leftmenu').removeClass('span3').addClass('lefticon').addClass('span1');
+        $('.leftmenu').removeClass('span2').addClass('lefticon').addClass('span1');
         $('.leftmenu > ul > li > a').each(function(){
             atitle = $(this).text();
             $(this).attr({'rel':'tooltip','title':atitle});
         });
-        $('#content').removeClass('span9').addClass('span11');
+        $('#content').removeClass('span10').addClass('span11');
     }
     
     function fullmenu(){
-        $('.leftmenu').removeClass('span1').removeClass('lefticon').addClass('span3');
+        $('.leftmenu').removeClass('span1').removeClass('lefticon').addClass('span2');
         $('.leftmenu > ul > li > a').each(function(){
             $(this).attr({'rel':'','title':''});
         });
-        $('#content').removeClass('span11').addClass('span9'); 
+        $('#content').removeClass('span11').addClass('span10');
     }
 });

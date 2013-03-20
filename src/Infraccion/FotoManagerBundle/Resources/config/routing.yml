@@ -1,3 +1,8 @@
-foto_manager_homepage:
-    pattern:  /
-    defaults: { _controller: FotoManagerBundle:Default:index }
+foto_manager_subirfoto:
+    pattern: /fotosup
+    defaults: { _controller: "FotoManagerBundle:Default:uploadFoto" }
+
+foto_manager_up2server:
+    pattern: /upfoto
+    defaults: { _controller: "FotoManagerBundle:Default:upfoto" }
+
