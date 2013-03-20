@@ -2,3 +2,11 @@ foto_manager:
     resource: "@FotoManagerBundle/Resources/config/routing.yml"
     prefix:   /
 
+
+lar_utils:
+    resource: "@LarUtilsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+_imagine:
+    resource: .
+    type:     imagine

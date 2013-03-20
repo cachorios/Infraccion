@@ -16,8 +16,12 @@
     {% block stylesheets %}{% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
+
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <script type="text/javascript" src="{{ asset( 'js/jquery.min.js') }}"></script>
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 
@@ -50,7 +54,7 @@
                             <li><a href="#">Edit Preferences</a></li>
                             <li><a href="#">Private Messages</a></li>
                             <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
+                            <li><a href="login.html">Salir</a></li>
                         </ul>
                     </div>
                 </div>
@@ -74,12 +78,13 @@
 </div>
 
 
-<script type="text/javascript" src="{{ asset( 'js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset( 'js/bootstrap.min.js')}}"></script>
+
 <!-- Explorer canvas, for IE6-8 support of canvas elements -->
 <!--[if lt IE 9]>
     <script src="{{ asset('js/excanvas.min.js')}}"></script>
 <![endif]-->
+
 <script type="text/javascript" src="{{ asset( 'js/jquery.flot.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset( 'js/jquery.flot.resize.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset( 'js/imperio.general.js') }}"></script>
