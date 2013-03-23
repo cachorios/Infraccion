@@ -22,6 +22,11 @@
         "raulfraile/ladybug-bundle": "dev-master",
         "avalanche123/imagine-bundle": "dev-master",
 
+        "pagerfanta/pagerfanta": "dev-master",
+        "lexik/form-filter-bundle": "1.2.*",
+        "jordillonch/crud-generator": "dev-master",
+        "whiteoctober/breadcrumbs-bundle": "dev-master",
+
         "lar/utiles-bundle": "dev-master"
     },
     "repositories": [

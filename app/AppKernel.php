@@ -23,10 +23,12 @@ class AppKernel extends Kernel
 
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+            new JordiLlonch\Bundle\CrudGeneratorBundle\JordiLlonchCrudGeneratorBundle(),
+            new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 
             new Lar\UtilsBundle\LarUtilsBundle(),
-
-
+            new Infraccion\VerificacionBundle\VerificacionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

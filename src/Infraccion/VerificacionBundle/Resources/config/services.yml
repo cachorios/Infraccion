@@ -1,0 +1,7 @@
+parameters:
+#    verificacion.example.class: Infraccion\VerificacionBundle\Example
+
+services:
+#    verificacion.example:
+#        class: %verificacion.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

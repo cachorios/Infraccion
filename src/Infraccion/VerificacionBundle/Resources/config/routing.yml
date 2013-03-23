@@ -1,0 +1,7 @@
+home_page:
+    pattern:  /
+    defaults: { _controller: VerificacionBundle:Default:index }
+
+VerificacionBundle_automotor:
+    resource: "@VerificacionBundle/Resources/config/routing/automotor.yml"
+    prefix:   /automotor

@@ -1,0 +1,10 @@
+automotor:
+    pattern:  /
+    defaults: { _controller: "VerificacionBundle:Automotor:index" }
+
+automotor_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "VerificacionBundle:Automotor:show" }
+
+
+
