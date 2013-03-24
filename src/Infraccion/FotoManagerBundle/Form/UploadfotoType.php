@@ -18,7 +18,7 @@ class UploadfotoType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('path')
+            ->add('path','file')
             ->add('foto','text',array(
                 'larutils_enabled' => true,
                 'div_img' => 'foto',

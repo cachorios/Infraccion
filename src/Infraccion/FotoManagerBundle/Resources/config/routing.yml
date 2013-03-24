@@ -6,3 +6,7 @@ foto_manager_up2server:
     pattern: /upfoto
     defaults: { _controller: "FotoManagerBundle:Default:upfoto" }
 
+foto_manager_proccesuoload:
+    pattern: /upfotoprocess
+    defaults: { _controller: "FotoManagerBundle:Default:upfotoproccess" }
+

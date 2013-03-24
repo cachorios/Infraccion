@@ -3,8 +3,7 @@
 <html lang="es">
 
 <head>
-    <title>Dashboard - Imperio Admin</title>
-    <title>{% block title %}{% endblock %}</title>
+    <title>Infraccion - {% block title %}Inicio{% endblock %}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -20,8 +19,8 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script type="text/javascript" src="{{ asset( 'js/jquery.min.js') }}"></script>
 
+    <script type="text/javascript" src="{{ asset( 'js/jquery.min.js') }}"></script>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 
@@ -91,6 +90,7 @@
 <script type="text/javascript" src="{{ asset( 'js/imperio.dashboard.js') }}"></script>
 {% block javascripts %}{% endblock %}
 
+{% block endscript %}{% endblock endscript %}
 </body>
 {% endblock body %}
 

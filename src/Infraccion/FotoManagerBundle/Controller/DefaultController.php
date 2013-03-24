@@ -2,8 +2,10 @@
 
 namespace Infraccion\FotoManagerBundle\Controller;
 
+use Doctrine\Tests\ORM\Functional\CompositePrimaryKeyTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Imagine\Image\ImageInterface;
+use Symfony\Component\Form\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,86 +23,61 @@ class DefaultController extends Controller
 
     }
 
+    public function upfotoproccessAction()
+    {
 
+    }
 
     public function upfotoAction()
     {
         $request = $this->getRequest();
-        //$log = $this->get("logger");
 
-        $options = $this->container->getParameter('lar.utils.options');
-        $filename = $options['fileObjName'];
-        $folder = $options['folderUpload'];
-        $web_dir = $this->container->getParameter('kernel.root_dir') . '/../web/';
+        $log = $this->get("logger");
+
+
+        //$mimetype = $request->get('mimetype');
+        $pathinfo = $request->get('pathinfo')[0]; //Es el camino completo, incluye el directorio final
+
+        $relpathinfo = $request->get('relpathinfo')[0]; //Es el directorio final
+        $md5sum = $request->get('md5sum')[0];
+        //$filemodificationdate = $request->get('filemodificationdate');
+
+        if(strpos($pathinfo,"/")){
+            $udir = substr(strrchr($pathinfo, "/"), 1);
+        }else{
+            $udir = substr(strrchr($pathinfo, "\\"), 1);
+        }
+
+        if (!$relpathinfo) {
+            $relpathinfo = $udir;
+        }
 
         $response = new Response();
 
-        if (true === $request->files->has($filename)) {
-            $file = $request->files->get($filename);
+        if ($relpathinfo == $udir) {
 
-            //$log->info(print_r($file, true));
-            $name = $file->getFilename();
-            $extension = $file->guessExtension();
 
-            if ($extension) {
-                $data = sprintf('%s.%s', $name, $extension);
-            } else {
-                $extension = "bmp";
-                $data = $name.'.bmp';
+            $web_dir = $this->container->getParameter('kernel.root_dir') . '/../web/unprocess/' . $relpathinfo;
 
+            try {
+
+                $file = $request->files->get('File')[0];
+
+
+                $file->move($web_dir, $file->getClientOriginalName());
+
+                $response->setContent("SUCCESS");
+            } catch (\ErrorException $e) {
+                $response->setContent("ERROR: ".$e->getMessage());
             }
-
-            if($extension == 'bmp'){
-                $file->move($web_dir . $folder, $data);
-                $img = $this->imagecreatefrombmp( $web_dir . $folder . '/' . $data  );
-                $nombre = basename( $file->getClientOriginalName() , ".bmp");
-                imagejpeg($img, $web_dir . $folder."/".$nombre .'.jpg');
-                unlink($web_dir.$folder.'/'.$data);
-            }else{
-                $file->move($web_dir . $folder, $file->getClientOriginalName());
-            }
-
-            /*
-            $imagine
-                ->open($web_dir . $folder . '/' . $data)
-                ->save("test.jpeg");
-            */
-
-            $response->setContent($data);
+        } else {
+            $response->setContent("WARNING: Solo se admite un nivel de directorio ($udir).\nSUCCESS");
         }
+
 
         return $response;
 
-//        $response = new Response();
-//        $filename = "foto";
-//        $web_dir  = $this->container->getParameter('kernel.root_dir') . '/../web/';
-//
-//        $folder = "uploads";
-//        if (true === $request->files->has($filename)) {
-//            $file = $request->files->get($filename);
-//            $name = $file->getFilename();
-//
-//            $extension = $file->guessExtension();
-//            $data = sprintf('%s.%s', $name, $extension);
-//
-//            $file->move($web_dir.$folder, $data);
-//
-//            $imagine = new \Imagine\Gd\Imagine();
-//            $size    = new \Imagine\Image\Box(40, 40);
-//            $mode    = ImageInterface::THUMBNAIL_OUTBOUND;
-//            $nombreArchivoFoto = uniqid('user-').'-foto1.png';
-//
-//            $imagine->open($web_dir.$folder.'/'.$data)
-//                ->thumbnail($size, $mode)
-//                ->save($web_dir.$folder.'/users/'.$nombreArchivoFoto)
-//            ;
-//
-//            unlink($web_dir.$folder.'/'.$data);
-//            $response->setStatusCode(200);
-//            $response->setContent( $nombreArchivoFoto);
-//        }
-//
-//        return $response;
+
     }
 
 
@@ -224,3 +201,4 @@ class DefaultController extends Controller
 //imagejpeg($img, "test.jpg");
 
 }
+
