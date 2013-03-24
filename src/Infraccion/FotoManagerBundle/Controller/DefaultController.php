@@ -42,9 +42,9 @@ class DefaultController extends Controller
         $md5sum = $request->get('md5sum')[0];
         //$filemodificationdate = $request->get('filemodificationdate');
 
-        if(strpos($pathinfo,"/")){
+        if (strpos($pathinfo, "/")) {
             $udir = substr(strrchr($pathinfo, "/"), 1);
-        }else{
+        } else {
             $udir = substr(strrchr($pathinfo, "\\"), 1);
         }
 
@@ -54,21 +54,30 @@ class DefaultController extends Controller
 
         $response = new Response();
 
-        if ($relpathinfo == $udir) {
 
+        $formato_fecha = 'Y-m-d';
+
+        if ($relpathinfo == $udir) {
 
             $web_dir = $this->container->getParameter('kernel.root_dir') . '/../web/unprocess/' . $relpathinfo;
 
-            try {
+            $t = \DateTime::createFromFormat($formato_fecha, $relpathinfo);
 
-                $file = $request->files->get('File')[0];
+            $log->info("Fecha->".print_r($t,true));
+            /*$m = date('m', $t);
+            $d = date('d', $t);
+            $y = date('Y', $t); */
+            if ($t->format($formato_fecha) == $relpathinfo ){  //&& checkdate($m, $d, $y)) {
+                try {
+                    $file = $request->files->get('File')[0];
+                    $file->move($web_dir, $file->getClientOriginalName());
 
-
-                $file->move($web_dir, $file->getClientOriginalName());
-
-                $response->setContent("SUCCESS");
-            } catch (\ErrorException $e) {
-                $response->setContent("ERROR: ".$e->getMessage());
+                    $response->setContent("SUCCESS");
+                } catch (\ErrorException $e) {
+                    $response->setContent("ERROR: " . $e->getMessage());
+                }
+            } else {
+                $response->setContent("ERROR: El nombre del directorio debe ser una fecha valida aaaa-mm-dd " );
             }
         } else {
             $response->setContent("WARNING: Solo se admite un nivel de directorio ($udir).\nSUCCESS");
