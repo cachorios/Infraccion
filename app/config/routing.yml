@@ -1,6 +1,6 @@
 verificacion:
     resource: "@VerificacionBundle/Resources/config/routing.yml"
-    prefix:   /verificacion
+    prefix:   /
 
 foto_manager:
     resource: "@FotoManagerBundle/Resources/config/routing.yml"
@@ -14,3 +14,7 @@ lar_utils:
 _imagine:
     resource: .
     type:     imagine
+
+home_page:
+    pattern:   /
+    defaults: { _controller: "FotoManagerBundle:Default:uploadFoto" }

@@ -4,7 +4,7 @@ parameters:
     database_port:     ~
     database_name:     infraccion
     database_user:     root
-    database_password: 113049
+    database_password: ~
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -12,4 +12,4 @@ parameters:
     mailer_password:   ~
 
     locale:            es
-    secret:            lar37297219051168
+    secret:            ThisTokenIsNotSoSecretChangeIt

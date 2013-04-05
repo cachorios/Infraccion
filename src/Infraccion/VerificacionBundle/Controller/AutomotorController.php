@@ -7,10 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Infraccion\VerificacionBundle\Adapter\AutoAdapter;
 use Pagerfanta\View\TwitterBootstrapView;
 
 use Infraccion\VerificacionBundle\Entity\Automotor;
 use Infraccion\VerificacionBundle\Form\AutomotorFilterType;
+
 
 /**
  * Automotor controller.
@@ -27,9 +29,9 @@ class AutomotorController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
         $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
-        list($filterForm, $queryBuilder) = $this->filter();
+        list($filterForm, $queryBuilder,$queryCount) = $this->filter();
 
-        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder,$queryCount);
 
         return $this->render('VerificacionBundle:Automotor:index.html.twig', array(
             'entities' => $entities,
@@ -48,7 +50,11 @@ class AutomotorController extends Controller
         $session = $request->getSession();
         $filterForm = $this->createForm(new AutomotorFilterType());
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('VerificacionBundle:Automotor')->createQueryBuilder('e');
+        $queryBuilder = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresQuery();
+            //createQueryBuilder('e');
+        $queryCount = $em->getRepository('VerificacionBundle:Automotor')->countAutomotoresQuery();
+
+
 
         // Reset filter
         if ($request->getMethod() == 'POST' && $request->get('filter_action') == 'reset') {
@@ -63,8 +69,10 @@ class AutomotorController extends Controller
             if ($filterForm->isValid()) {
                 // Build the query from the given form object
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryCount);
                 // Save filter to session
                 $filterData = $filterForm->getData();
+
                 $session->set('AutomotorControllerFilter', $filterData);
             }
         } else {
@@ -73,22 +81,42 @@ class AutomotorController extends Controller
                 $filterData = $session->get('AutomotorControllerFilter');
                 $filterForm = $this->createForm(new AutomotorFilterType(), $filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryCount);
             }
         }
 
-        return array($filterForm, $queryBuilder);
+
+
+      //  ld($queryCount);
+      //  ld($queryCount->getQuery()->getSingleScalarResult());
+
+
+        return array($filterForm, $queryBuilder,$queryCount);
     }
 
     /**
     * Get results from paginator and get paginator view.
     *
     */
-    protected function paginator($queryBuilder)
+    protected function paginator($queryBuilder, $queryCount)
     {
+
         // Paginator
-        $adapter = new DoctrineORMAdapter($queryBuilder);
+        //$adapter = new DoctrineORMAdapter($queryBuilder, false);
+
+        //$adapter = new AutoAdapter($this->getDoctrine()->getManager(), $this->get('session') ,$queryBuilder,$queryCount, false);
+        $adapter = new AutoAdapter($this->get('session'),$queryBuilder,$queryCount->getQuery(), false);
+
         $pagerfanta = new Pagerfanta($adapter);
+
+
+        if(!$this->getRequest()->get('page')){
+            $this->get('session')->set("automotor_registros",0);
+        }
+
         $currentPage = $this->getRequest()->get('page', 1);
+
+        $pagerfanta->setMaxPerPage(15);
         $pagerfanta->setCurrentPage($currentPage);
         $entities = $pagerfanta->getCurrentPageResults();
 

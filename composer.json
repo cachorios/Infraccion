@@ -24,7 +24,7 @@
 
         "pagerfanta/pagerfanta": "dev-master",
         "lexik/form-filter-bundle": "1.2.*",
-        "jordillonch/crud-generator": "dev-master",
+        "jordillonch/crud-generator": "master",
         "whiteoctober/breadcrumbs-bundle": "dev-master",
 
         "lar/utiles-bundle": "dev-master"

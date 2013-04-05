@@ -5,95 +5,82 @@
     {% embed 'box.html.twig' with {'box_titulo': 'Subir Fotografias' } %}
         {% block box_contenido %}
             <div class="row-fluid">
-                {#<div class="span4">#}
-                {#<form class="form-horizontal" method="post" action="#" name="register_form" id="register_form" novalidate="novalidate">#}
-
-                {#{{ form_row(form.path) }}#}
-                {#{{ form_row(form.foto) }}#}
-                {#<a href="#" id="ver">Ver</a>#}
-                {#</form>#}
-
-                {#</div>#}
-                {#<div class="span8">#}
-                {#<div id="fotoUp">#}
-                {#</div>#}
-                {#</div>#}
                 <div class="span12">
-                    <div style="padding: 10px;">
-                        <script type="text/javascript">
-                            <!--
-                            function JUploadSetProperty(name, value) {
-                                document.applets["JUpload"] == null || document.applets["JUpload"].setProperty(name, value);
-                                document.embeds["JUpload"] == null || document.embeds["JUpload"].setProperty(name, value);
-                            }
-                            //-->
-                        </script>
-                        <object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
-                                codebase="http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=5,0,0,3"
-                                width="100%"
-                                height="600"
-                                name="JUpload">
-                            <param name="maxFileSize" value="2147483648"/>
-                            <param name="archive" value="../wjhk.jupload.jar"/>
-                            <param name="afterUploadURL" value="javascript:;" />
-                            {#<param name="afterUploadURL" value="after_upload.php"/>#}
-                            <param name="sendMD5Sum" value="true"/>
-                            <param name="debugLevel" value="0"/>
-                            <param name="name" value="JUpload"/>
-                            <param name="code" value="wjhk.jupload2.JUploadApplet"/>
-                            <param name="httpUploadParameterType" value="array"/>
-                            <param name="showLogWindow" value="false"/>
-                            <param name="uploadPolicy" value="PictureUploadPolicy"/>
-                            <param name="postURL" value="{{ path('foto_manager_up2server') }}">
-                            <param name="browsingDirectory" value="/">
-                            <param name="highQualityPreview" value="true">
-                            <param name="lookAndFeel" value="system">
-                            <param name="targetPictureFormat" value="bmp,png:jpg;">
-                            <param name="keepOriginalFileExtensionForConvertedImages" value="false">
-                            <param name="pictureCompressionQuality" value="0.8">
-                            <param name="mayscript" value="true"/>
-                            <param name="scriptable" value="false"/>
-                            <param name="stringUploadSuccess" value="SUCCESS"/>
-                            <param name="stringUploadError" value="ERROR: (.*)"/>
-                            <param name="maxChunkSize" value="500000"/>
 
-                            <comment>
-                                <embed
-                                        type="application/x-java-applet;version=1.5"
-                                        maxFileSize="2147483648"
-                                        archive="../wjhk.jupload.jar"
-                                        afterUploadURL="javascript:;"
-                                        {#"{{ path('foto_manager_proccesuoload') }}"#}
-                                        sendMD5Sum="true"
-                                        debugLevel="0"
-                                        name="JUpload"
-                                        lang="es"
-                                        code="wjhk.jupload2.JUploadApplet"
-                                        httpUploadParameterType="array"
-                                        showLogWindow="false"
-                                        uploadPolicy="PictureUploadPolicy"
-                                        postURL="{{ path('foto_manager_up2server') }}"
-                                        browsingDirectory="/"
-                                        highQualityPreview="true"
-                                        lookAndFeel="system"
-                                        targetPictureFormat="bmp,png:jpg;"
-                                        keepOriginalFileExtensionForConvertedImages="false"
-                                        pictureCompressionQuality="0.8"
-                                        width="100%"
-                                        height="650"
-                                        mayscript="true"
-                                        scriptable="false"
-                                        stringUploadSuccess="SUCCESS"
-                                        stringUploadError="ERROR: (.*)"
-                                        maxChunkSize="500000"
-                                        pluginspage="http://java.sun.com/products/plugin/index.html#download">
-                                    <noembed>
-                                        Se requiere Java 1.5 o superior plugin.
-                                    </noembed>
-                                </embed>
-                            </comment>
-                        </object>
-                    </div>
+                    <script type="text/javascript">
+                        <!--
+                        function JUploadSetProperty(name, value) {
+                            document.applets["JUpload"] == null || document.applets["JUpload"].setProperty(name, value);
+                            document.embeds["JUpload"] == null || document.embeds["JUpload"].setProperty(name, value);
+                        }
+                        //-->
+                    </script>
+                    <object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+                            codebase="http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=5,0,0,3"
+                            width="100%"
+                            height="600"
+                            name="JUpload">
+                        <param name="maxFileSize" value="2147483648"/>
+                        <param name="archive" value="{{ asset('wjhk.jupload.jar') }}"/>
+                        <param name="afterUploadURL" value="javascript:;"/>
+                        {#<param name="afterUploadURL" value="after_upload.php"/>#}
+                        <param name="sendMD5Sum" value="true"/>
+                        <param name="debugLevel" value="0"/>
+                        <param name="name" value="JUpload"/>
+                        <param name="code" value="wjhk.jupload2.JUploadApplet"/>
+                        <param name="httpUploadParameterType" value="array"/>
+                        <param name="showLogWindow" value="false"/>
+                        <param name="uploadPolicy" value="PictureUploadPolicy"/>
+                        <param name="postURL" value="{{ path('foto_manager_up2server') }}">
+                        <param name="browsingDirectory" value="/">
+                        <param name="highQualityPreview" value="true">
+                        <param name="lookAndFeel" value="system">
+                        <param name="targetPictureFormat" value="bmp,png:jpg;">
+                        <param name="keepOriginalFileExtensionForConvertedImages" value="false">
+                        <param name="pictureCompressionQuality" value="0.8">
+                        <param name="mayscript" value="true"/>
+                        <param name="scriptable" value="false"/>
+                        <param name="stringUploadSuccess" value="SUCCESS"/>
+                        <param name="stringUploadError" value="ERROR: (.*)"/>
+                        <param name="maxChunkSize" value="500000"/>
+
+                        <comment>
+                            <embed
+                                    type="application/x-java-applet;version=1.5"
+                                    maxFileSize="2147483648"
+                                    archive="{{ asset('wjhk.jupload.jar') }}"
+                                    afterUploadURL="javascript:;"
+                                    {#"{{ path('foto_manager_proccesuoload') }}"#}
+                                    sendMD5Sum="true"
+                                    debugLevel="0"
+                                    name="JUpload"
+                                    lang="es"
+                                    code="wjhk.jupload2.JUploadApplet"
+                                    httpUploadParameterType="array"
+                                    showLogWindow="false"
+                                    uploadPolicy="PictureUploadPolicy"
+                                    postURL="{{ path('foto_manager_up2server') }}"
+                                    browsingDirectory="/"
+                                    highQualityPreview="true"
+                                    lookAndFeel="system"
+                                    targetPictureFormat="bmp,png:jpg;"
+                                    keepOriginalFileExtensionForConvertedImages="false"
+                                    pictureCompressionQuality="0.8"
+                                    width="100%"
+                                    height="650"
+                                    mayscript="true"
+                                    scriptable="false"
+                                    stringUploadSuccess="SUCCESS"
+                                    stringUploadError="ERROR: (.*)"
+                                    maxChunkSize="500000"
+                                    pluginspage="http://java.sun.com/products/plugin/index.html#download">
+                                <noembed>
+                                    Se requiere Java 1.5 o superior plugin.
+                                </noembed>
+                            </embed>
+                        </comment>
+                    </object>
+
 
                 </div>
             </div>

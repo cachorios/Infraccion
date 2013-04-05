@@ -2,9 +2,14 @@
     <div class="span12">
         <div class="box alternate">
             <div class="box-title">
+                <h2>
                 {{ box_titulo }}
+                <div class="pull-right">
+                    {% block rigth_title %}{% endblock %}
+                </div>
+                </h2>
             </div>
-            <div class="box-content nopadding">
+            <div class="box-content ">
                 {% block box_contenido %}box content{% endblock box_contenido %}
             </div>
         </div>
