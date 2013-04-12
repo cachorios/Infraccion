@@ -21,14 +21,16 @@
 
         "raulfraile/ladybug-bundle": "dev-master",
         "avalanche123/imagine-bundle": "dev-master",
+        "khepin/yaml-fixtures-bundle": "0.7.*",
 
         "pagerfanta/pagerfanta": "dev-master",
         "lexik/form-filter-bundle": "1.2.*",
         "jordillonch/crud-generator": "dev-master",
         "whiteoctober/breadcrumbs-bundle": "dev-master",
 
-        "willdurand/expose-translation-bundle": "dev-master",
-        "apy/jsfv-bundle":"dev-master",
+        //"willdurand/expose-translation-bundle": "dev-master",
+        //"apy/jsfv-bundle":"dev-master",
+
         "liuggio/excelbundle": ">=1.0.4",
 
 

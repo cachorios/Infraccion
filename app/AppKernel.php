@@ -27,7 +27,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 
             //new APY\JsFormValidationBundle\APYJsFormValidationBundle(),
-
+            new Khepin\YamlFixturesBundle\KhepinYamlFixturesBundle(),
 
             new Lar\UtilsBundle\LarUtilsBundle(),
             new Lar\UsuarioBundle\UsuarioBundle(),

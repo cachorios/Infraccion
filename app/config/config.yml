@@ -114,3 +114,7 @@ raul_fraile_ladybug:
 
 parameters:
     directorio.importa: %kernel.root_dir%/../web/uploads/procesar_excel/
+
+khepin_yaml_fixtures:
+    resources:
+        - InfraccionBundle

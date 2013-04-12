@@ -1,16 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <title>Infraccion - {% block title %}{% endblock %}</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap-responsive.css') }}"/>
 
 
-    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap-responsive.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/imperio.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/imperio.css') }}"/>
 
     {% block stylesheets %}{% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -21,7 +21,7 @@
 
 
     <script type="text/javascript" src="{{ asset( 'js/jquery.min.js') }}"></script>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 
 
@@ -33,19 +33,20 @@
         <div class="span12">
             <div id="header">
                 <a href="#">
-                    <img src="{{ asset('img/logo.png') }}" alt="" />
+                    <img src="{{ asset('img/logo.png') }}" alt=""/>
                 </a>
+
                 <div class="hright">
                     <div id="search" class="column">
                         <div class="search">
                             <form method="post" action="#">
-                                <input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword" />
+                                <input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword"/>
                             </form>
                         </div>
                     </div>
                     <div id="userinfo" class="column">
                         <a class="userinfo dropown-toggle" data-toggle="dropdown" href="#userinfo">
-                            <img alt="" src="img/avatar.jpg" />
+                            <img alt="" src="img/avatar.jpg"/>
                             <span><strong>Admin</strong></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -53,7 +54,7 @@
                             <li><a href="#">Edit Preferences</a></li>
                             <li><a href="#">Private Messages</a></li>
                             <li class="divider"></li>
-                            <li><a href="login.html">Salir</a></li>
+                            <li><a href="{{ path('seg_logout') }}">Salir</a></li>
                         </ul>
                     </div>
                 </div>
@@ -61,32 +62,27 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid" id="container">
-    <div class="row-fluid">
-        <div class="span2 leftmenu">
-            {% include ':include:leftmenu.html.twig' %}
-        </div>
-        <div class="span10" id="content">
-            {% block container %}
-            {% endblock container %}
-            {% block page %}
-            {% endblock page %}
 
-        </div>
+    {% block principal %}
+        {% block container %}
+        {% endblock container %}
+    {% endblock principal %}
 
-    </div>
+
 </div>
 
 
-<script type="text/javascript" src="{{ asset( 'js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset( 'js/bootstrap.min.js') }}"></script>
 
 <!-- Explorer canvas, for IE6-8 support of canvas elements -->
 <!--[if lt IE 9]>
-    <script src="{{ asset('js/excanvas.min.js')}}"></script>
+<script src="{{ asset('js/excanvas.min.js')}}"></script>
 <![endif]-->
 
-<script type="text/javascript" src="{{ asset( 'js/jquery.flot.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset( 'js/jquery.flot.resize.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset( 'js/jquery.flot.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset( 'js/jquery.flot.resize.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset( 'js/imperio.general.js') }}"></script>
 <script type="text/javascript" src="{{ asset( 'js/imperio.dashboard.js') }}"></script>
 {% block javascripts %}{% endblock %}

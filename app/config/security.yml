@@ -25,10 +25,9 @@ security:
 #        - { path: ^/registro/*,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         - { path: ^/larparametro/*, roles: ROLE_ADMIN }
-        - { path: ^/codigobarra/*,  roles: ROLE_ADMIN }
         - { path: ^/usuario/*,      roles: ROLE_ADMIN }
         - { path: ^/*,              roles: ROLE_USUARIO }
-#        - { path: ^/larutils/*, role: ROLE_USUARIO }
+
 
 
 
