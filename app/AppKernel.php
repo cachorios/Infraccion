@@ -30,11 +30,9 @@ class AppKernel extends Kernel
 
 
             new Lar\UtilsBundle\LarUtilsBundle(),
-<<<<<<< HEAD
             new Lar\UsuarioBundle\UsuarioBundle(),
-=======
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
->>>>>>> a4585bb68f399511a5196b485a722ba5f8b33c00
+
 
             new Infraccion\FotoManagerBundle\FotoManagerBundle(),
             new Infraccion\VerificacionBundle\VerificacionBundle(),
