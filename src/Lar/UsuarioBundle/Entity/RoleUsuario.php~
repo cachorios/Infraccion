@@ -1,0 +1,40 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: cacho
+ * Date: 28/10/12
+ * Time: 11:56
+ * To change this template use File | Settings | File Templates.
+ */
+namespace Soporte\UsuarioBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+/**
+ * Soporte\UsuarioBundle\Entity\RoleUsuario
+ *
+ * @ORM\Entity(repositoryClass="Soporte\UsuarioBundle\Entity\RoleUsuarioRepository")
+  */
+class RoleUsuario
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Soporte\UsuarioBundle\Entity\Usuario")
+     */
+    protected $usuario;
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     */
+    protected $role_id;
+
+    /** @ORM\Column(type="datetime") */
+    protected $fecha_asignada;
+
+
+
+}
