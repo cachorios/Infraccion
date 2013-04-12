@@ -1,3 +1,7 @@
+infraccion:
+    resource: "@InfraccionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 verificacion:
     resource: "@VerificacionBundle/Resources/config/routing.yml"
     prefix:   /

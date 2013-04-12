@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Infraccion\FotoManagerBundle\FotoManagerBundle(),
 
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
@@ -28,7 +27,10 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 
             new Lar\UtilsBundle\LarUtilsBundle(),
+
+            new Infraccion\FotoManagerBundle\FotoManagerBundle(),
             new Infraccion\VerificacionBundle\VerificacionBundle(),
+            new Infraccion\infraccionBundle\InfraccionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
