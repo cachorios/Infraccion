@@ -1,0 +1,6 @@
+
+
+
+InfraccionBundle_municipio:
+    resource: "@InfraccionBundle/Resources/config/routing/municipio.yml"
+    prefix:   /municipio

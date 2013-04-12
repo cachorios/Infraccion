@@ -1,0 +1,30 @@
+municipio:
+    pattern:  /
+    defaults: { _controller: "InfraccionBundle:Municipio:index" }
+
+municipio_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InfraccionBundle:Municipio:show" }
+
+municipio_new:
+    pattern:  /new
+    defaults: { _controller: "InfraccionBundle:Municipio:new" }
+
+municipio_create:
+    pattern:  /create
+    defaults: { _controller: "InfraccionBundle:Municipio:create" }
+    requirements: { _method: post }
+
+municipio_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InfraccionBundle:Municipio:edit" }
+
+municipio_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InfraccionBundle:Municipio:update" }
+    requirements: { _method: post }
+
+municipio_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InfraccionBundle:Municipio:delete" }
+    requirements: { _method: post }

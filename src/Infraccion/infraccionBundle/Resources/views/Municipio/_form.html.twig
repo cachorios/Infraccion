@@ -1,0 +1,87 @@
+<ul class="errorMessages"></ul>
+
+{{ form_errors(edit_form) }}
+
+<ul class="nav nav-tabs" id="myForm">
+    <li class="active"> <a href="#tab1" data-toggle="tab">Municipio</a>               </li>
+    <li class="">       <a href="#tab2" data-toggle="tab">Primer Contacto</a>   </li>
+    <li class="">       <a href="#tab3" data-toggle="tab">Segundo Contacto</a>                </li>
+
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+        <fieldset>
+            {{ form_row(edit_form.codigo) }}
+            {{ form_row(edit_form.nombre) }}
+            {{ form_row(edit_form.email) }}
+            {{ form_row(edit_form.telefono) }}
+            {{ form_row(edit_form.direccion) }}
+            {{ form_row(edit_form.localidad) }}
+            {{ form_row(edit_form.codigoPostal) }}
+
+        </fieldset>
+
+    </div>
+    <div class="tab-pane" id="tab2">
+        <fieldset>
+            {{ form_row(edit_form.cont1Nombre) }}
+            {{ form_row(edit_form.cont1Cargo) }}
+            {{ form_row(edit_form.cont1Celular) }}
+            {{ form_row(edit_form.cont1Telfijo) }}
+            {{ form_row(edit_form.cont1Email) }}
+
+        </fieldset>
+
+    </div>
+    <div class="tab-pane" id="tab3">
+        <fieldset>
+            {{ form_row(edit_form.cont2Nombre) }}
+            {{ form_row(edit_form.cont2Cargo) }}
+            {{ form_row(edit_form.cont2Celular) }}
+            {{ form_row(edit_form.cont2Telfijo) }}
+            {{ form_row(edit_form.cont2Email) }}
+            {{ form_widget(edit_form) }}
+        </fieldset>
+
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+
+        var createAllErrors = function () {
+            var form = $(this);
+            var errorList = $('ul.errorMessages', form);
+
+            var showAllErrorMessages = function () {
+                errorList.empty();
+
+                //Find all invalid fields within the form.
+                form.find(':invalid').each(function (index, node) {
+
+                    //Find the field's corresponding label
+                    var label = $('label[for=' + node.id + ']');
+
+                    //Opera incorrectly does not fill the validationMessage property.
+                    var message = node.validationMessage || 'Invalid value.';
+                    errorList
+                            .show()
+                            .append('<li><span>' + label.html() + '</span> ' + message + '</li>');
+                });
+            };
+
+            $('input[type=submit]', form).on('click', showAllErrorMessages);
+            $('input[type=text]', form).on('keypress', function (event) {
+                //keyCode 13 is Enter
+                if (event.keyCode == 13) {
+                    showAllErrorMessages();
+                }
+            });
+        };
+
+        $('form').each(createAllErrors);
+    });
+</script>
+

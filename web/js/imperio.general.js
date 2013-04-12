@@ -33,13 +33,13 @@ $(document).ready(function(){
         var el = $('.leftmenu > ul'); 
         if($(window).width() > 479) {
             if ($(this).scrollTop() > 80){
-                el.css({'position':'fixed','top':'10px','width':'22.35%'});
+                el.css({'position':'fixed','top':'10px','width':'14.529%'});
             } else {
                 el.css({'position': 'relative', 'top': '0','width':'auto'});
             }
         } else {
             if ($(this).scrollTop() > 130){
-                el.css({'position':'fixed','top':'10px','width':'22.35%'});
+                el.css({'position':'fixed','top':'10px','width':'14.529%'});
             } else {
                 el.css({'position': 'relative', 'top': '0','width':'auto'});
             }

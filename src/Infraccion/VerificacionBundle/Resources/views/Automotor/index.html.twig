@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 {% block id  'mod_automotor' %}
 
     {% block title %}
@@ -6,7 +6,8 @@
     {% endblock %}
 
 
-    {% block page %}
+{% block page %}
+    <section id="automotor">
         {% form_theme filterForm with ['LexikFormFilterBundle:Form:form_div_layout.html.twig' ] %}
         {% embed 'box.html.twig' with {'box_titulo': 'Lista de Automotores' } %}
             {% block rigth_title %}
@@ -121,4 +122,5 @@
 
             {% endblock box_contenido %}
         {% endembed %}
-    {% endblock %}
+    </section>
+{% endblock %}
