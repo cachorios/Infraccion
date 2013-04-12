@@ -29,6 +29,7 @@
 
         "willdurand/expose-translation-bundle": "dev-master",
         "apy/jsfv-bundle":"dev-master",
+        "liuggio/excelbundle": ">=1.0.4",
 
 
         "lar/utiles-bundle": "dev-master"

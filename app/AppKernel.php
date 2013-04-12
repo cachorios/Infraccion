@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 
             new Lar\UtilsBundle\LarUtilsBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
 
             new Infraccion\FotoManagerBundle\FotoManagerBundle(),
             new Infraccion\VerificacionBundle\VerificacionBundle(),

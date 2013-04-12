@@ -1,0 +1,58 @@
+{% extends "::layout.html.twig" %}
+{% block id  'mod_automotor' %}
+
+    {% block title %}
+        {{ parent() }} - Automotor {{ 'views.index.list'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+    {% endblock %}
+
+
+{% block page %}
+    <section id="automotor">
+
+        {% embed 'box.html.twig' with {'box_titulo': 'Lista de Automotores' } %}
+            {% block rigth_title %}
+                <a class="btn dropdown-toggle btn-mini" data-toggle="collapse"
+                   data-target="#filters">
+                    {{ 'views.index.filters'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                    <span class="caret"></span>
+                </a> &nbsp;
+            {% endblock %}
+            {% block box_contenido %}
+                <div class="row-fluid" >
+                    <div class="span12" style="margin-top: 0;">
+                        <section id="Automotor">
+                            {{ wo_render_breadcrumbs() }}
+                            {% for type, flashMessages in app.session.flashbag.all() %}
+                                {% for flashMessage in flashMessages %}
+                                    <div class='alert alert-{{ type }}'>
+                                        {{ flashMessage|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+
+
+
+
+                            <div class="row-fluid" style="margin-top: 0;">
+
+                                <div class="span12" style="zoom: 1; overflow: auto; margin-top: -8px;">
+
+                                    <a class="btn"
+                                       href="{{ path('automotor_phpexcel') }}">
+                                        <span class="icon-refresh"></span>Procesar Excel.
+                                    </a>
+
+                                </div>
+                            </div>
+
+                    </div>
+
+
+
+                    </section>
+                </div>
+
+            {% endblock box_contenido %}
+        {% endembed %}
+    </section>
+{% endblock %}

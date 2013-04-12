@@ -4,7 +4,7 @@ infraccion:
 
 verificacion:
     resource: "@VerificacionBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /verificacion
 
 foto_manager:
     resource: "@FotoManagerBundle/Resources/config/routing.yml"
