@@ -8,8 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Infraccion\VerificacionBundle\Adapter\AutoAdapter;
-use Pagerfanta\View\TwitterBootstrapView;
 
+use Pagerfanta\View\TwitterBootstrapView;
+use Symfony\Component\HttpFoundation\Response;
 use Infraccion\VerificacionBundle\Entity\Automotor;
 use Infraccion\VerificacionBundle\Form\AutomotorFilterType;
 
@@ -162,5 +163,23 @@ class AutomotorController extends Controller
             'entity'      => $entity,
         ));
     }
+
+    public function importarAction()
+    {
+        return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
+
+        ));
+    }
+
+    public function phpexcelAction()
+    {
+
+        $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . "prueba.xlsx");
+
+
+
+        return new Response('<h1>Contact us!</h1>');
+    }
+
 
 }

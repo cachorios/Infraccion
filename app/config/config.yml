@@ -111,3 +111,6 @@ raul_fraile_ladybug:
         html_color:           #080
         cli_color:            green
         show_quotes:          true
+
+parameters:
+    directorio.importa: %kernel.root_dir%/../web/uploads/procesar_excel/
