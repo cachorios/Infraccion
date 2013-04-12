@@ -28,6 +28,12 @@ twig:
         resources:
             - LexikFormFilterBundle:Form:form_div_layout.html.twig
             - FotoManagerBundle:Form:fields.html.twig
+    globals:
+            lar:
+                nombre_sistema: 'Sistema de Infracciones'
+                logo_empresa:  'img/logo-infraccion.png'
+                usuario:
+                    imagenes: 'uploads/users/'
 
 # Assetic Configuration
 assetic:

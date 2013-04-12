@@ -26,7 +26,11 @@ class AppKernel extends Kernel
             new JordiLlonch\Bundle\CrudGeneratorBundle\JordiLlonchCrudGeneratorBundle(),
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 
+            //new APY\JsFormValidationBundle\APYJsFormValidationBundle(),
+
+
             new Lar\UtilsBundle\LarUtilsBundle(),
+            new Lar\UsuarioBundle\UsuarioBundle(),
 
             new Infraccion\FotoManagerBundle\FotoManagerBundle(),
             new Infraccion\VerificacionBundle\VerificacionBundle(),

@@ -68,11 +68,12 @@
                     var message = node.validationMessage || 'Invalid value.';
                     errorList
                             .show()
-                            .append('<li><span>' + label.html() + '</span> ' + message + '</li>');
+                            .append('<li><span>' + label.html() + '</span> : ' + message + '</li>');
                 });
             };
 
             $('input[type=submit]', form).on('click', showAllErrorMessages);
+            $('button[type=submit]', form).on('click', showAllErrorMessages);
             $('input[type=text]', form).on('keypress', function (event) {
                 //keyCode 13 is Enter
                 if (event.keyCode == 13) {

@@ -67,8 +67,9 @@
             {% include ':include:leftmenu.html.twig' %}
         </div>
         <div class="span10" id="content">
+            {% block container %}
+            {% endblock container %}
             {% block page %}
-                contenido
             {% endblock page %}
 
         </div>
