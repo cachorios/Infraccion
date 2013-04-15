@@ -3,12 +3,16 @@
 namespace Infraccion\infraccionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * TipoInfraccion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Infraccion\infraccionBundle\Entity\TipoInfraccionRepository")
+ * @DoctrineAssert\UniqueEntity("codigo")
+ * @DoctrineAssert\UniqueEntity("nombre")
  */
 class TipoInfraccion
 {
@@ -25,6 +29,7 @@ class TipoInfraccion
      * @var integer
      *
      * @ORM\Column(name="codigo", type="integer")
+     * @Assert\Length(min = 1, max = 2)
      */
     private $codigo;
 
@@ -32,13 +37,16 @@ class TipoInfraccion
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=64)
+     * @Assert\Length(min = 3, max = 64)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observacion", type="text")
+     * @ORM\Column(name="observacion", type="text", nullable = true)
+
+
      */
     private $observacion;
 

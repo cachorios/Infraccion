@@ -32,47 +32,45 @@
     <div class="row-fluid">
         <div class="span12">
             <div id="header">
-                <a href="#">
-                    <img src="{{ asset('img/logo.png') }}" alt=""/>
+                <a href="{{ path('home_page') }}">
+                    <img src="{{ asset('img/logo.png') }}" alt="" />
                 </a>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="hright">
+                        <div id="search" class="column">
+                            <div class="search">
+                                <form method="post" action="#">
+                                    <input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword" />
+                                </form>
+                            </div>
+                        </div>
+                        <div id="userinfo" class="column">
+                            <a class="userinfo dropown-toggle" data-toggle="dropdown" href="#userinfo">
 
-                <div class="hright">
-                    <div id="search" class="column">
-                        <div class="search">
-                            <form method="post" action="#">
-                                <input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword"/>
-                            </form>
+                                <img class="avatar" src="{{ asset( usuario_imagenes ~ app.user.foto) | apply_filter('foto_login') }}">
+                                <span><strong>{{ app.user  }}</strong></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('perfil') }}">Editar Perfil</a></li>
+                                {#<li><a href="#">Private Messages</a></li>#}
+                                <li class="divider"></li>
+                                <li><a href="{{ path('seg_logout') }}">Salir</a></li>
+                            </ul>
                         </div>
                     </div>
-                    <div id="userinfo" class="column">
-                        <a class="userinfo dropown-toggle" data-toggle="dropdown" href="#userinfo">
-                            <img alt="" src="img/avatar.jpg"/>
-                            <span><strong>Admin</strong></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Edit Profile</a></li>
-                            <li><a href="#">Edit Preferences</a></li>
-                            <li><a href="#">Private Messages</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{ path('seg_logout') }}">Salir</a></li>
-                        </ul>
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
-
+{% block envuelve_container %}
 <div class="container-fluid" id="container">
-
     {% block principal %}
         {% block container %}
         {% endblock container %}
     {% endblock principal %}
-
-
 </div>
-
+{% endblock envuelve_container %}
 
 <script type="text/javascript" src="{{ asset( 'js/bootstrap.min.js') }}"></script>
 
@@ -88,6 +86,7 @@
 {% block javascripts %}{% endblock %}
 
 {% block endscript %}{% endblock endscript %}
+
 </body>
 {% endblock body %}
 

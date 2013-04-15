@@ -1,71 +1,18 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
-<body id="{% block id '' %}">
 
-<div class="container-fluid nopadding">
+{% block principal %}
     <div class="row-fluid">
-        <div class="span12">
-            <div id="header">
-                <a href="#">
-                    <img src="{{ asset('img/logo.png') }}" alt="" />
-                </a>
-                <div class="hright">
-                    <div id="search" class="column">
-                        <div class="search">
-                            <form method="post" action="#">
-                                <input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword" />
-                            </form>
-                        </div>
-                    </div>
-                    <div id="userinfo" class="column">
-                        <a class="userinfo dropown-toggle" data-toggle="dropdown" href="#userinfo">
-                            <img alt="" src="img/avatar.jpg" />
-                            <span><strong>Admin</strong></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Edit Profile</a></li>
-                            <li><a href="#">Edit Preferences</a></li>
-                            <li><a href="#">Private Messages</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{ path('seg_logout') }}">Salir</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="span2 leftmenu">
+            {% include ':include:leftmenu.html.twig' %}
+        </div>
+        <div class="span10" id="content">
+            {% block page %}
+            {% endblock page %}
         </div>
     </div>
-</div>
-<div class="container-fluid" id="container">
-    <div class="row-fluid">
-        {% block principal %}
-            <div class="span2 leftmenu">
-                {% include ':include:leftmenu.html.twig' %}
-            </div>
-            <div class="span10" id="content">
-                {% block page %}
-                {% endblock page %}
-            </div>
-        {% endblock principal %}
-
-    </div>
-</div>
+{% endblock principal %}
 
 
-<script type="text/javascript" src="{{ asset( 'js/bootstrap.min.js')}}"></script>
 
-<!-- Explorer canvas, for IE6-8 support of canvas elements -->
-<!--[if lt IE 9]>
-<script src="{{ asset('js/excanvas.min.js')}}"></script>
-<![endif]-->
-
-<script type="text/javascript" src="{{ asset( 'js/jquery.flot.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset( 'js/jquery.flot.resize.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset( 'js/imperio.general.js') }}"></script>
-<script type="text/javascript" src="{{ asset( 'js/imperio.dashboard.js') }}"></script>
-{% block javascripts %}{% endblock %}
-
-{% block endscript %}{% endblock endscript %}
-</body>
-{% endblock body %}
 

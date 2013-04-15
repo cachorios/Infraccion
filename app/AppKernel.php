@@ -28,6 +28,7 @@ class AppKernel extends Kernel
 
             //new APY\JsFormValidationBundle\APYJsFormValidationBundle(),
             new Khepin\YamlFixturesBundle\KhepinYamlFixturesBundle(),
+            new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
 
             new Lar\UtilsBundle\LarUtilsBundle(),
             new Lar\UsuarioBundle\UsuarioBundle(),
