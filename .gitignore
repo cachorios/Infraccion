@@ -10,6 +10,8 @@ web/bundles/*
 #web/css/*
 #web/js/*
 #web/uploads/*
+web/unprocess/*
+web/media/*
 
 # -- Composer -----------------------------------------
 composer.phar
