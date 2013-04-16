@@ -1,0 +1,30 @@
+tipoinfraccion:
+    pattern:  /
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:index" }
+
+tipoinfraccion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:show" }
+
+tipoinfraccion_new:
+    pattern:  /new
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:new" }
+
+tipoinfraccion_create:
+    pattern:  /create
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:create" }
+    requirements: { _method: post }
+
+tipoinfraccion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:edit" }
+
+tipoinfraccion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:update" }
+    requirements: { _method: post }
+
+tipoinfraccion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InfraccionBundle:TipoInfraccion:delete" }
+    requirements: { _method: post }

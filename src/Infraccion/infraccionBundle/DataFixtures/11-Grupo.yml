@@ -1,0 +1,10 @@
+model: Lar\UsuarioBundle\Entity\Grupo
+fixtures:
+    gr1:
+        nombre: Usuarios
+        role: ROLE_USUARIO
+    gr2:
+        nombre: Administradores
+        role: ROLE_ADMIN
+
+
