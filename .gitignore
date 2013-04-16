@@ -9,4 +9,6 @@
 /composer.phar
 /web/unprocess/
 /web/uploads/
-/app/config/parameters.yml
+app/config/parameters.ini
+app/config/parameters.yml
+.idea
