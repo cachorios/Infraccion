@@ -12,6 +12,7 @@ use Infraccion\VerificacionBundle\Adapter\AutoAdapter;
 use Pagerfanta\View\TwitterBootstrapView;
 use Symfony\Component\HttpFoundation\Response;
 use Infraccion\VerificacionBundle\Entity\Automotor;
+use Infraccion\VerificacionBundle\Entity\AutomotorImportar;
 use Infraccion\VerificacionBundle\Form\AutomotorFilterType;
 
 
@@ -173,13 +174,58 @@ class AutomotorController extends Controller
 
     public function phpexcelAction()
     {
+        $result1 = '';
+        $result1 .= '<h1>inicio!' . \time() . ' </h1>';
 
-        $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . "prueba.xlsx");
+        $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . "todo1.xlsx");
+        $objWorksheet = $excelObj->getActiveSheet();
+        $highestRow = $objWorksheet->getHighestRow();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $result1 .= '<h1>export!' . \time() . ' </h1>';
+
+        $inicio = 2;
+        $end      = $highestRow;
+
+        $em->getConnection()->beginTransaction(); // suspend auto-commit
+        try {
+            //... do some work
+            for ($row = $inicio; $row <= $end ; $row++) {
+
+                $sql = 'INSERT INTO automotorimportar(
+                                    dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad)
+                                    VALUES ('
+                    .'"'. \addslashes($objWorksheet->getCell('A' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('B' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('C' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('D' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('E' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('F' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('G' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('H' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('I' . $row)->getValue()) .'"'. ','
+                    .'"'. \addslashes($objWorksheet->getCell('J' . $row)->getValue()).'"'.')';
+
+                $em->getConnection()->executeUpdate($sql);
 
 
+            }
 
-        return new Response('<h1>Contact us!</h1>');
+            $em->getConnection()->commit();
+        } catch (Exception $e) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $e;
+        }
+
+        $result1 .= '<h1>fin!' . \time() . ' </h1>';
+
+        $result1 .= '<h1>Total de registros:' . ($highestRow-$inicio) . ' </h1>';
+        return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
+            'result' => $result1,
+        ));
+
     }
-
 
 }
