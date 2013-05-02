@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Unchecked
+@end;
+@begin Targets
+ 0 "renombra_foto.pbt";
+@end;
+DefaultTarget "renombra_foto.pbt";
+DefaultRemoteTarget "renombra_foto.pbt";

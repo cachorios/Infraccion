@@ -143,8 +143,8 @@ mopa_bootstrap:
                 icon: plus-sign
 
 avalanche_imagine:
-    source_root: C:/xampp/htdocs/Infraccion/
-#    source_root: %kernel.root_dir%/../web
+    source_root: C:/xampp/htdocs/
+    #source_root: %kernel.root_dir%/../web
     web_root:     %kernel.root_dir%/../web
 
     cache_prefix: media/cache

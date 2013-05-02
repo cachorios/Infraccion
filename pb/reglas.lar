@@ -1,0 +1,7 @@
+﻿;by LAR
+;Cacho
+[regla]
+r01=@:[A-Za-z]
+r02=#:[0-9]
+r03=.:\.
+Filas=3
