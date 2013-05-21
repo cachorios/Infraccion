@@ -6,3 +6,7 @@ InfraccionBundle_municipio:
 InfraccionBundle_tipoinfraccion:
     resource: "@InfraccionBundle/Resources/config/routing/tipoinfraccion.yml"
     prefix:   /tipoinfraccion
+
+InfraccionBundle_ubicacion:
+    resource: "@InfraccionBundle/Resources/config/routing/ubicacion.yml"
+    prefix:   /ubicacion

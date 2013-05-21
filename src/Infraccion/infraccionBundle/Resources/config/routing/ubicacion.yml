@@ -1,0 +1,30 @@
+ubicacion:
+    pattern:  /
+    defaults: { _controller: "InfraccionBundle:Ubicacion:index" }
+
+ubicacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InfraccionBundle:Ubicacion:show" }
+
+ubicacion_new:
+    pattern:  /new
+    defaults: { _controller: "InfraccionBundle:Ubicacion:new" }
+
+ubicacion_create:
+    pattern:  /create
+    defaults: { _controller: "InfraccionBundle:Ubicacion:create" }
+    requirements: { _method: post }
+
+ubicacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InfraccionBundle:Ubicacion:edit" }
+
+ubicacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InfraccionBundle:Ubicacion:update" }
+    requirements: { _method: post }
+
+ubicacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InfraccionBundle:Ubicacion:delete" }
+    requirements: { _method: post }

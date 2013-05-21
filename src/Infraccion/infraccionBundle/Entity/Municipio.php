@@ -550,4 +550,9 @@ class Municipio
     {
         return $this->cont2Email;
     }
+
+
+    public function __toString(){
+        return $this->getNombre();
+    }
 }

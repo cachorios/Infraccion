@@ -6,17 +6,19 @@ r2=Cande - Semaforo km12 1
 reglas=2
 [Garupa - Semaforo km12 1]
 entrada=^@@@###-######-F#.BMP$
-salida=010101[2][1][3][4].[5]
+salida=250103[2][1][3][4].[5]
 r1=000000Fecha
 r2=001006Dominio
-r3=008006Hora
+r3=008006Hora Infraccion
 r4=016001Nro. de Foto
-pos=4
+r5=018003Extension
+pos=5
 [Cande - Semaforo km12 1]
 entrada=^@@@###-######-F#.BMP$
-salida=020101[2][1][3][4].[5]
+salida=130103[2][1][3][4].[5]
 r1=000000Fecha
 r2=001006Dominio
-r3=008006Hora
+r3=008006Hora de Infrac
 r4=016001Nro. de Foto
-pos=4
+r5=018003Extension
+pos=5

@@ -42,10 +42,9 @@ class Ubicacion
      */
     private $ubicacion;
 
+
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="municipio", type="integer")
+     * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\Municipio")
      */
     private $municipio;
 

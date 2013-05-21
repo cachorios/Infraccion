@@ -34,7 +34,6 @@ class DefaultController extends Controller
 
         $log = $this->get("logger");
 
-
         //$mimetype = $request->get('mimetype');
         $pathinfo = $request->get('pathinfo')[0]; //Es el camino completo, incluye el directorio final
 
@@ -55,7 +54,7 @@ class DefaultController extends Controller
         $response = new Response();
 
 
-        $formato_fecha = 'Y-m-d';
+        $formato_fecha = 'Ymd';
 
         if ($relpathinfo == $udir) {
 
