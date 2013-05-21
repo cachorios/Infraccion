@@ -31,9 +31,9 @@ class AutomotorController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
         $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
-        list($filterForm, $queryBuilder,$queryCount) = $this->filter();
+        list($filterForm, $queryBuilder, $queryCount) = $this->filter();
 
-        list($entities, $pagerHtml) = $this->paginator($queryBuilder,$queryCount);
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder, $queryCount);
 
         return $this->render('VerificacionBundle:Automotor:index.html.twig', array(
             'entities' => $entities,
@@ -43,9 +43,9 @@ class AutomotorController extends Controller
     }
 
     /**
-    * Create filter form and process filter request.
-    *
-    */
+     * Create filter form and process filter request.
+     *
+     */
     protected function filter()
     {
         $request = $this->getRequest();
@@ -53,9 +53,8 @@ class AutomotorController extends Controller
         $filterForm = $this->createForm(new AutomotorFilterType());
         $em = $this->getDoctrine()->getManager();
         $queryBuilder = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresQuery();
-            //createQueryBuilder('e');
+        //createQueryBuilder('e');
         $queryCount = $em->getRepository('VerificacionBundle:Automotor')->countAutomotoresQuery();
-
 
 
         // Reset filter
@@ -88,18 +87,17 @@ class AutomotorController extends Controller
         }
 
 
+        //  ld($queryCount);
+        //  ld($queryCount->getQuery()->getSingleScalarResult());
 
-      //  ld($queryCount);
-      //  ld($queryCount->getQuery()->getSingleScalarResult());
 
-
-        return array($filterForm, $queryBuilder,$queryCount);
+        return array($filterForm, $queryBuilder, $queryCount);
     }
 
     /**
-    * Get results from paginator and get paginator view.
-    *
-    */
+     * Get results from paginator and get paginator view.
+     *
+     */
     protected function paginator($queryBuilder, $queryCount)
     {
 
@@ -107,13 +105,13 @@ class AutomotorController extends Controller
         //$adapter = new DoctrineORMAdapter($queryBuilder, false);
 
         //$adapter = new AutoAdapter($this->getDoctrine()->getManager(), $this->get('session') ,$queryBuilder,$queryCount, false);
-        $adapter = new AutoAdapter($this->get('session'),$queryBuilder,$queryCount->getQuery(), false);
+        $adapter = new AutoAdapter($this->get('session'), $queryBuilder, $queryCount->getQuery(), false);
 
         $pagerfanta = new Pagerfanta($adapter);
 
 
-        if(!$this->getRequest()->get('page')){
-            $this->get('session')->set("automotor_registros",0);
+        if (!$this->getRequest()->get('page')) {
+            $this->get('session')->set("automotor_registros", 0);
         }
 
         $currentPage = $this->getRequest()->get('page', 1);
@@ -124,8 +122,7 @@ class AutomotorController extends Controller
 
         // Paginator - route generator
         $me = $this;
-        $routeGenerator = function($page) use ($me)
-        {
+        $routeGenerator = function ($page) use ($me) {
             return $me->generateUrl('automotor', array('page' => $page));
         };
 
@@ -150,7 +147,7 @@ class AutomotorController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
         $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
-        $breadcrumbs->addItem("Ver" );
+        $breadcrumbs->addItem("Ver");
 
         $em = $this->getDoctrine()->getManager();
 
@@ -161,7 +158,7 @@ class AutomotorController extends Controller
         }
 
         return $this->render('VerificacionBundle:Automotor:show.html.twig', array(
-            'entity'      => $entity,
+            'entity' => $entity,
         ));
     }
 
@@ -242,6 +239,35 @@ class AutomotorController extends Controller
         return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
             'result' => $result1,
         ));
+
+    }
+
+    public function actualizarTablaAction()
+    {
+
+
+
+
+        $queryUpdate = "
+        Update automotor a  join automotorimportar b on a.dominio = b.dominio
+    set a.marca = COALESCE(b.marca,''),
+    a.modelo = COALESCE(b.modelo,''),
+    a.dni = COALESCE(b.dni,''),
+    a.cuit_cuil = COALESCE(b.cuit_cuil,''),
+    a.nombre = COALESCE(b.nombre,''),
+    a.domicilio = COALESCE(b.domicilio,''),
+    a.codigo_postal = COALESCE(b.codigo_postal,''),
+    a.provincia = COALESCE(b.provincia,''),
+    a.localidad = COALESCE(b.localidad,''),
+    a.ultima_actualizacion = SYSDATE()
+        ";
+
+        $queryInsert = "
+insert into automotor( dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, ultima_actualizacion )
+select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar
+where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)
+";
+
 
     }
 
