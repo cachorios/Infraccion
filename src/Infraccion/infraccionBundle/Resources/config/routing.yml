@@ -10,3 +10,4 @@ InfraccionBundle_tipoinfraccion:
 InfraccionBundle_ubicacion:
     resource: "@InfraccionBundle/Resources/config/routing/ubicacion.yml"
     prefix:   /ubicacion
+

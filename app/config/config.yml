@@ -118,6 +118,7 @@ raul_fraile_ladybug:
 parameters:
     directorio.importa: %kernel.root_dir%/../web/uploads/procesar_excel/
     lar.usuario.imagenes: %kernel.root_dir%/../web/uploads/users/
+    infraccion.unproccess.dir: %kernel.root_dir%/../web/unprocess/
 
 khepin_yaml_fixtures:
     resources:
