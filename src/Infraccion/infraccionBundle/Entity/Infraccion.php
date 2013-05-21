@@ -3,10 +3,13 @@
 namespace Infraccion\infraccionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 
+=======
+>>>>>>> modelo
 
 /**
  * Infraccion
@@ -57,7 +60,10 @@ class Infraccion
      * @var string
      *
      * @ORM\Column(name="dominio", type="string", length=6)
+<<<<<<< HEAD
      * @Assert\Length(min = 6, max = 6)
+=======
+>>>>>>> modelo
      */
     private $dominio;
 
@@ -71,7 +77,11 @@ class Infraccion
     /**
      * @var integer
      *
+<<<<<<< HEAD
      * @ORM\Column(name="etapa", type="integer", nullable = true)
+=======
+     * @ORM\Column(name="etapa", type="integer")
+>>>>>>> modelo
      */
     private $etapa;
 
