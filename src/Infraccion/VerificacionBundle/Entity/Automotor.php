@@ -92,6 +92,13 @@ class Automotor
      */
     private $localidad;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ultima_actualizacion", type="datetime")
+     */
+    private $ultimaActualizacion;
+
 
     /**
      * Get id
@@ -331,5 +338,29 @@ class Automotor
     public function getLocalidad()
     {
         return $this->localidad;
+    }
+
+    /**
+     * Set ultimaActualizacion
+     *
+     * @param \DateTime $ultimaActualizacion
+     */
+    public
+    function setUltimaActualizacion($ultimaActualizacion)
+    {
+        $this->ultimaActualizacion = $ultimaActualizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get ultimaActualizacion
+     *
+     * @return \DateTime
+     */
+    public
+    function getUltimaActualizacion()
+    {
+        return $this->ultimaActualizacion;
     }
 }

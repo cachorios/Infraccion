@@ -164,20 +164,13 @@ class AutomotorController extends Controller
 
     public function importarAction()
     {
-//        $importar = new \Infraccion\VerificacionBundle\Entity\Importar();
-//        $form = $this->createForm(new \Infraccion\VerificacionBundle\Form\ImportarType(), $importar);
-
         $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-//            if ($form->isValid()) {
-
-//                $importar->upload();
 
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-//            }
         }
 
         return $this->render('VerificacionBundle:Automotor:importar.html.twig', array( //            'form' => $form->createView()
@@ -244,31 +237,27 @@ class AutomotorController extends Controller
 
     public function actualizarTablaAction()
     {
+        $em = $this->getDoctrine()->getManager();
 
+        $queryUpdate = "Update automotor a  join automotorimportar b on a.dominio = b.dominio ";
+        $queryUpdate .= "set a.marca = COALESCE(b.marca,''),";
+        $queryUpdate .= "    a.modelo = COALESCE(b.modelo,''),";
+        $queryUpdate .= "    a.dni = COALESCE(b.dni,''),";
+        $queryUpdate .= "    a.cuit_cuil = COALESCE(b.cuit_cuil,''),";
+        $queryUpdate .= "    a.nombre = COALESCE(b.nombre,''),";
+        $queryUpdate .= "    a.domicilio = COALESCE(b.domicilio,''),";
+        $queryUpdate .= "    a.codigo_postal = COALESCE(b.codigo_postal,''),";
+        $queryUpdate .= "    a.provincia = COALESCE(b.provincia,''),";
+        $queryUpdate .= "    a.localidad = COALESCE(b.localidad,''),";
+        $queryUpdate .= "    a.ultima_actualizacion = SYSDATE()";
 
+        $em->getConnection()->executeUpdate($queryUpdate);
 
+        $queryInsert = "insert into automotor( dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, ultima_actualizacion )";
+        $queryInsert .= "select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar";
+        $queryInsert .= "where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)";
 
-        $queryUpdate = "
-        Update automotor a  join automotorimportar b on a.dominio = b.dominio
-    set a.marca = COALESCE(b.marca,''),
-    a.modelo = COALESCE(b.modelo,''),
-    a.dni = COALESCE(b.dni,''),
-    a.cuit_cuil = COALESCE(b.cuit_cuil,''),
-    a.nombre = COALESCE(b.nombre,''),
-    a.domicilio = COALESCE(b.domicilio,''),
-    a.codigo_postal = COALESCE(b.codigo_postal,''),
-    a.provincia = COALESCE(b.provincia,''),
-    a.localidad = COALESCE(b.localidad,''),
-    a.ultima_actualizacion = SYSDATE()
-        ";
-
-        $queryInsert = "
-insert into automotor( dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, ultima_actualizacion )
-select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar
-where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)
-";
-
-
+        $em->getConnection()->executeUpdate($queryInsert);
     }
 
 }
