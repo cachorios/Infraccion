@@ -167,8 +167,23 @@ class AutomotorController extends Controller
 
     public function importarAction()
     {
-        return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
+//        $importar = new \Infraccion\VerificacionBundle\Entity\Importar();
+//        $form = $this->createForm(new \Infraccion\VerificacionBundle\Form\ImportarType(), $importar);
 
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+//            if ($form->isValid()) {
+
+//                $importar->upload();
+
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+//            }
+        }
+
+        return $this->render('VerificacionBundle:Automotor:importar.html.twig', array( //            'form' => $form->createView()
         ));
     }
 
@@ -186,26 +201,28 @@ class AutomotorController extends Controller
         $result1 .= '<h1>export!' . \time() . ' </h1>';
 
         $inicio = 2;
-        $end      = $highestRow;
+
+        $end = $highestRow;
+        $cell = array("dominio" => "A", "marca" => "B", "modelo" => "C", "dni" => "D", "cuit_cuil" => "E", "nombre" => "F", "domicilio" => "G", "codigo_postal" => "H", "provincia" => "I", "localidad" => "J");
 
         $em->getConnection()->beginTransaction(); // suspend auto-commit
         try {
             //... do some work
-            for ($row = $inicio; $row <= $end ; $row++) {
+            for ($row = $inicio; $row <= $end; $row++) {
+//                $sql = "INSERT INTO usuarios (nombre, email, telefono) VALUES (′$nombre′, ′$email’, ′$telefono’)";
 
-                $sql = 'INSERT INTO automotorimportar(
-                                    dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad)
-                                    VALUES ('
-                    .'"'. \addslashes($objWorksheet->getCell('A' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('B' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('C' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('D' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('E' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('F' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('G' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('H' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('I' . $row)->getValue()) .'"'. ','
-                    .'"'. \addslashes($objWorksheet->getCell('J' . $row)->getValue()).'"'.')';
+                $sql = "INSERT INTO automotorimportar(dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad)
+                        VALUES ("
+                    . '"' . \addslashes($objWorksheet->getCell($cell["dominio"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["marca"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["modelo"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["dni"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["cuit_cuil"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["nombre"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["domicilio"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["codigo_postal"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["provincia"] . $row)->getValue()) . '"' . ','
+                    . '"' . \addslashes($objWorksheet->getCell($cell["localidad"] . $row)->getValue()) . '"' . ')';
 
                 $em->getConnection()->executeUpdate($sql);
 
@@ -221,7 +238,7 @@ class AutomotorController extends Controller
 
         $result1 .= '<h1>fin!' . \time() . ' </h1>';
 
-        $result1 .= '<h1>Total de registros:' . ($highestRow-$inicio) . ' </h1>';
+        $result1 .= '<h1>Total de registros:' . ($highestRow - $inicio) . ' </h1>';
         return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
             'result' => $result1,
         ));
