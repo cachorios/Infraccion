@@ -57,6 +57,7 @@ class Infraccion
      *
      * @ORM\Column(name="dominio", type="string", length=6)
      * @Assert\Length(min = 6, max = 6)
+     */
 
     private $dominio;
 
@@ -70,11 +71,9 @@ class Infraccion
     /**
      * @var integer
      *
-     * @ORM\Column(name="etapa", type="integer")
+     * @ORM\Column(name="etapa", type="integer", nullable = false)
      */
     private $etapa;
-
-
     /**
      * Get id
      *

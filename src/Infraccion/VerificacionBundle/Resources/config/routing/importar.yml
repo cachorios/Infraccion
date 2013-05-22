@@ -1,0 +1,7 @@
+automotor_importar:
+    pattern:  /importar
+    defaults: { _controller: "VerificacionBundle:Importar:importar" }
+
+automotor_phpexcel:
+    pattern:  /phpexcel
+    defaults: { _controller: "VerificacionBundle:Importar:phpexcel" }

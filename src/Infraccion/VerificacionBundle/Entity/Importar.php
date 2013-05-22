@@ -4,98 +4,34 @@ namespace Infraccion\VerificacionBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Infraccion\VerificacionBundle\Validator as sisAssert;
+use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Importar
 {
     /**
+     * @sisAssert\ImportarAutomotor()
+     * @Assert\File(maxSize="6000000")
      */
-    private $archivo;
+    private $file;
 
     /**
+     * Set imagen
+     *
      */
-    private $archivo_nombreReal;
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
 
     /**
+     * Get imagen
+     *
      */
-    private $dominio;
+    public function getFile()
+    {
+        return $this->file;
+    }
 
-    /**
-     */
-    private $marca;
-
-    /**
-     */
-    private $modelo;
-
-    /**
-     */
-    private $dni;
-
-    /**
-     */
-    private $cuitCuil;
-
-    /**
-     */
-    private $nombre;
-
-    /**
-     */
-    private $domicilio;
-
-    /**
-     */
-    private $codigoPostal;
-
-    /**
-     */
-    private $provincia;
-
-    /**
-     */
-    private $localidad;
-
-    /**
-     */
-    private $activate_dominio;
-
-    /**
-     */
-    private $activate_marca;
-
-    /**
-     */
-    private $activate_modelo;
-
-    /**
-     */
-    private $activate_dni;
-
-    /**
-     */
-    private $activate_cuitCuil;
-
-    /**
-     */
-    private $activate_nombre;
-
-    /**
-     */
-    private $activate_domicilio;
-
-    /**
-     */
-    private $activate_codigoPostal;
-
-    /**
-     */
-    private $activate_provincia;
-
-    /**
-     */
-    private $activate_localidad;
 
 }
