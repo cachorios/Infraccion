@@ -16,6 +16,18 @@ class Importar
     private $file;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^[A-Z]$/" )
+     */
+    private $columna = "A";
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^[0-9]$/" )
+     */
+    private $fila = 2;
+
+    /**
      * Set imagen
      *
      */
@@ -33,5 +45,53 @@ class Importar
         return $this->file;
     }
 
+    /**
+     * Set fila
+     *
+     */
+    public function setFila($fila)
+    {
+        $this->fila = $fila;
+    }
+
+    /**
+     * Get fila
+     *
+     */
+    public function getFila()
+    {
+        return $this->fila;
+    }
+
+    /**
+     * Set columna
+     *
+     */
+    public function setColumna($columna)
+    {
+        $this->columna = $columna;
+    }
+
+    /**
+     * Get columna
+     *
+     */
+    public function getColumna()
+    {
+        return \strtolower($this->columna);
+    }
+
+    /**
+     * Get toArray
+     *
+     */
+    public function getColumnaArray()
+    {
+        $columna = array("dominio" => "A", "marca" => "B", "modelo" => "C", "dni" => "D", "cuit_cuil" => "E", "nombre" => "F", "domicilio" => "G", "codigo_postal" => "H", "provincia" => "I", "localidad" => "J");
+
+        
+
+        return $columna;
+    }
 
 }

@@ -43,7 +43,7 @@ class ImportarController extends Controller
                 $directorio = $this->container->getParameter('directorio.importa');
 
                 $file = $this->copiar($directorio, $file);
-                $error = $this->procesarQuery($file);
+                $error = $this->procesarQuery($file, $importar);
 
                 $this->get('session')->getFlashBag()->add('success', $error);
             } else {
@@ -57,7 +57,7 @@ class ImportarController extends Controller
         ));
     }
 
-    public function phpexcel($file)
+    public function phpexcel($file, $importar = null)
     {
         $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . $file);
         $objWorksheet = $excelObj->getActiveSheet();
@@ -65,10 +65,12 @@ class ImportarController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $inicio = 2;
+        $inicio = $importar->getFila();
 
         $end = $highestRow;
-        $cell = array("dominio" => "A", "marca" => "B", "modelo" => "C", "dni" => "D", "cuit_cuil" => "E", "nombre" => "F", "domicilio" => "G", "codigo_postal" => "H", "provincia" => "I", "localidad" => "J");
+
+        $cell = $importar->getColumnaArray();
+//        $cell = array("dominio" => "A", "marca" => "B", "modelo" => "C", "dni" => "D", "cuit_cuil" => "E", "nombre" => "F", "domicilio" => "G", "codigo_postal" => "H", "provincia" => "I", "localidad" => "J");
 
         $em->getConnection()->beginTransaction(); // suspend auto-commit
         try {
@@ -154,10 +156,10 @@ class ImportarController extends Controller
         return $file->getClientOriginalName();
     }
 
-    public function procesarQuery($file)
+    public function procesarQuery($file, $importar)
     {
         try {
-            $this->phpexcel($file);     //Leer archivo Excel.
+            $this->phpexcel($file, $importar);     //Leer archivo Excel.
             $this->actualizarTabla();   //Actualiza la tabla automotor.
             $this->vaciarTabla();       //Vacia la tabla automotorImportar
 

@@ -9,7 +9,7 @@
     {% block page %}
         <section id="automotor">
 
-        {% embed 'box.html.twig' with {'box_titulo': 'Importar planilla Automotores.' } %}
+        {% embed 'box.html.twig' with {'box_titulo': 'Importar datos Automotores.' } %}
         {% block rigth_title %}
         {% endblock %}
         {% block box_contenido %}
@@ -25,24 +25,28 @@
                             {% endfor %}
                         {% endfor %}
 
-
-
                         {% if form is defined %}
                             <div class="row-fluid" style="margin-top: 0;">
 
                                 <div class="span12" style="zoom: 1; overflow: auto; margin-top: -8px;">
 
-                                    <form class="form-horizontal" action="{{ path('automotor_importar') }}" method="post" {{ form_enctype(form) }}>
+                                    <form class="form-horizontal" action="{{ path('automotor_importar') }}"
+                                          method="post" {{ form_enctype(form) }}>
+
+                                        {{ form_row(form.file) }}
+
+                                        <legend>{% trans %}Primer fila y columna de datos.{% endtrans %}</legend>
+                                        {{ form_row(form.columna) }}
+                                        {{ form_row(form.fila) }}
                                         {{ form_widget(form) }}
+
+                                        <div>
+                                            <span> </span>
+                                        </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-success">Procesar.</button>
+                                            <button type="submit" class="btn btn-success brn_importar">Procesar.</button>
                                         </div>
                                     </form>
-
-                                    {#<a class="btn"#}
-                                       {#href="{{ path('automotor_phpexcel') }}">#}
-                                        {#<span class="icon-refresh"></span>Procesar Excel.#}
-                                    {#</a>#}
 
                                 </div>
                             </div>
@@ -57,4 +61,33 @@
         {% endblock box_contenido %}
         {% endembed %}
         </section>
+
+        <script>
+            $(document).ready(function () {
+                $(".brn_importar").click(function () {
+                    sdir = $(this).data("dir");
+
+                    $.blockUI({ message:'<h1   > <img src="{{ asset("img/indicator.gif") }}" style="padding-right: 20px;"  /> Importando, espere...</h1>' });
+                    $("#" + sdir).show();
+                    $.ajax({
+                        type:"POST",
+                        url:'{{ path("automotor_importar") }}',
+                        data:{'carpeta':sdir},
+                        success:function (data) {
+                            //$("#"+sdir).hide();
+                            //$.unblockUI();
+                            if (data.length > 0)
+                                alert(data);
+
+                            $(location).attr("href", "{{ path("automotor_importar") }}");
+
+                        },
+                        dataType:'html'
+                    });
+
+
+                });
+            });
+        </script>
+
     {% endblock %}
