@@ -1,7 +1,6 @@
 # -- Symfony2 -----------------------------------------
 app/bootstrap.php.cache
 app/bootstrap_cache.php.cache
-app/config/parameters.ini
 app/config/parameters.yml
 app/cache/*
 app/logs/*
@@ -9,15 +8,14 @@ vendor/*
 web/bundles/*
 #web/css/*
 #web/js/*
-#web/uploads/*
-web/unprocess/*
+web/uploads/php*
 web/media/*
 
 # -- Composer -----------------------------------------
 composer.phar
 
 # -- PHPUnit ------------------------------------------
-app/phpunit.xml
+app/phpunit.xml  
 
 # -- Editores -----------------------------------------
 # vim
@@ -87,5 +85,6 @@ Icon
 .Spotlight-V100
 .Trashes
 
-
-
+*.zip
+*.lock
+parameters.yml
