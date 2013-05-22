@@ -11,3 +11,10 @@ InfraccionBundle_ubicacion:
     resource: "@InfraccionBundle/Resources/config/routing/ubicacion.yml"
     prefix:   /ubicacion
 
+importar_infraccion:
+    pattern: /importar
+    defaults: { _controller: "InfraccionBundle:Infraccion:importar" }
+
+#infraccion_importar_carpeta:
+#    pattern: /{carpeta}/importar_carpeta
+#    defaults: { _controller: "InfraccionBundle:Infraccion:importar_carpeta" }
