@@ -59,7 +59,9 @@ class InfraccionController extends Controller
         // Filter action
         if ($request->getMethod() == 'POST' && $request->get('filter_action') == 'filter') {
             // Bind values from the request
+
             $filterForm->bind($request);
+
 
             if ($filterForm->isValid()) {
                 // Build the query from the given form object

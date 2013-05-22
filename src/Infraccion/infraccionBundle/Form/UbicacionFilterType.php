@@ -17,6 +17,7 @@ class UbicacionFilterType extends AbstractType
             ->add('codigo', 'filter_number_range')
             ->add('referencia', 'filter_text')
             ->add('ubicacion', 'filter_text')
+//            ->add('municipio','filter_entity', array("class" => "InfraccionBundle:Municipio", "required" =>true))
             ->add('municipio', 'filter_number_range')
         ;
 
