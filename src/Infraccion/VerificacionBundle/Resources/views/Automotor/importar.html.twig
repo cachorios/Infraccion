@@ -35,10 +35,7 @@
                                     <form class="form-horizontal" action="{{ path('automotor_importar') }}" method="post" {{ form_enctype(form) }}>
                                         {{ form_widget(form) }}
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-success">{{ 'views.new.cargar'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
-                                            <a class="btn" href="{{ path('home_page') }}">
-                                                {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                                            </a>
+                                            <button type="submit" class="btn btn-success">Procesar.</button>
                                         </div>
                                     </form>
 
