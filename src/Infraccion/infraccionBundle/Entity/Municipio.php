@@ -74,6 +74,13 @@ class Municipio
     /**
      * @var string
      *
+     * @ORM\Column(name="provincia", type="string", length=64)
+     * @Assert\Length(min = 3, max = 64)
+     */
+    private $provincia;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="codigo_postal", type="string", length=15)
      * @Assert\Length(min = 4, max = 15)
      */
@@ -554,5 +561,28 @@ class Municipio
 
     public function __toString(){
         return $this->getNombre();
+    }
+
+    /**
+     * Set provincia
+     *
+     * @param string $provincia
+     * @return Municipio
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+    
+        return $this;
+    }
+
+    /**
+     * Get provincia
+     *
+     * @return string 
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
     }
 }

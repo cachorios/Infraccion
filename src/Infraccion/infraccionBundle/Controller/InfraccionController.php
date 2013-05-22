@@ -11,8 +11,8 @@ namespace Infraccion\infraccionBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Symfony\Component\Finder\Finder;
+use Infraccion\infraccionBundle\Entity\Infraccion;
 
 class InfraccionController extends  Controller {
 
@@ -21,7 +21,6 @@ class InfraccionController extends  Controller {
         $reg = $this->getDirectories();
         return $this->render('InfraccionBundle:Infraccion:importar.html.twig', array(
             'reg' => $reg,
-
         ));
     }
 
@@ -65,7 +64,40 @@ class InfraccionController extends  Controller {
 
 
     public function importarCarpetaAction($carpeta){
+        $finder = new Finder();
+        $finder->files()
+            ->depth(0)
+            ->sortByName()
+            ->in($this->container->getParameter("infraccion.unproccess.dir").$carpeta)
+        ;
 
+        foreach($finder as $file){
+            $this->generarRegistro($file->getFilename());
+        }
+    }
+
+    private function generarRegistro($file){
+        /**
+         * 25 01 03 AAA145 201305251239112.jpg
+         * 1,2: Empresa nn
+         * 3,2: Ubicacion nn
+         * 5,2: Tipo de infraccion nn
+         * 7,6: Dominio
+         *13,8: fecha
+         *21,6: Hora
+         *27,1: Nro de foto
+         **/
+        $empresa = substr($file,0,2);
+        $ubicacion = substr($file,2,2);
+        $tipoInfraccion = substr($file,4,2);
+        $dominio = substr($file,6,6);
+        $fecha  = substr($file,12,8);
+        $hora = substr($file,20,6);
+        $foto = substr($file,26,1);
+
+        //verificar que no este el registro
+        $em = $this->getDoctrine()->getManager();
+        $em->getRepository("InfraccionBundle:Infraccion")->findBy("");
 
     }
 

@@ -1,0 +1,37 @@
+model: Infraccion\InfraccionBundle\Entity\Municipio
+fixtures:
+  cande:
+    codigo: 14
+    nombre: "Municipalidad de Candelaria"
+    email: "cande@gmail.com"
+    telefono: "00"
+    direccion: " "
+    localidad: " "
+    provincia: "Misiones"
+    codigo_postal: 3000
+    cont_1_nombre: Sergio Escobar
+    cont_1_cargo: "Director"
+    cont_1_celular: 0374
+    cont_1_telfijo: 0374
+    cont_1_email: "sergio@candel.com"
+
+  garupa:
+    codigo: 25
+    nombre: "Municipalidad de Garupa"
+    email: "cande@gmail.com"
+    telefono: "00"
+    direccion: " "
+    localidad: " "
+    provincia: "Misiones"
+    codigo_postal: 3000
+    cont_1_nombre: Sergio Escobar
+    cont_1_cargo: "Director"
+    cont_1_celular: 0374
+    cont_1_telfijo: 0374
+    cont_1_email: "sergio@candel.com"
+
+
+
+
+
+

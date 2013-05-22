@@ -1,0 +1,12 @@
+model: Infraccion\InfraccionBundle\Entity\Ubicacion
+fixtures:
+  u1:
+    municipio: cande
+    codigo: 1
+    referencia: "Semaforo 1"
+    ubicacion: "Ruta 12 Km 666"
+  u2:
+    municipio: garupa
+    codigo: 1
+    referencia: "Semaforo 1 Ap15"
+    ubicacion: "Ruta 2 Km 6"

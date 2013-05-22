@@ -1,0 +1,5 @@
+model: Infraccion\InfraccionBundle\Entity\TipoInfraccion
+fixtures:
+  ti1:
+    codigo: 3
+    nombre: "Semaforo Luz Roja"

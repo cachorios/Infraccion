@@ -36,7 +36,6 @@
                                     <th>Fecha</th>
                                     <th>Carpeta</th>
                                     <th>Accion</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -58,8 +57,7 @@
                                             {{ fila[7] }}
                                         </td>
                                         <td>
-                                            <button >Importar</button>
-
+                                            <a href="{{ path("infraccion_importar_carpeta",{'carpeta': fila[7]}) }}" class="btn btn-primary">Importar</a>
                                         </td>
 
                                     </tr>

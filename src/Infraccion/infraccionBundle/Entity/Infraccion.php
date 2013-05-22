@@ -6,13 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Doctrine\ORM\Mapping\Index as Index;
 
 /**
  * Infraccion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Infraccion\infraccionBundle\Entity\InfraccionRepository")
+ *
  */
+
+//@ORM\Table(indexes={@Index(name="email_address_idx", columns={"municipio"})})
 class Infraccion
 {
     /**
@@ -25,18 +29,41 @@ class Infraccion
     private $id;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="municipio", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\Municipio")
+     *
      */
     private $municipio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo_infraccion", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\Ubicacion")
+     */
+    private $ubicacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\TipoInfraccion")
      */
     private $tipoInfraccion;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dominio", type="string", length=6)
+     * @Assert\Length(min = 6, max = 6)
+     */
+
+    private $dominio;
+
+    /**
+     * @var datetime
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    private $fecha;
 
     /**
      * @var string
@@ -55,11 +82,10 @@ class Infraccion
     /**
      * @var string
      *
-     * @ORM\Column(name="dominio", type="string", length=6)
-     * @Assert\Length(min = 6, max = 6)
+     * @ORM\Column(name="foto3", type="string", length=255)
      */
+    private $foto3;
 
-    private $dominio;
 
     /**
      * @var string
@@ -74,6 +100,9 @@ class Infraccion
      * @ORM\Column(name="etapa", type="integer", nullable = false)
      */
     private $etapa;
+
+
+
     /**
      * Get id
      *
@@ -85,49 +114,26 @@ class Infraccion
     }
 
     /**
-     * Set municipio
+     * Set dominio
      *
-     * @param string $municipio
+     * @param string $dominio
      * @return Infraccion
      */
-    public function setMunicipio($municipio)
+    public function setDominio($dominio)
     {
-        $this->municipio = $municipio;
+        $this->dominio = $dominio;
     
         return $this;
     }
 
     /**
-     * Get municipio
+     * Get dominio
      *
      * @return string 
      */
-    public function getMunicipio()
+    public function getDominio()
     {
-        return $this->municipio;
-    }
-
-    /**
-     * Set tipoInfraccion
-     *
-     * @param string $tipoInfraccion
-     * @return Infraccion
-     */
-    public function setTipoInfraccion($tipoInfraccion)
-    {
-        $this->tipoInfraccion = $tipoInfraccion;
-    
-        return $this;
-    }
-
-    /**
-     * Get tipoInfraccion
-     *
-     * @return string 
-     */
-    public function getTipoInfraccion()
-    {
-        return $this->tipoInfraccion;
+        return $this->dominio;
     }
 
     /**
@@ -177,26 +183,26 @@ class Infraccion
     }
 
     /**
-     * Set dominio
+     * Set foto3
      *
-     * @param string $dominio
+     * @param string $foto3
      * @return Infraccion
      */
-    public function setDominio($dominio)
+    public function setFoto3($foto3)
     {
-        $this->dominio = $dominio;
+        $this->foto3 = $foto3;
     
         return $this;
     }
 
     /**
-     * Get dominio
+     * Get foto3
      *
      * @return string 
      */
-    public function getDominio()
+    public function getFoto3()
     {
-        return $this->dominio;
+        return $this->foto3;
     }
 
     /**
@@ -243,5 +249,97 @@ class Infraccion
     public function getEtapa()
     {
         return $this->etapa;
+    }
+
+    /**
+     * Set municipio
+     *
+     * @param \Infraccion\infraccionBundle\Entity\Municipio $municipio
+     * @return Infraccion
+     */
+    public function setMunicipio(\Infraccion\infraccionBundle\Entity\Municipio $municipio = null)
+    {
+        $this->municipio = $municipio;
+    
+        return $this;
+    }
+
+    /**
+     * Get municipio
+     *
+     * @return \Infraccion\infraccionBundle\Entity\Municipio 
+     */
+    public function getMunicipio()
+    {
+        return $this->municipio;
+    }
+
+    /**
+     * Set ubicacion
+     *
+     * @param \Infraccion\infraccionBundle\Entity\Ubicacion $ubicacion
+     * @return Infraccion
+     */
+    public function setUbicacion(\Infraccion\infraccionBundle\Entity\Ubicacion $ubicacion = null)
+    {
+        $this->ubicacion = $ubicacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get ubicacion
+     *
+     * @return \Infraccion\infraccionBundle\Entity\Ubicacion 
+     */
+    public function getUbicacion()
+    {
+        return $this->ubicacion;
+    }
+
+    /**
+     * Set tipoInfraccion
+     *
+     * @param \Infraccion\infraccionBundle\Entity\TipoInfraccion $tipoInfraccion
+     * @return Infraccion
+     */
+    public function setTipoInfraccion(\Infraccion\infraccionBundle\Entity\TipoInfraccion $tipoInfraccion = null)
+    {
+        $this->tipoInfraccion = $tipoInfraccion;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipoInfraccion
+     *
+     * @return \Infraccion\infraccionBundle\Entity\TipoInfraccion 
+     */
+    public function getTipoInfraccion()
+    {
+        return $this->tipoInfraccion;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return Infraccion
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
     }
 }
