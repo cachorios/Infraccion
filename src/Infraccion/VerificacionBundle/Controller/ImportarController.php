@@ -41,31 +41,29 @@ class ImportarController extends Controller
                 $file = $form['file']->getData();
 
                 $directorio = $this->container->getParameter('directorio.importa');
-                $this->copiar($directorio, $file);
 
-                $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
-            }else {
-                $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
+                $file = $this->copiar($directorio, $file);
+                $error = $this->procesarQuery($file);
+
+                $this->get('session')->getFlashBag()->add('success', $error);
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'error. !!!');
             }
         }
 
         return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
-                    'form' => $form->createView()
+            'form' => $form->createView()
+
         ));
     }
 
-    public function phpexcelAction()
+    public function phpexcel($file)
     {
-        $result1 = '';
-        $result1 .= '<h1>inicio!' . \time() . ' </h1>';
-
-        $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . "todo1.xlsx");
+        $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . $file);
         $objWorksheet = $excelObj->getActiveSheet();
         $highestRow = $objWorksheet->getHighestRow();
 
         $em = $this->getDoctrine()->getManager();
-
-        $result1 .= '<h1>export!' . \time() . ' </h1>';
 
         $inicio = 2;
 
@@ -74,9 +72,8 @@ class ImportarController extends Controller
 
         $em->getConnection()->beginTransaction(); // suspend auto-commit
         try {
-            //... do some work
+
             for ($row = $inicio; $row <= $end; $row++) {
-//                $sql = "INSERT INTO usuarios (nombre, email, telefono) VALUES (′$nombre′, ′$email’, ′$telefono’)";
 
                 $sql = "INSERT INTO automotorimportar(dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad)
                         VALUES ("
@@ -92,32 +89,25 @@ class ImportarController extends Controller
                     . '"' . \addslashes($objWorksheet->getCell($cell["localidad"] . $row)->getValue()) . '"' . ')';
 
                 $em->getConnection()->executeUpdate($sql);
-
-
             }
 
             $em->getConnection()->commit();
         } catch (Exception $e) {
             $em->getConnection()->rollback();
             $em->close();
-            throw $e;
+            //throw $e;
+            return $e->getMessage();
         }
 
-        $result1 .= '<h1>fin!' . \time() . ' </h1>';
-
-        $result1 .= '<h1>Total de registros:' . ($highestRow - $inicio) . ' </h1>';
-        return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
-            'result' => $result1,
-        ));
-
+        return true;
     }
 
-    public function actualizarTablaAction()
+    public function actualizarTabla()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $queryUpdate = "Update automotor a  join automotorimportar b on a.dominio = b.dominio ";
-        $queryUpdate .= "set a.marca = COALESCE(b.marca,''),";
+        $queryUpdate = "Update automotor a  join automotorimportar b on a.dominio = b.dominio";
+        $queryUpdate .= " set a.marca = COALESCE(b.marca,''),";
         $queryUpdate .= "    a.modelo = COALESCE(b.modelo,''),";
         $queryUpdate .= "    a.dni = COALESCE(b.dni,''),";
         $queryUpdate .= "    a.cuit_cuil = COALESCE(b.cuit_cuil,''),";
@@ -131,25 +121,50 @@ class ImportarController extends Controller
         $em->getConnection()->executeUpdate($queryUpdate);
 
         $queryInsert = "insert into automotor( dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, ultima_actualizacion )";
-        $queryInsert .= "select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar";
-        $queryInsert .= "where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)";
+        $queryInsert .= " select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar";
+        $queryInsert .= " where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)";
 
         $em->getConnection()->executeUpdate($queryInsert);
+
     }
 
-    public function copiar($uploadDir, $file) {
+    public function vaciarTabla()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->executeUpdate('TRUNCATE TABLE automotorimportar;');
+    }
+
+    public function copiar($uploadDir, $file)
+    {
         try {
+            if (!is_dir($uploadDir)) {
+                \mkdir($uploadDir);
+            }
+
             if (\file_exists($uploadDir . $file)) {
                 \unlink($uploadDir . $file);
             }
 
-            $name_file = $file->move($uploadDir, $file->getClientOriginalName());
+            $file->move($uploadDir, $file->getClientOriginalName());
 
         } catch (\Exception $e) {
             return $e->getMessage();
         }
 
-        return $name_file;
+        return $file->getClientOriginalName();
     }
 
+    public function procesarQuery($file)
+    {
+        try {
+            $this->phpexcel($file);     //Leer archivo Excel.
+            $this->actualizarTabla();   //Actualiza la tabla automotor.
+            $this->vaciarTabla();       //Vacia la tabla automotorImportar
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return 'Proceso terminado. !!!';
+    }
 }

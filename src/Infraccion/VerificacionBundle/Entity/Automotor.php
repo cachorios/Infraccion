@@ -7,9 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Automotor
  *
- * @ORM\Table()
+ * @ORM\Table(indexes= {@ORM\index(name="automotor_dominio_idx",columns={"dominio"}),@ORM\index(name="automotor_nombre_idx", columns={"nombre"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Infraccion\VerificacionBundle\Entity\AutomotorRepository")
+ *
  */
 class Automotor
 {

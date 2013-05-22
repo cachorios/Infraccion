@@ -19,15 +19,15 @@ class ImportarAutomotorValidator extends ConstraintValidator
         if ($value instanceof UploadedFile) {
 
             $nombreOriginal = $value->getClientOriginalName();
-            if (($nombreOriginal == 'COE_DATA.ZIP')) {
-                $isValid = true;
-            }
-
-
+//            if (($nombreOriginal == 'COE_DATA.ZIP')) {
+//
+//            }
+            $isValid = true;
         }
 
         if (!$isValid) {
-            $this->context->addViolation(  sprintf($constraint->message));
+
+            $this->context->addViolation($constraint->message, array('{{ value }}' => $value));
         }
 
         return $isValid;
