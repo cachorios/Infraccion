@@ -26,9 +26,9 @@ class ImportarAutomotorValidator extends ConstraintValidator
 
         }
 
-//        if (!$isValid) {
-//            $this->context->addViolation(sprintf($constraint->message));
-//        }
+        if (!$isValid) {
+            $this->context->addViolation(  sprintf($constraint->message));
+        }
 
         return $isValid;
     }

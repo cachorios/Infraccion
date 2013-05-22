@@ -42,9 +42,11 @@ class ImportarController extends Controller
 
                 $directorio = $this->container->getParameter('directorio.importa');
                 $this->copiar($directorio, $file);
-            }
 
-            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+                $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+            }else {
+                $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
+            }
         }
 
         return $this->render('VerificacionBundle:Automotor:importar.html.twig', array(
