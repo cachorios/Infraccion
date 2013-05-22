@@ -1,3 +1,7 @@
 VerificacionBundle_automotor:
     resource: "@VerificacionBundle/Resources/config/routing/automotor.yml"
     prefix:   /automotor
+
+VerificacionBundle_automotor_importar:
+    resource: "@VerificacionBundle/Resources/config/routing/importar.yml"
+    prefix:   /automotor

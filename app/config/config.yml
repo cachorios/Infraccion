@@ -116,7 +116,7 @@ raul_fraile_ladybug:
         show_quotes:          true
 
 parameters:
-    directorio.importa: %kernel.root_dir%/../web/uploads/procesar_excel/
+    directorio.importa: %kernel.root_dir%/../web/uploads/importar/
     lar.usuario.imagenes: %kernel.root_dir%/../web/uploads/users/
     infraccion.unproccess.dir: %kernel.root_dir%/../web/unprocess/
 

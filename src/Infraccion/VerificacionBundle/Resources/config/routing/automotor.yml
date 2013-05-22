@@ -6,14 +6,6 @@ automotor_show:
     pattern:  /{id}/show
     defaults: { _controller: "VerificacionBundle:Automotor:show" }
 
-automotor_importar:
-    pattern:  /importar
-    defaults: { _controller: "VerificacionBundle:Automotor:importar" }
-
-automotor_phpexcel:
-    pattern:  /phpexcel
-    defaults: { _controller: "VerificacionBundle:Automotor:phpexcel" }
-
 automotor_mysql:
     pattern:  /mysql
     defaults: { _controller: "VerificacionBundle:Automotor:mysql" }
