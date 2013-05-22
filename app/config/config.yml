@@ -119,6 +119,8 @@ parameters:
     directorio.importa: %kernel.root_dir%/../web/uploads/importar/
     lar.usuario.imagenes: %kernel.root_dir%/../web/uploads/users/
     infraccion.unproccess.dir: %kernel.root_dir%/../web/unprocess/
+    infraccion.infracciones.dir: %kernel.root_dir%/../web/infracciones/
+
 
 khepin_yaml_fixtures:
     resources:
@@ -144,7 +146,7 @@ mopa_bootstrap:
                 icon: plus-sign
 
 avalanche_imagine:
-    source_root: C:/xampp/htdocs/
+    source_root: C:/web/
     #source_root: %kernel.root_dir%/../web
     web_root:     %kernel.root_dir%/../web
 

@@ -11,12 +11,12 @@ use Doctrine\ORM\Mapping\Index as Index;
 /**
  * Infraccion
  *
- * @ORM\Table()
+ * @ORM\Table(indexes={@Index(name="fichero_idx", columns={"municipio_id","ubicacion_id","tipo_infraccion_id","dominio","fecha"})})
  * @ORM\Entity(repositoryClass="Infraccion\infraccionBundle\Entity\InfraccionRepository")
+ * @DoctrineAssert\UniqueEntity({"municipio_id","ubicacion_id","tipo_infraccion_id","dominio","fecha"})
  *
  */
 
-//@ORM\Table(indexes={@Index(name="email_address_idx", columns={"municipio"})})
 class Infraccion
 {
     /**
@@ -47,7 +47,7 @@ class Infraccion
      *
      * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\TipoInfraccion")
      */
-    private $tipoInfraccion;
+    private $tipo_infraccion;
 
 
     /**
@@ -68,21 +68,21 @@ class Infraccion
     /**
      * @var string
      *
-     * @ORM\Column(name="foto1", type="string", length=255)
+     * @ORM\Column(name="foto1", type="string", length=255, nullable = true)
      */
     private $foto1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="foto2", type="string", length=255)
+     * @ORM\Column(name="foto2", type="string", length=255, nullable = true)
      */
     private $foto2;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="foto3", type="string", length=255)
+     * @ORM\Column(name="foto3", type="string", length=255, nullable = true)
      */
     private $foto3;
 
@@ -90,7 +90,7 @@ class Infraccion
     /**
      * @var string
      *
-     * @ORM\Column(name="observacion", type="text")
+     * @ORM\Column(name="observacion", type="text", nullable = true)
      */
     private $observacion;
 
@@ -100,6 +100,7 @@ class Infraccion
      * @ORM\Column(name="etapa", type="integer", nullable = false)
      */
     private $etapa;
+
 
 
 
@@ -134,6 +135,29 @@ class Infraccion
     public function getDominio()
     {
         return $this->dominio;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return Infraccion
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
     }
 
     /**
@@ -298,48 +322,25 @@ class Infraccion
     }
 
     /**
-     * Set tipoInfraccion
+     * Set tipo_infraccion
      *
      * @param \Infraccion\infraccionBundle\Entity\TipoInfraccion $tipoInfraccion
      * @return Infraccion
      */
     public function setTipoInfraccion(\Infraccion\infraccionBundle\Entity\TipoInfraccion $tipoInfraccion = null)
     {
-        $this->tipoInfraccion = $tipoInfraccion;
+        $this->tipo_infraccion = $tipoInfraccion;
     
         return $this;
     }
 
     /**
-     * Get tipoInfraccion
+     * Get tipo_infraccion
      *
      * @return \Infraccion\infraccionBundle\Entity\TipoInfraccion 
      */
     public function getTipoInfraccion()
     {
-        return $this->tipoInfraccion;
-    }
-
-    /**
-     * Set fecha
-     *
-     * @param \DateTime $fecha
-     * @return Infraccion
-     */
-    public function setFecha($fecha)
-    {
-        $this->fecha = $fecha;
-    
-        return $this;
-    }
-
-    /**
-     * Get fecha
-     *
-     * @return \DateTime 
-     */
-    public function getFecha()
-    {
-        return $this->fecha;
+        return $this->tipo_infraccion;
     }
 }

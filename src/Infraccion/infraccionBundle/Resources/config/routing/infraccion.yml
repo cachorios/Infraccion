@@ -1,0 +1,30 @@
+infraccion:
+    pattern:  /
+    defaults: { _controller: "InfraccionBundle:Infraccion:index" }
+
+infraccion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "InfraccionBundle:Infraccion:show" }
+
+infraccion_new:
+    pattern:  /new
+    defaults: { _controller: "InfraccionBundle:Infraccion:new" }
+
+infraccion_create:
+    pattern:  /create
+    defaults: { _controller: "InfraccionBundle:Infraccion:create" }
+    requirements: { _method: post }
+
+infraccion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "InfraccionBundle:Infraccion:edit" }
+
+infraccion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "InfraccionBundle:Infraccion:update" }
+    requirements: { _method: post|put }
+
+infraccion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "InfraccionBundle:Infraccion:delete" }
+    requirements: { _method: post|delete }

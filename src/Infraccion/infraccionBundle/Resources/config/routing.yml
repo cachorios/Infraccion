@@ -13,8 +13,13 @@ InfraccionBundle_ubicacion:
 
 importar_infraccion:
     pattern: /importar
-    defaults: { _controller: "InfraccionBundle:Infraccion:importar" }
+    defaults: { _controller: "InfraccionBundle:Importar:importar" }
 
 infraccion_importar_carpeta:
-    pattern: /{carpeta}/importar_carpeta
-    defaults: { _controller: "InfraccionBundle:Infraccion:importarCarpeta" }
+    pattern: /importar_carpeta
+    defaults: { _controller: "InfraccionBundle:Importar:importarCarpeta" }
+    requirements: { _method: post }
+
+InfraccionBundle_infraccion:
+    resource: "@InfraccionBundle/Resources/config/routing/infraccion.yml"
+    prefix:   /infraccion

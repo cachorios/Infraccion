@@ -130,4 +130,8 @@ class TipoInfraccion
     {
         return $this->observacion;
     }
+
+    public function __toString(){
+        return $this->getNombre();
+    }
 }

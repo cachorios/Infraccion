@@ -1,104 +1,295 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: cacho
- * Date: 21/05/13
- * Time: 11:27
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Infraccion\infraccionBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Finder\Finder;
+
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\View\TwitterBootstrapView;
+
 use Infraccion\infraccionBundle\Entity\Infraccion;
+use Infraccion\infraccionBundle\Form\InfraccionType;
+use Infraccion\infraccionBundle\Form\InfraccionFilterType;
 
-class InfraccionController extends  Controller {
+/**
+ * Infraccion controller.
+ *
+ */
+class InfraccionController extends Controller
+{
+    /**
+     * Lists all Infraccion entities.
+     *
+     */
+    public function indexAction()
+    {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+        list($filterForm, $queryBuilder) = $this->filter();
 
-    public function importarAction() {
-        //cargar carpetas
-        $reg = $this->getDirectories();
-        return $this->render('InfraccionBundle:Infraccion:importar.html.twig', array(
-            'reg' => $reg,
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+
+        return $this->render('InfraccionBundle:Infraccion:index.html.twig', array(
+            'entities' => $entities,
+            'pagerHtml' => $pagerHtml,
+            'filterForm' => $filterForm->createView(),
         ));
     }
 
-    private function getDirectories(){
-        $ret = array();
-        $finder = new Finder();
-        $finder->directories()->depth(0)->in($this->container->getParameter("infraccion.unproccess.dir"));
-
-        foreach($finder as $dir){
-            $ret[] = $this->getDetalle($dir->getFilename());
-        }
-        return $ret;
-    }
-
-    private function getDetalle($dir_name){
+    /**
+     * Create filter form and process filter request.
+     *
+     */
+    protected function filter()
+    {
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $filterForm = $this->createForm(new InfraccionFilterType());
         $em = $this->getDoctrine()->getManager();
-        $ret = array();
-        /**
-         * 13010320130125
-         * 1,2: Empresa nn
-         * 3,2: Ubicacion nn
-         * 5,2: Tipo de infraccion nn
-         * 7:8: fecha aaaammdd
-         */
-        $ret[0] = substr($dir_name,0,2);
-        $ret[1] = $em->getRepository("InfraccionBundle:Municipio")->findBy(array("codigo" => $ret[0]))[0]->getNombre();
+        $queryBuilder = $em->getRepository('InfraccionBundle:Infraccion')->createQueryBuilder('e');
 
-        $ret[2] = substr($dir_name,2,2);
-        $ret[3] = $em->getRepository("InfraccionBundle:Ubicacion")->findBy(array("codigo" => $ret[2]))[0]->getReferencia();
-
-        $ret[4] = substr($dir_name,4,2);
-        $ret[5] = $em->getRepository("InfraccionBundle:TipoInfraccion")->findBy(array("codigo" => $ret[4]))[0]->getNombre();
-
-        $ret[6] = substr($dir_name,6);
-        $ret[7] = $dir_name;
-
-
-        return $ret;
-
-    }
-
-
-    public function importarCarpetaAction($carpeta){
-        $finder = new Finder();
-        $finder->files()
-            ->depth(0)
-            ->sortByName()
-            ->in($this->container->getParameter("infraccion.unproccess.dir").$carpeta)
-        ;
-
-        foreach($finder as $file){
-            $this->generarRegistro($file->getFilename());
+        // Reset filter
+        if ($request->getMethod() == 'POST' && $request->get('filter_action') == 'reset') {
+            $session->remove('InfraccionControllerFilter');
         }
+
+        // Filter action
+        if ($request->getMethod() == 'POST' && $request->get('filter_action') == 'filter') {
+            // Bind values from the request
+            $filterForm->bind($request);
+
+            if ($filterForm->isValid()) {
+                // Build the query from the given form object
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+                // Save filter to session
+                $filterData = $filterForm->getData();
+                $session->set('InfraccionControllerFilter', $filterData);
+            }
+        } else {
+            // Get filter from session
+            if ($session->has('InfraccionControllerFilter')) {
+                $filterData = $session->get('InfraccionControllerFilter');
+                $filterForm = $this->createForm(new InfraccionFilterType(), $filterData);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+            }
+        }
+
+        return array($filterForm, $queryBuilder);
     }
 
-    private function generarRegistro($file){
-        /**
-         * 25 01 03 AAA145 201305251239112.jpg
-         * 1,2: Empresa nn
-         * 3,2: Ubicacion nn
-         * 5,2: Tipo de infraccion nn
-         * 7,6: Dominio
-         *13,8: fecha
-         *21,6: Hora
-         *27,1: Nro de foto
-         **/
-        $empresa = substr($file,0,2);
-        $ubicacion = substr($file,2,2);
-        $tipoInfraccion = substr($file,4,2);
-        $dominio = substr($file,6,6);
-        $fecha  = substr($file,12,8);
-        $hora = substr($file,20,6);
-        $foto = substr($file,26,1);
+    /**
+     * Get results from paginator and get paginator view.
+     *
+     */
+    protected function paginator($queryBuilder)
+    {
+        // Paginator
+        $adapter = new DoctrineORMAdapter($queryBuilder);
+        $pagerfanta = new Pagerfanta($adapter);
+        $currentPage = $this->getRequest()->get('page', 1);
+        $pagerfanta->setCurrentPage($currentPage);
+        $entities = $pagerfanta->getCurrentPageResults();
 
-        //verificar que no este el registro
+        // Paginator - route generator
+        $me = $this;
+        $routeGenerator = function($page) use ($me)
+        {
+            return $me->generateUrl('infraccion', array('page' => $page));
+        };
+
+        // Paginator - view
+        $translator = $this->get('translator');
+        $view = new TwitterBootstrapView();
+        $pagerHtml = $view->render($pagerfanta, $routeGenerator, array(
+            'proximity' => 3,
+            'prev_message' => $translator->trans('views.index.pagprev', array(), 'JordiLlonchCrudGeneratorBundle'),
+            'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
+        ));
+
+        return array($entities, $pagerHtml);
+    }
+
+    /**
+     * Creates a new Infraccion entity.
+     *
+     */
+    public function createAction(Request $request)
+    {
+        $entity  = new Infraccion();
+        $form = $this->createForm(new InfraccionType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+            return $this->redirect($this->generateUrl('infraccion_show', array('id' => $entity->getId())));
+        }
+
+        return $this->render('InfraccionBundle:Infraccion:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to create a new Infraccion entity.
+     *
+     */
+    public function newAction()
+    {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+        $breadcrumbs->addItem("Nuevo" );
+        $entity = new Infraccion();
+        $form   = $this->createForm(new InfraccionType(), $entity);
+
+        return $this->render('InfraccionBundle:Infraccion:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a Infraccion entity.
+     *
+     */
+    public function showAction($id)
+    {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+        $breadcrumbs->addItem("Ver" );
+
         $em = $this->getDoctrine()->getManager();
-        $em->getRepository("InfraccionBundle:Infraccion")->findBy("");
 
+        $entity = $em->getRepository('InfraccionBundle:Infraccion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Infraccion entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('InfraccionBundle:Infraccion:show.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),        ));
     }
 
+    /**
+     * Displays a form to edit an existing Infraccion entity.
+     *
+     */
+    public function editAction($id)
+    {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+        $breadcrumbs->addItem("Editar" );
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('InfraccionBundle:Infraccion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Infraccion entity.');
+        }
+
+        $editForm = $this->createForm(new InfraccionType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('InfraccionBundle:Infraccion:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Edits an existing Infraccion entity.
+     *
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('InfraccionBundle:Infraccion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Infraccion entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new InfraccionType(), $entity);
+        $editForm->bind($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
+
+            return $this->redirect($this->generateUrl('infraccion_edit', array('id' => $id)));
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
+        }
+
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+        $breadcrumbs->addItem("Editar" );
+
+        return $this->render('InfraccionBundle:Infraccion:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a Infraccion entity.
+     *
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('InfraccionBundle:Infraccion')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Infraccion entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
+        }
+
+        return $this->redirect($this->generateUrl('infraccion'));
+    }
+
+    /**
+     * Creates a form to delete a Infraccion entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+            ;
+    }
 }

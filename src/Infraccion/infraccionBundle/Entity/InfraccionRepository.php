@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class InfraccionRepository extends EntityRepository
 {
+   public function getInfraccionByDatos($muni,$ubi,$tipoInf,$dom, $fecha){
+        $reg = $this->findBy(array('municipio'=> $muni, 'ubicacion' => $ubi, "tipo_infraccion" => $tipoInf, "dominio" => $dom, "fecha" => $fecha ) );
+        if(count($reg) >0 ){
+            return $reg[0];
+        }
+
+       return null;
+   }
+
 }

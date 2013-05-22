@@ -57,7 +57,10 @@
                                             {{ fila[7] }}
                                         </td>
                                         <td>
-                                            <a href="{{ path("infraccion_importar_carpeta",{'carpeta': fila[7]}) }}" class="btn btn-primary">Importar</a>
+                                            <button class="brn_importar" data-dir="{{  fila[7] }}" class="btn btn-primary" >Importar</button>
+
+                                            <img id="{{ fila[7] }}" src="{{ asset("img/"~ 'pbar.gif') }}" style="height: 20px; display: none" >
+                                            {#<a href="{{ path("infraccion_importar_carpeta",{'carpeta': fila[7]}) }}" class="btn btn-primary">Importar</a>#}
                                         </td>
 
                                     </tr>
@@ -71,4 +74,33 @@
                 {% endblock box_contenido %}
             {% endembed %}
         </section>
+        <script>
+        $(document).ready(function(){
+            $(".brn_importar").click(function(){
+                sdir = $(this).data("dir");
+
+                $.blockUI({ message: '<h1   > <img src="{{ asset("img/indicator.gif") }}" style="padding-right: 20px;"  /> Importando, espere...</h1>' });
+                $("#"+sdir).show();
+                $.ajax({
+                    type: "POST",
+                    url: '{{ path("infraccion_importar_carpeta") }}',
+                    data: {'carpeta': sdir},
+                    success: function(data){
+                        //$("#"+sdir).hide();
+                        //$.unblockUI();
+                        if(data.length >0)
+                            alert(data);
+
+                        $(location).attr("href","{{ path("importar_infraccion") }}");
+
+                    },
+                    dataType: 'html'
+                });
+
+
+
+            });
+        });
+        </script>
     {% endblock %}
+
