@@ -29,11 +29,9 @@
 
                 <form class="form-horizontal" action="{{ path('usuario_create') }}"
                       method="post" {{ form_enctype(edit_form) }}>
-<<<<<<< HEAD
+
                     {% include 'UsuarioBundle:Usuario:_form.html.twig'  %}
-=======
-                    {% include 'UsuarioBundle:Usuario:_form.twig.html'  %}
->>>>>>> modelo
+
                     <div class="form-actions">
                         <button type="submit"
                                 class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>

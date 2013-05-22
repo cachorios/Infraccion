@@ -63,4 +63,10 @@ class InfraccionController extends  Controller {
 
     }
 
+
+    public function importarCarpetaAction($carpeta){
+
+
+    }
+
 }

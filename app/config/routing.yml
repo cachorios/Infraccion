@@ -27,6 +27,3 @@ home_page:
     pattern:   /
     defaults: { _controller: "FotoManagerBundle:Default:uploadFoto" }
 
-importar_infraccion:
-    pattern: /importar
-    defaults: { _controller: "InfraccionBundle:Infraccion:importar" }
