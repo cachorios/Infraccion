@@ -10,10 +10,11 @@ security:
             provider: usuarios
             form_login:
                 use_referer: true
-                login_path: /login
+                login_path: "seg_login"
                 check_path: /login_check
                 #default_target_path: home_page
                 always_use_default_target_path: true
+
 
             logout:
                 path: /logout
@@ -21,6 +22,7 @@ security:
 
     access_control:
         - { path: ^/login,          roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 #        - { path: ^/registro/*,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
 

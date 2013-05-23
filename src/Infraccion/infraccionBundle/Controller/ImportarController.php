@@ -59,10 +59,11 @@ class ImportarController extends Controller
         $ret = array();
 
         $ret[0] = substr($dir_name, 0, 2);
-        $ret[1] = $em->getRepository("InfraccionBundle:Municipio")->findBy(array("codigo" => $ret[0]))[0]->getNombre();
+        $muni = $em->getRepository("InfraccionBundle:Municipio")->findBy(array("codigo" => $ret[0]))[0];
+        $ret[1] = $muni->getNombre();
 
         $ret[2] = substr($dir_name, 2, 2);
-        $ret[3] = $em->getRepository("InfraccionBundle:Ubicacion")->findBy(array("codigo" => $ret[2]))[0]->getReferencia();
+        $ret[3] = $em->getRepository("InfraccionBundle:Ubicacion")->findBy(array("codigo" => $ret[2],'municipio' => $muni))[0]->getReferencia();
 
         $ret[4] = substr($dir_name, 4, 2);
         $ret[5] = $em->getRepository("InfraccionBundle:TipoInfraccion")->findBy(array("codigo" => $ret[4]))[0]->getNombre();
@@ -185,8 +186,11 @@ class ImportarController extends Controller
             throw(new Exception("El registro existe - $empresa,$ubicacion, $tipoInfraccion, $dominio, $fecha, $hora  "));
         } else {
             $reg = new Infraccion();
-            $reg->setMunicipio( $em->getRepository("InfraccionBundle:Municipio")->findOneBy(array("codigo" => $empresa)));
-            $reg->setUbicacion($em->getRepository("InfraccionBundle:Ubicacion")->findOneBy(array("codigo" => $ubicacion)));
+            $muni = $em->getRepository("InfraccionBundle:Municipio")->findOneBy(array("codigo" => $empresa));
+            $reg->setMunicipio( $muni );
+            $reg->setUbicacion(
+                $em->getRepository("InfraccionBundle:Ubicacion")->findOneBy(array("codigo" => $ubicacion,"municipio" =>$muni))
+            );
             $reg->setTipoInfraccion($em->getRepository("InfraccionBundle:TipoInfraccion")->findOneBy(array("codigo" => $tipoInfraccion)));
             $reg->setDominio($dominio);
             $reg->setFecha($dt);

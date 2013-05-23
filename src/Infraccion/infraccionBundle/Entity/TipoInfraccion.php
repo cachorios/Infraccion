@@ -44,6 +44,12 @@ class TipoInfraccion
     private $nombre;
 
     /**
+     * @var integer
+     * @ORM\Column(name="cantidad_foto", type="integer")
+     * @Assert\Length(min = 1, max = 3)
+     */
+     private  $cantidad_foto;
+    /**
      * @var string
      *
      * @ORM\Column(name="observacion", type="text", nullable = true)
@@ -133,5 +139,28 @@ class TipoInfraccion
 
     public function __toString(){
         return $this->getNombre();
+    }
+
+    /**
+     * Set cantidad_foto
+     *
+     * @param integer $cantidadFoto
+     * @return TipoInfraccion
+     */
+    public function setCantidadFoto($cantidadFoto)
+    {
+        $this->cantidad_foto = $cantidadFoto;
+    
+        return $this;
+    }
+
+    /**
+     * Get cantidad_foto
+     *
+     * @return integer 
+     */
+    public function getCantidadFoto()
+    {
+        return $this->cantidad_foto;
     }
 }

@@ -28,3 +28,12 @@ infraccion_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "InfraccionBundle:Infraccion:delete" }
     requirements: { _method: post|delete }
+
+
+infraccion_filterparm:
+    pattern:  /filterparm
+    defaults: { _controller: "InfraccionBundle:Infraccion:filterParm" }
+
+infraccion_filterparm_refubi:
+    pattern:  /filterparm_refubi
+    defaults: { _controller: "InfraccionBundle:Infraccion:refreshUbicaciones" }

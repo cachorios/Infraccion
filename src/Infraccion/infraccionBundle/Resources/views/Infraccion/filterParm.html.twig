@@ -1,0 +1,64 @@
+{% extends '::layout.html.twig' %}
+{% block id 'mod_Infraccion' %}
+    {% block title %}
+        {{ parent() }} - Parametro para Verificaciones
+    {% endblock %}
+
+    {% block page %}
+
+        <section id="Infraccion">
+
+            {% embed 'box.html.twig' with {'box_titulo': 'Parametro para Verificaciones' } %}
+
+                {% block box_contenido %}
+                    {% for type, flashMessages in app.session.flashbag.all() %}
+                        {% for flashMessage in flashMessages %}
+                            <div class='alert alert-{{ type }}'>
+                                {{ flashMessage|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <form action="{{ path('infraccion_filterparm') }}" method="post" {{ form_enctype(form) }}>
+                        <div class="row-fluid">
+                            <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; ">
+                                {{ form_row(form.municipio) }}
+                            </div>
+
+                            <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; ">
+                                {{ form_row(form.ubicacion) }}
+                            </div>
+                            <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; ">
+                                {{ form_row(form.tipo_infraccion) }}
+                            </div>
+                        </div>
+                        {{ form_widget(form) }}
+                        <p>
+                            <button type="submit">Enviar Parametro</button>
+                        </p>
+                    </form>
+                {% endblock box_contenido %}
+            {% endembed %}
+
+
+        </section>
+
+        <script>
+            $("#infraccion_infraccionbundle_FiltroParmtype_municipio").change(function () {
+                $.post(
+                        "{{ path("infraccion_filterparm_refubi") }}",
+                        {'id':  this.value},
+                        function (dato) {
+                            $("#infraccion_infraccionbundle_FiltroParmtype_ubicacion").html(dato);
+                        }
+                );
+
+            });
+
+        </script>
+
+
+    {% endblock %}
+
+
+
+

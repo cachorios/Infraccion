@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping\Index as Index;
  *
  * @ORM\Table(indexes={@Index(name="fichero_idx", columns={"municipio_id","ubicacion_id","tipo_infraccion_id","dominio","fecha"})})
  * @ORM\Entity(repositoryClass="Infraccion\infraccionBundle\Entity\InfraccionRepository")
- * @DoctrineAssert\UniqueEntity({"municipio_id","ubicacion_id","tipo_infraccion_id","dominio","fecha"})
  *
  */
 

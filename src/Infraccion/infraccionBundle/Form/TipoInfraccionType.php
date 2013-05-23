@@ -13,6 +13,13 @@ class TipoInfraccionType extends AbstractType
         $builder
             ->add('codigo')
             ->add('nombre')
+            ->add('cantidad_foto',"choice", array(
+                'choices' => array(1 => 1,2 =>2, 3=>3 ),
+                'required' => true,
+                'label' => "Cantidad de Fotos",
+                'expanded' => true,
+
+            ))
             ->add('observacion')
         ;
     }

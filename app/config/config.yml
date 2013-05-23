@@ -39,7 +39,7 @@ twig:
                 imagenes: 'uploads/users/'
         infraccion:
             infracciones:
-                dir: %kernel.root_dir%/../web/infracciones/
+                dir: 'infracciones/'
 
 # Assetic Configuration
 assetic:

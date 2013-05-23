@@ -24,6 +24,29 @@
                         <div class="span12" style="margin-top: 0;">
                             {{ wo_render_breadcrumbs() }}
 
+
+                            <div class="breadcrumb">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        Municipio
+                                        <h3> {{ filtro.municipio.nombre }}</h3>
+                                    </div>
+                                    <div class="span3">Ubicación
+                                        <h2> {{ filtro.ubicacion.referencia ~' - '~ filtro.ubicacion.ubicacion }}</h3>
+                                    </div>
+                                    <div class="span3">
+                                        Tipo de Infracción
+                                        <h3>{{ filtro.tipoInfraccion.nombre }}</h3>
+                                    </div>
+                                    <div class="span3">
+                                        Fecha
+                                        <h3>{{ filtro.fecha |date('d-m-Y') }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                             {% for type, flashMessages in app.session.flashbag.all() %}
                                 {% for flashMessage in flashMessages %}
                                     <div class='alert alert-{{ type }}'>
@@ -45,10 +68,7 @@
                         <form class="well" action="{{ path('infraccion') }}"
                               method="post" {{ form_enctype(filterForm) }}>
                             {{ form_row(filterForm.dominio) }}
-                            {{ form_row(filterForm.municipio) }}
-                            {#{{ form_row(filterForm.ubicacion) }}#}
-                            {#{{ form_row(filterForm.tipo_infraccion) }}#}
-                            {{ form_row(filterForm.fecha) }}
+
                             {{ form_row(filterForm.etapa) }}
 
                             {{ form_rest(filterForm) }}
@@ -84,28 +104,36 @@
                                 </thead>
                                 <tbody>
                                 {% for entity in entities %}
-                                <tr>
-                                {#<td>#}
-                                {#&#123;&#35;<a href="{{ path('infraccion_show', { 'id': entity.id }) }}">{{ entity.codigo }}</a>&#35;&#125;#}
-                                {#{{ entity.municipio }}#}
-                                {#</td>#}
-                                {#<td>{{ entity.ubicacion }}</td>#}
-                                {#<td>{{ entity.tipoInfraccion }}</td>#}
-                                <td>{{ entity.dominio }}</td>
-                                <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y H:i:s') }}{% endif %}</td>
-                                <td><img src="{{ asset('infracciones/'~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}" /> </td>
-                                    <td><img src="{{ asset('infracciones/'~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}" /> </td>
-                                    <td><img src="{{ asset('infracciones/'~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}" /> </td>
-                                <td>{{ entity.etapa }}</td>
+                                    <tr>
+                                        {#<td>#}
+                                        {#&#123;&#35;<a href="{{ path('infraccion_show', { 'id': entity.id }) }}">{{ entity.codigo }}</a>&#35;&#125;#}
+                                        {#{{ entity.municipio }}#}
+                                        {#</td>#}
+                                        {#<td>{{ entity.ubicacion }}</td>#}
+                                        {#<td>{{ entity.tipoInfraccion }}</td>#}
+                                        <td>{{ entity.dominio }}</td>
+                                        <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y H:i:s') }}{% endif %}</td>
+                                        <td>
+                                            <img src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}"
+                                                 style="width: 250px;"/></td>
+                                        <td>
+                                            <img src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
+                                                 style="width: 250px;"/></td>
+                                        <td>
+                                            <img src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}"
+                                                 style="width: 250px;"/></td>
+                                        <td>{{ entity.etapa }}</td>
 
-                                <td>
-                                <a class="btn btn-mini" href="{{ path('infraccion_show', { 'id': entity.id }) }}">
-                                {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                                </a>
-                                <a class="btn btn-mini" href="{{ path('infraccion_edit', { 'id': entity.id }) }}">
-                                {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                                </a>                            </td>
-                                </tr>
+                                        <td>
+                                            <a class="btn btn-mini"
+                                               href="{{ path('infraccion_show', { 'id': entity.id }) }}">
+                                                {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                                            </a>
+                                            <a class="btn btn-mini"
+                                               href="{{ path('infraccion_edit', { 'id': entity.id }) }}">
+                                                {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                                            </a></td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>

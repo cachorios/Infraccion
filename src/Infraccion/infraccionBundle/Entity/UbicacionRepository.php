@@ -12,4 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class UbicacionRepository extends EntityRepository
 {
+    public function getUbicacionByMuni($muni) {
+        return  $this->createQueryBuilder("s")
+            ->where("s.municipio= :muni")
+            ->setParameter("muni", $muni)
+            ->addOrderBy("s.ubicacion", "asc");
+
+     /*   $aTabla = array();
+
+        $parametros = $q->getResult();
+
+
+//        foreach ($parametros as $parametro) {
+//            $aTabla[$parametro->getId()] = $parametro->__toString();
+//        }
+
+        return $parametros //$aTabla;
+*/
+    }
 }

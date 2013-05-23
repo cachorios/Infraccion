@@ -15,11 +15,6 @@ class InfraccionFilterType extends AbstractType
     {
         $builder
             ->add('dominio', 'filter_text')
-            ->add('municipio','filter_number_range')
-            //->add('municipio','filter_entity', array("class" => "InfraccionBundle:Municipio", "required" =>true))
-            //->add('ubicacion','filter_entity', array("class" => "InfraccionBundle:Ubicacion", "required" =>true))
-            //->add('tipo_infraccion','filter_entity', array("class" => "InfraccionBundle:TipoInfraccion", "required" =>true))
-            ->add('fecha',"filter_date_range")
             ->add('etapa',"filter_number_range")
         ;
 

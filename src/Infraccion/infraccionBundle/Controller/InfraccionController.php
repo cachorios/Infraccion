@@ -13,6 +13,9 @@ use Infraccion\infraccionBundle\Entity\Infraccion;
 use Infraccion\infraccionBundle\Form\InfraccionType;
 use Infraccion\infraccionBundle\Form\InfraccionFilterType;
 
+use Infraccion\infraccionBundle\Form\FiltroParmType;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Infraccion controller.
  *
@@ -28,6 +31,20 @@ class InfraccionController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
         $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        $data = $session->get('InfraccionFilterParm');
+
+        if(!$data){
+            $session->getFlashBag()->add('error', 'Primero debe establecer los parametraos de trabajo.');
+            return $this->redirect($this->generateUrl('infraccion_filterparm'));
+        }
+
+
+
+
         list($filterForm, $queryBuilder) = $this->filter();
 
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
@@ -36,6 +53,7 @@ class InfraccionController extends Controller
             'entities' => $entities,
             'pagerHtml' => $pagerHtml,
             'filterForm' => $filterForm->createView(),
+            'filtro' => $data,
         ));
     }
 
@@ -49,7 +67,15 @@ class InfraccionController extends Controller
         $session = $request->getSession();
         $filterForm = $this->createForm(new InfraccionFilterType());
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('InfraccionBundle:Infraccion')->createQueryBuilder('e');
+
+        $data = $session->get('InfraccionFilterParm');
+
+        if($data)
+            $queryBuilder = $em->getRepository('InfraccionBundle:Infraccion')->getInfraccionQuery($data->getMunicipio()->getId(),$data->getUbicacion()->getId(),$data->getTipoInfraccion()->getId(),$data->getFecha());
+        else{
+            return $this->redirect($this->generateUrl('infraccion_filterparm'));
+        }
+
 
         // Reset filter
         if ($request->getMethod() == 'POST' && $request->get('filter_action') == 'reset') {
@@ -293,5 +319,71 @@ class InfraccionController extends Controller
             ->add('id', 'hidden')
             ->getForm()
             ;
+    }
+
+
+    public function filterParmAction(){
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+
+        $entity  = new Infraccion();
+        $entity->setFecha(new \DateTime("now"));
+
+        if ($request->getMethod() == 'POST') {
+            $muni  = $request->get("infraccion_infraccionbundle_FiltroParmtype")['municipio'];
+
+            $form = $this->createForm(
+                new FiltroParmType(
+                    $em->getRepository("InfraccionBundle:Ubicacion"),
+                    $muni),
+                $entity);
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $session->getFlashBag()->add('success', 'Filtro creado con exito');
+                $filterData = $form->getData();
+                $session->set('InfraccionFilterParm', $filterData);
+                return $this->redirect($this->generateUrl('infraccion'));
+            }
+
+        }else{
+
+            $data = $session->get('InfraccionFilterParm');
+            if($data){
+                $entity->setMunicipio( $em->getRepository("InfraccionBundle:Municipio")->find($data->getMunicipio()->getid()));
+                $entity->setUbicacion( $em->getRepository("InfraccionBundle:Ubicacion")->find($data->getUbicacion()->getid()));
+                $entity->setTipoInfraccion(  $em->getRepository("InfraccionBundle:TipoInfraccion")->find($data->getTipoInfraccion()->getid()));
+                $entity->setFecha($data->getFecha());
+            }
+
+            $form = $this->createForm(new FiltroParmType($em->getRepository("InfraccionBundle:Ubicacion")), $entity);
+
+        }
+
+
+        return $this->render('InfraccionBundle:Infraccion:filterParm.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+
+    }
+
+    public function refreshUbicacionesAction()
+    {
+        $response = new Response();
+
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+
+        $id = $request->get("id");
+        $tablas = $em->getRepository("InfraccionBundle:Ubicacion")->getUbicacionByMuni($id)->getQuery()->getResult();
+        $opciones="";
+        foreach($tablas as $tabla){
+            $opciones = $opciones."<option value='{$tabla->getid()}'>".$tabla."</option>";
+        }
+
+        $response->setContent($opciones);
+        return $response;
     }
 }

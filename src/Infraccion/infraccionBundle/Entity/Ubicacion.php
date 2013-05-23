@@ -152,6 +152,6 @@ class Ubicacion
     }
 
     public function __toString(){
-        return $this->getReferencia();
+        return $this->getReferencia() ." - " .$this->getUbicacion();
     }
 }
