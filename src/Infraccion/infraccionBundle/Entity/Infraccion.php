@@ -98,7 +98,10 @@ class Infraccion
      */
     private $etapa;
 
-
+    /**
+     * @var \Infraccion\VerificacionBundle\Entity\Automotor
+     */
+    private $automotor;
 
 
     /**
@@ -340,4 +343,19 @@ class Infraccion
     {
         return $this->tipo_infraccion;
     }
+
+    /**
+     * Get Automotor
+     *
+     * @return \Infraccion\VerificacionBundle\Entity\Automotor
+     */
+    public function getAutomotor(){
+
+        return $this->automotor;
+    }
+
+    public function setAutomotor($auto){
+        $this->automotor = $auto;
+    }
+
 }

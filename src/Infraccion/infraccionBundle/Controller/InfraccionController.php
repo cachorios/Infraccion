@@ -2,6 +2,7 @@
 
 namespace Infraccion\infraccionBundle\Controller;
 
+use Infraccion\VerificacionBundle\Entity\Automotor;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -46,8 +47,15 @@ class InfraccionController extends Controller
 
 
         list($filterForm, $queryBuilder) = $this->filter();
-
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+
+        foreach($entities as $entity){
+            try{
+                $entity->setAutomotor($this->getDoctrine()->getRepository("VerificacionBundle:Automotor")->findOneByDominio($entity->getDominio()) );
+            }catch(\Exception $e){
+                $entity->setAutomotor(new Automotor());
+            }
+        }
 
         return $this->render('InfraccionBundle:Infraccion:index.html.twig', array(
             'entities' => $entities,
