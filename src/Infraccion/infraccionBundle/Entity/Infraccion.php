@@ -36,14 +36,12 @@ class Infraccion
     private $municipio;
 
     /**
-     * @var string
      *
      * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\Ubicacion")
      */
     private $ubicacion;
 
     /**
-     * @var string
      *
      * @ORM\ManyToOne(targetEntity="Infraccion\infraccionBundle\Entity\TipoInfraccion")
      */

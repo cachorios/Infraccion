@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "af17b04c9c17ef5f536df7063fc262d6",
+    "hash": "d844fae8bad2b505164e3a249bb584ee",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -2143,17 +2143,17 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v2.2.1",
+            "version": "2.2.x-dev",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioGeneratorBundle.git",
-                "reference": "v2.2.1"
+                "reference": "781c1a93a705fc823e2b65dd85e322b4eb77fef8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioGeneratorBundle/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/sensio/SensioGeneratorBundle/zipball/781c1a93a705fc823e2b65dd85e322b4eb77fef8",
+                "reference": "781c1a93a705fc823e2b65dd85e322b4eb77fef8",
                 "shasum": ""
             },
             "require": {
@@ -2187,7 +2187,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2013-03-21 16:38:44"
+            "time": "2013-05-07 13:40:47"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2416,16 +2416,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.2.1",
+            "version": "2.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "v2.2.1"
+                "reference": "f213a851e6f9664cfd2bdfc63fee7ac2c885e4ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/f213a851e6f9664cfd2bdfc63fee7ac2c885e4ed",
+                "reference": "f213a851e6f9664cfd2bdfc63fee7ac2c885e4ed",
                 "shasum": ""
             },
             "require": {
@@ -2511,7 +2511,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-04-06 10:16:33"
+            "time": "2013-05-19 19:04:48"
         },
         {
             "name": "twig/extensions",

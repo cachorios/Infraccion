@@ -16,9 +16,10 @@ class InfraccionFilterType extends AbstractType
         $builder
             ->add('dominio', 'filter_text')
             ->add('municipio','filter_number_range')
-            ->add('ubicacion','filter_number_range')
-            ->add('tipo_infraccion','filter_number_range')
-            ->add('fecha')
+            //->add('municipio','filter_entity', array("class" => "InfraccionBundle:Municipio", "required" =>true))
+            //->add('ubicacion','filter_entity', array("class" => "InfraccionBundle:Ubicacion", "required" =>true))
+            //->add('tipo_infraccion','filter_entity', array("class" => "InfraccionBundle:TipoInfraccion", "required" =>true))
+            ->add('fecha',"filter_date_range")
             ->add('etapa',"filter_number_range")
         ;
 
@@ -45,6 +46,14 @@ class InfraccionFilterType extends AbstractType
 
     public function getName()
     {
-        return 'infraccion_infraccionbundle_municipiofiltertype';
+        return 'infraccion_infraccionbundle_infraccionfiltertype';
     }
+
+//
+//    public function getDefaultOptions(array $options)
+//    {
+//        return array(
+//            'validation' => array('no_validation')
+//        );
+//    }
 }
