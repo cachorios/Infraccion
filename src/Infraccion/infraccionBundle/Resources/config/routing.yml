@@ -23,3 +23,7 @@ infraccion_importar_carpeta:
 InfraccionBundle_infraccion:
     resource: "@InfraccionBundle/Resources/config/routing/infraccion.yml"
     prefix:   /infraccion
+
+InfraccionBundle_exportar:
+    resource: "@InfraccionBundle/Resources/config/routing/exportar.yml"
+    prefix:   /exportar

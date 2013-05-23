@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 {% block id  'mod_Automotor' %}
 {% block title %}
 {{ parent() }} - Automotor {{ 'views.show.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
@@ -76,5 +76,6 @@
             {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
     </div>
-</div></section>
+</div>
+</section>
 {% endblock %}

@@ -41,7 +41,7 @@ class ImportarController extends Controller
                 $file = $form['file']->getData();
 
                 $directorio = $this->container->getParameter('directorio.importa');
-                
+
                 $file = $this->copiar($directorio, $file);
                 $error = $this->procesarQuery($file, $importar);
 
