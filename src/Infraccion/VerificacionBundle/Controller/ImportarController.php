@@ -77,20 +77,27 @@ class ImportarController extends Controller
 
             for ($row = $inicio; $row <= $end; $row++) {
 
-                $sql = "INSERT INTO automotorimportar(dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad)
-                        VALUES ("
-                    . '"' . \addslashes($objWorksheet->getCell($cell["dominio"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["marca"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["modelo"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["dni"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["cuit_cuil"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["nombre"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["domicilio"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["codigo_postal"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["provincia"] . $row)->getValue()) . '"' . ','
-                    . '"' . \addslashes($objWorksheet->getCell($cell["localidad"] . $row)->getValue()) . '"' . ')';
+                $dominio = \addslashes($objWorksheet->getCell($cell["dominio"] . $row)->getValue());
+                $dominio = preg_replace('/\s+/', ' ', $dominio);
 
-                $em->getConnection()->executeUpdate($sql);
+                if (preg_match("/^[a-zA-Z][a-zA-Z][a-zA-Z][0-9][0-9][0-9]$/", $dominio)) {
+
+                    $sql = "INSERT INTO automotorimportar(dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad)
+                        VALUES ("
+                        . '"' . \addslashes($objWorksheet->getCell($cell["dominio"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["marca"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["modelo"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["dni"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["cuit_cuil"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["nombre"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["domicilio"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["codigo_postal"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["provincia"] . $row)->getValue()) . '"' . ','
+                        . '"' . \addslashes($objWorksheet->getCell($cell["localidad"] . $row)->getValue()) . '"' . ')';
+
+                    $em->getConnection()->executeUpdate($sql);
+
+                }
             }
 
             $em->getConnection()->commit();
@@ -159,9 +166,9 @@ class ImportarController extends Controller
     public function procesarQuery($file, $importar)
     {
         try {
-            $this->phpexcel($file, $importar);     //Leer archivo Excel.
-            $this->actualizarTabla();   //Actualiza la tabla automotor.
-            $this->vaciarTabla();       //Vacia la tabla automotorImportar
+            $this->phpexcel($file, $importar); //Leer archivo Excel.
+            $this->actualizarTabla(); //Actualiza la tabla automotor.
+            $this->vaciarTabla(); //Vacia la tabla automotorImportar
 
         } catch (\Exception $e) {
             return $e->getMessage();

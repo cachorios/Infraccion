@@ -17,13 +17,12 @@ class Importar
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/^[A-Z]$/" )
      */
     private $columna = "A";
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/^[0-9]$/" )
+     * @Assert\Regex(pattern="/^[0-999]$/" )
      */
     private $fila = 2;
 
@@ -89,7 +88,7 @@ class Importar
     {
         $columna = array("dominio" => "A", "marca" => "B", "modelo" => "C", "dni" => "D", "cuit_cuil" => "E", "nombre" => "F", "domicilio" => "G", "codigo_postal" => "H", "provincia" => "I", "localidad" => "J");
 
-        
+
 
         return $columna;
     }

@@ -15,7 +15,7 @@ class ImportarType extends AbstractType
         $builder
             ->add("file","file", array("required"=>true, 'label' => 'Archivo'))
             ->add("fila","integer", array("required"=>true, 'label' => 'Fila'))
-            ->add("columna","text", array("required"=>true, 'label' => 'Colunmna'))
+//            ->add("columna","text", array("required"=>true, 'label' => 'Colunmna'))
         ;
     }
 

@@ -36,15 +36,45 @@
                                         {{ form_row(form.file) }}
 
                                         <legend>{% trans %}Primer fila y columna de datos.{% endtrans %}</legend>
-                                        {{ form_row(form.columna) }}
+                                        {#{{ form_row(form.columna) }}#}
                                         {{ form_row(form.fila) }}
                                         {{ form_widget(form) }}
 
+                                        <div class="alert alert-block">
+                                            <blockquote>
+
+                                                <b> Las columnas son las siguientes, de izquierda a derecha: </b>
+                                                <br/>
+                                                <br/>
+
+                                                <ul>
+                                                    <li><span>Dominio</span> => "A"</li>
+                                                    <li><span>Modelo</span> => "C"</li>
+                                                    <li><span>DNI</span> => "D"</li>
+                                                    <li><span>Cuit Cuil</span> => "E"</li>
+                                                    <li><span>Nombre</span> => "F"</li>
+                                                    <li><span>Domicilio</span> => "G"</li>
+                                                    <li><span>Codigo Postal</span> => "H"</li>
+                                                    <li><span>Provincia</span> => "I"</li>
+                                                    <li><span>Localidad</span> => "J"</li>
+
+                                                </ul>
+
+                                                <br/>
+
+                                                <b>Se valida la columna dominio, en casos de ser vacía se descarta el
+                                                    registro.</b><br/>
+                                                <b>Formula de validación [XXX000] sin espacios.</b>
+
+
+                                            </blockquote>
+                                        </div>
                                         <div>
                                             <span> </span>
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-success brn_importar">Procesar.</button>
+                                            <button type="submit" class="btn btn-success brn_importar">Procesar.
+                                            </button>
                                         </div>
                                     </form>
 
