@@ -131,7 +131,7 @@ class ImportarController extends Controller
 
         $queryInsert = "insert into automotor( dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, ultima_actualizacion )";
         $queryInsert .= " select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar";
-        $queryInsert .= " where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)";
+        $queryInsert .= " where 0 in( select count(*) from automotor where automotorimportar.dominio = automotor.dominio)";
 
         $em->getConnection()->executeUpdate($queryInsert);
 

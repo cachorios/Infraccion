@@ -12,4 +12,4 @@ set a.marca = COALESCE(b.marca,''),
 
 insert into automotor( dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, ultima_actualizacion )
 select dominio, marca, modelo, dni, cuit_cuil, nombre, domicilio, codigo_postal, provincia, localidad, SYSDATE() from automotorimportar
-where 0 in( select count(*) from automotor where automotor.dominio = automotor.dominio)
+where 0 in( select count(*) from automotor where automotorimportar.dominio = automotor.dominio)
