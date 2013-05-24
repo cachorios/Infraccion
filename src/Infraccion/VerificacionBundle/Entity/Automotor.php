@@ -33,70 +33,70 @@ class Automotor
     /**
      * @var string
      *
-     * @ORM\Column(name="marca", type="string", length=50)
+     * @ORM\Column(name="marca", type="string", length=50, nullable=true)
      */
     private $marca;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="modelo", type="string", length=255)
+     * @ORM\Column(name="modelo", type="string", length=255, nullable=true)
      */
     private $modelo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="dni", type="string", length=10)
+     * @ORM\Column(name="dni", type="string", length=10, nullable=true)
      */
     private $dni;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cuit_cuil", type="string", length=12)
+     * @ORM\Column(name="cuit_cuil", type="string", length=12, nullable=true)
      */
     private $cuitCuil;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="domicilio", type="string", length=255)
+     * @ORM\Column(name="domicilio", type="string", length=255, nullable=true)
      */
     private $domicilio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="codigo_postal", type="string", length=15)
+     * @ORM\Column(name="codigo_postal", type="string", length=15, nullable=true)
      */
     private $codigoPostal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="provincia", type="string", length=50)
+     * @ORM\Column(name="provincia", type="string", length=50, nullable=true)
      */
     private $provincia;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="localidad", type="string", length=100)
+     * @ORM\Column(name="localidad", type="string", length=100, nullable=true)
      */
     private $localidad;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="ultima_actualizacion", type="datetime")
+     * @ORM\Column(name="ultima_actualizacion", type="datetime",  nullable=true)
      */
     private $ultimaActualizacion;
 
@@ -345,22 +345,21 @@ class Automotor
      * Set ultimaActualizacion
      *
      * @param \DateTime $ultimaActualizacion
+     * @return Automotor
      */
-    public
-    function setUltimaActualizacion($ultimaActualizacion)
+    public function setUltimaActualizacion($ultimaActualizacion)
     {
         $this->ultimaActualizacion = $ultimaActualizacion;
-
+    
         return $this;
     }
 
     /**
      * Get ultimaActualizacion
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
-    public
-    function getUltimaActualizacion()
+    public function getUltimaActualizacion()
     {
         return $this->ultimaActualizacion;
     }

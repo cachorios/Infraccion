@@ -8,8 +8,12 @@ vendor/*
 web/bundles/*
 #web/css/*
 #web/js/*
-web/uploads/php*
+web/uploads/imp*
+web/uploads/importar/*
 web/media/*
+web/infraccion/*
+web/unpro*
+
 
 # -- Composer -----------------------------------------
 composer.phar

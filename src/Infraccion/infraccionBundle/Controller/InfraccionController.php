@@ -45,10 +45,17 @@ class InfraccionController extends Controller
 
 
 
+        $filtro = new Infraccion();
+        $filtro->setMunicipio($data->getMunicipio());
+        $filtro->setUbicacion($data->getUbicacion());
+        $filtro->setTipoInfraccion($this->getDoctrine()->getRepository("InfraccionBundle:TipoInfraccion")->find($data->getTipoInfraccion()->getid()));
+
+
 
         list($filterForm, $queryBuilder) = $this->filter();
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
 
+/*
         foreach($entities as $entity){
             try{
                 $entity->setAutomotor($this->getDoctrine()->getRepository("VerificacionBundle:Automotor")->findOneByDominio($entity->getDominio()) );
@@ -56,12 +63,12 @@ class InfraccionController extends Controller
                 $entity->setAutomotor(new Automotor());
             }
         }
-
+*/
         return $this->render('InfraccionBundle:Infraccion:index.html.twig', array(
             'entities' => $entities,
             'pagerHtml' => $pagerHtml,
             'filterForm' => $filterForm->createView(),
-            'filtro' => $data,
+            'filtro' => $filtro,
         ));
     }
 
@@ -377,6 +384,12 @@ class InfraccionController extends Controller
 
     }
 
+
+    /**
+     * Para refrescar el combo de Ubicacion, segun la
+     * localidad
+     * @return Response
+     */
     public function refreshUbicacionesAction()
     {
         $response = new Response();

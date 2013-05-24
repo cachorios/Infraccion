@@ -64,6 +64,7 @@
                 <tr>
                         <th>Codigo</th>
                         <th>Nombre</th>
+                        <th>Nro. Fotos</th>
                         <th>Observacion</th>
                     <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
                 </tr>
@@ -75,6 +76,7 @@
                                 <a href="{{ path('tipoinfraccion_show', { 'id': entity.codigo }) }}">{{ entity.id }}</a>
                             </td>
                             <td>{{ entity.nombre }}</td>
+                            <td style="text-align: center;">{{ entity.cantidadFoto }}</td>
                             <td>{{ entity.observacion }}</td>
                             <td>
         <a class="btn btn-mini" href="{{ path('tipoinfraccion_show', { 'id': entity.id }) }}">

@@ -98,8 +98,9 @@ class Infraccion
      */
     private $etapa;
 
+
     /**
-     * @var \Infraccion\VerificacionBundle\Entity\Automotor
+     * @ORM\ManyToOne(targetEntity="Infraccion\VerificacionBundle\Entity\Automotor", cascade={"persist"} )
      */
     private $automotor;
 
@@ -343,19 +344,42 @@ class Infraccion
     {
         return $this->tipo_infraccion;
     }
+//
+//    /**
+//     * Get Automotor
+//     *
+//     * @return \Infraccion\VerificacionBundle\Entity\Automotor
+//     */
+//    public function getAutomotor(){
+//
+//        return $this->automotor;
+//    }
+//
+//    public function setAutomotor($auto){
+//        $this->automotor = $auto;
+//    }
+
 
     /**
-     * Get Automotor
+     * Set automotor
      *
-     * @return \Infraccion\VerificacionBundle\Entity\Automotor
+     * @param \Infraccion\VerificacionBundle\Entity\Automotor $automotor
+     * @return Infraccion
      */
-    public function getAutomotor(){
+    public function setAutomotor(\Infraccion\VerificacionBundle\Entity\Automotor $automotor = null)
+    {
+        $this->automotor = $automotor;
+    
+        return $this;
+    }
 
+    /**
+     * Get automotor
+     *
+     * @return \Infraccion\VerificacionBundle\Entity\Automotor 
+     */
+    public function getAutomotor()
+    {
         return $this->automotor;
     }
-
-    public function setAutomotor($auto){
-        $this->automotor = $auto;
-    }
-
 }
