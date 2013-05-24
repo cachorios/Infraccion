@@ -33,11 +33,12 @@ class InfraccionRepository extends EntityRepository
     {
         $fecha2 = clone($fecha);
         $a = $this->createQueryBuilder("r")
+//            ->leftJoin("VerificacionBundle:Automotor","a",\Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,"r.dominio = a.dominio")
             ->where("r.municipio = :muni")
             ->andWhere("r.ubicacion = :ubic")
             ->andWhere("r.tipo_infraccion = :tipo")
             ->andWhere("r.fecha between :fechaDesde and :fechaHasta")
-            ->orderBy('r.dominio')
+            ->orderBy('r.fecha')
             ->setParameter("muni", $muni)
             ->setParameter("ubic", $ubi)
             ->setParameter("tipo", $tipo)

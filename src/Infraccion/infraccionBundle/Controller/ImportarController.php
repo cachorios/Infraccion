@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Finder;
 use Infraccion\infraccionBundle\Entity\Infraccion;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Acl\Exception\Exception;
+
 
 class ImportarController extends Controller
 {
@@ -129,7 +129,7 @@ class ImportarController extends Controller
                 try {
                     $reg = $this->generarRegistro($file->getFilename());
                     $this->moveFoto($carpeta, $file->getFilename());
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $reg = null;
                     $msg += $e->getMessage();
 

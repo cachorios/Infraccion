@@ -60,6 +60,8 @@ class ImportarController extends Controller
     public function phpexcel($file, $importar = null)
     {
         $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . $file);
+
+
         $objWorksheet = $excelObj->getActiveSheet();
         $highestRow = $objWorksheet->getHighestRow();
 
