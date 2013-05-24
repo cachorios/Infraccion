@@ -11,7 +11,7 @@ class Importar
 {
     /**
      * @sisAssert\ImportarAutomotor()
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="16000000")
      */
     private $file;
 
