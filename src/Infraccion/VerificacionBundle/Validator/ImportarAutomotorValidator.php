@@ -19,10 +19,12 @@ class ImportarAutomotorValidator extends ConstraintValidator
         if ($value instanceof UploadedFile) {
 
             $nombreOriginal = $value->getClientOriginalName();
-//            if (($nombreOriginal == 'COE_DATA.ZIP')) {
-//
-//            }
-            $isValid = true;
+            if ($value->getClientMimeType() ==  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+                $isValid = true;
+            }elseif($value->getClientMimeType() ==  "application/vnd.ms-excel"){
+                $isValid = true;
+            }
+
         }
 
         if (!$isValid) {

@@ -4,6 +4,7 @@ namespace Infraccion\VerificacionBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use Infraccion\VerificacionBundle\Entity\Importar;
 use Infraccion\VerificacionBundle\Form\ImportarType;
 
@@ -59,8 +61,14 @@ class ImportarController extends Controller
 
     public function phpexcel($file, $importar = null)
     {
-        $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . $file);
 
+        if ($file->getClientMimeType() ==  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+            $excelObj = $this->get('xls.load_xls2007')->load($this->container->getParameter('directorio.importa') . $file->getClientOriginalName());
+        }elseif($file->getClientMimeType() ==  "application/vnd.ms-excel"){
+            $excelObj = $this->get('xls.load_xls5')->load($this->container->getParameter('directorio.importa') . $file->getClientOriginalName());
+        }else{
+            throw new \exception ('Error al procesar el tipo de archivo.');
+        }
 
         $objWorksheet = $excelObj->getActiveSheet();
         $highestRow = $objWorksheet->getHighestRow();
@@ -72,7 +80,6 @@ class ImportarController extends Controller
         $end = $highestRow;
 
         $cell = $importar->getColumnaArray();
-//        $cell = array("dominio" => "A", "marca" => "B", "modelo" => "C", "dni" => "D", "cuit_cuil" => "E", "nombre" => "F", "domicilio" => "G", "codigo_postal" => "H", "provincia" => "I", "localidad" => "J");
 
         $em->getConnection()->beginTransaction(); // suspend auto-commit
         try {
@@ -162,7 +169,7 @@ class ImportarController extends Controller
             return $e->getMessage();
         }
 
-        return $file->getClientOriginalName();
+        return $file;
     }
 
     public function procesarQuery($file, $importar)
