@@ -24,11 +24,40 @@ class AutomotorRepository extends EntityRepository
     public function countAutomotoresQuery()
     {
         $qm = $this->getEntityManager();
-        $qb =$qm->createQueryBuilder();
+        $qb = $qm->createQueryBuilder();
         $qb->select('count(auto.id)');
-        $qb->from('VerificacionBundle:Automotor','auto');
+        $qb->from('VerificacionBundle:Automotor', 'auto');
 
         //$count = $qb->getQuery()->getSingleScalarResult();
         return $qb;
+    }
+
+    public function getAutomotoresExportar()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder("c")
+            ->select('c.id,c.dominio')
+            ->add('from', 'VerificacionBundle:Automotor c')
+            ->setMaxResults(100);
+//            ->add('where', 'c.ultima_actualizacion = null')
+        ;
+
+        return $query;
+    }
+
+    public function setUltimaActualizacion($ids){
+        $fecha = new \DateTime('now');
+        $em = $this->getEntityManager();
+
+        $qb = $em->createQueryBuilder();
+        $q = $qb->update('VerificacionBundle:Automotor', 'u')
+            ->set('u.fechaPedido', '?1')
+            ->where('u.id IN (:ids)')
+            ->setParameter(1, $fecha)
+            ->setParameter('ids', $ids)
+            ->getQuery();
+        $p = $q->execute();
+
+        return $q;
     }
 }
