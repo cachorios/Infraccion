@@ -1,0 +1,4 @@
+automotor_exportar:
+    pattern:  /
+    defaults: { _controller: "VerificacionBundle:Exportar:index" }
+

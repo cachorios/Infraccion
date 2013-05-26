@@ -1,4 +1,0 @@
-exportar:
-    pattern:  /
-    defaults: { _controller: "InfraccionBundle:Exportar:index" }
-

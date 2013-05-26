@@ -102,6 +102,12 @@ class Automotor
      */
     private $ultimaActualizacion;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_pedido", type="datetime",  nullable=true)
+     */
+    private $fechaPedido;
 
     /**
      * Get id
@@ -364,5 +370,28 @@ class Automotor
     public function getUltimaActualizacion()
     {
         return $this->ultimaActualizacion;
+    }
+
+    /**
+     * Set fechaPedido
+     *
+     * @param \DateTime $fechaPedido
+     * @return fechaPedido
+     */
+    public function setFechaPedido($fechaPedido)
+    {
+        $this->fechaPedido = $fechaPedido;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaPedido
+     *
+     * @return \DateTime
+     */
+    public function getFechaPedido()
+    {
+        return $this->fechaPedido;
     }
 }
