@@ -3,6 +3,7 @@
 namespace Infraccion\VerificacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * Automotor
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(indexes= {@ORM\index(name="automotor_dominio_idx",columns={"dominio"}),@ORM\index(name="automotor_nombre_idx", columns={"nombre"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Infraccion\VerificacionBundle\Entity\AutomotorRepository")
+ * @DoctrineAssert\UniqueEntity("dominio")
  *
  */
 class Automotor

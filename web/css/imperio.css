@@ -1122,7 +1122,7 @@ table div[class*="span"]{
     margin-bottom: 1px !important;
     min-height: 12px !important;
     line-height: 15px;
-    height: 15px !important;
+    /*height: 15px !important;*/
 }
 
 table div[class*="span4"]{

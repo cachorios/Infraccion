@@ -116,11 +116,11 @@
                             {#{{ entity.municipio }}#}
                             {#</td>#}
                             {#<td>{{ entity.tipoInfraccion }}</td>#}
-                            <td style="width: 80px;"><span
-                                        style="font-size: 24px; color: #802420; font-weight: bold   ">  {{ entity.automotor.dominio | default("") }} </span>
+                            <td style="width: 60px;"><span
+                                        style="font-size: 18px; color: #802420; font-weight: bold   ">  {{ entity.automotor.dominio | default("") }} </span>
                             </td>
-                            <td style="width: 60px;">{% if entity.fecha %}{{ entity.fecha|date('H:i:s') }}{% endif %}</td>
-                            <td style="width: 250px;">
+                            <td style="width: 50px;">{% if entity.fecha %}{{ entity.fecha|date('H:i:s') }}{% endif %}</td>
+                            <td style="width: 300px;">
                                 <div class="row-fluid">
                                     <div class="span4">Marca:</div>
                                     <div class="span8">{{ entity.automotor.marca | default("-") }}</div>
@@ -157,31 +157,24 @@
                                     <div class="span4">Actualización:</div>
                                     <div class="span8">{{ entity.automotor.ultimaActualizacion | default("") | date("d-m-Y") }}</div>
                                 </div>
-                                {#<a href="{{ parh("",) }}" class="pull-right">Editar</a>#}
+                                <a class="btn_dom_edit" href="{{ path("infraccion_dominio_edit", {"id": entity.automotor.id}) }}" class="pull-right">Editar</a>
 
                 </div>
 
                 </td>
                 <td>
-                    {#<div class="foto_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"#}
-                    {#aria-disabled="false" style="width: 250px;">#}
-                    {#<div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"#}
-                    {#style="width: 250px;">#}
-                    {#</div>#}
-                    {#<a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 50%;"></a>#}
-                    {#</div>#}
                     <img class="fotoinfra"
                          src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}"
                          style="width: 200px;"/></td>
                 {% if filtro.tipoInfraccion.cantidadFoto >= 2 %}
                     <td>
-                        <img src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
-                             style="width: 250px;"/></td>
+                        <img class="fotoinfra" src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
+                             style="width: 200px;"/></td>
                 {% endif %}
                 {% if filtro.tipoInfraccion.cantidadFoto == 3 %}
                     <td>
-                        <img src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}"
-                             style="width: 250px;"/></td>
+                        <img class="fotoinfra" src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}"
+                             style="width: 200px;"/></td>
                 {% endif %}
                 <td>{{ entity.etapa }}</td>
 
@@ -213,8 +206,11 @@
                     </a>
                 </div>
             </div>
-            <script>
 
+            {#para modal#}
+            <div id="myModal_auto_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            </div>
+            <script>
 
                 $(function () {
                     $(".fotoinfra").dblclick(function () {
@@ -232,6 +228,35 @@
                             e.preventDefault();
                         }
                     });
+
+                    $(".btn_dom_edit").click(function(e){
+                        var sUrl = this.href;
+                        $.blockUI({ message: '<h1   > <img src="{{ asset("img/indicator.gif") }}" style="padding-right: 20px;"  /> Procesando...</h1>' });
+                        $.ajax({
+                            type: "POST",
+                            url: sUrl,
+                            data: sUrl,
+                            success: function(data){
+                                $.unblockUI();
+
+                                if(data.length >0){
+
+                                    $('#myModal_auto_edit').html(data);
+                                    $('#myModal_auto_edit').modal({
+                                        backdrop: true,
+                                        keyboard: false,
+                                        show: false,
+                                        show: true
+                                    });
+                                }
+
+                            },
+                            dataType: 'html'
+                        });
+                        e.preventDefault();
+
+
+                    })
 
                 });
 
