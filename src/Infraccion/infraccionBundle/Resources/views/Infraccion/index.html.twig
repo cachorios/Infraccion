@@ -114,7 +114,8 @@
                             {#{{ entity.municipio }}#}
                             {#</td>#}
                             {#<td>{{ entity.tipoInfraccion }}</td>#}
-                            <td style="width: 60px;"><span class="ver_dominio">  {{ entity.automotor.dominio | default("") }} </span>
+                            <td style="width: 60px;"><span
+                                        class="ver_dominio">  {{ entity.automotor.dominio | default("") }} </span>
                             </td>
                             <td style="width: 50px;">{% if entity.fecha %}{{ entity.fecha|date('H:i:s') }}{% endif %}</td>
                             <td style="width: 300px;">
@@ -129,9 +130,18 @@
 
                 </td>
                 <td>
-                    <img class="fotoinfra"
-                         src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}"
-                         style="width: 200px;"/></td>
+                    <div class="dropdown">
+                        <a href="#" data-toggle="dropdown">
+                            <img class="fotoinfra"
+                                 src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}"
+                                 style="width: 200px;"/>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li><a href="{{ path('perfil') }}">Editar Perfil</a></li>
+                            <li><a href="{{ path('infraccion') }}">Cambiar Fotografia</a></li>
+                        </ul>
+                    </div>
+                </td>
                 {% if filtro.tipoInfraccion.cantidadFoto >= 2 %}
                     <td>
                         <img class="fotoinfra"
@@ -168,16 +178,16 @@
                     {{ pagerHtml|raw }}
                 </div>
 
-                <div class="span2">
-                    <a class="btn btn-primary likepaginator" href="{{ path('infraccion_new') }}">
-                        {{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} Infraccion
-                    </a>
-                </div>
+                {#<div class="span2">#}
+                {#<a class="btn btn-primary likepaginator" href="{{ path('infraccion_new') }}">#}
+                {#{{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} Infraccion#}
+                {#</a>#}
+                {#</div>#}
             </div>
 
 
             {#para modal#}
-            <div id="myModal_auto_edit"
+        <div id="myModal_auto_edit"
             </div>
             <script>
 
@@ -224,8 +234,8 @@
                                                 $('#formDominio').ajaxSubmit({
                                                     beforeSubmit: showRequest,
                                                     success: function (responseText, statusText, xhr, $form) {
-                                                        if(statusText=='success'){
-                                                            $(".dominio_edit",$td).html(responseText);
+                                                        if (statusText == 'success') {
+                                                            $(".dominio_edit", $td).html(responseText);
                                                             alert('Los datos del dominio se han actualizado.');
                                                             dlg.dialog("destroy");
                                                         }

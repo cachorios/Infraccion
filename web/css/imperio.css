@@ -1098,6 +1098,13 @@ a.fc-event,
     }
 }
 
+.indicator{
+    float: right ;
+    margin-top: 10px;
+    margin-right: 5px;
+
+}
+
 form {
     margin-bottom: 18px;
     margin-left: 0;
@@ -1159,3 +1166,4 @@ table div[class*="span8"]{
 .modal-header{
     background-color: lightslategrey;
 }
+
