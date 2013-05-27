@@ -22,7 +22,7 @@ class Importar
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/^([0-9]+)$/" )
+     * @Assert\Regex(pattern="/^([0-9]{1,8}+)$/" )
      */
     private $fila = 2;
 

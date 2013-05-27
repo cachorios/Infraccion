@@ -29,6 +29,9 @@
                             <div class="row-fluid" style="margin-top: 0;">
 
                                 <div class="span12" style="zoom: 1; overflow: auto; margin-top: -8px;">
+                                    <div class="errors">
+                                        {{ form_errors(formulario) }}
+                                    </div>
 
                                     <form class="form-horizontal" action="{{ path('automotor_importar') }}"
                                           method="post" {{ form_enctype(form) }}>

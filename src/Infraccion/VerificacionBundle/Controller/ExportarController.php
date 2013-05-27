@@ -89,12 +89,13 @@ class ExportarController extends Controller
             $em = $this->getDoctrine()->getManager();
             $query = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresExportar();
             $results = $query->getQuery()->getArrayResult();
-
+            $cantidadPermitido = 10000;
             $ids = array();
-
             $row = 2;
             if (count($results) != 0) {
-
+                if (count($results) > $cantidadPermitido){
+                    throw new \exception ('Error la cantidad de registros es de '.count($results).'.');
+                }
                 foreach ($results as $result) {
                     $excelObj->setCellValue('A' . $row, $result['dominio']);
                     $ids[] = $result['id'];
