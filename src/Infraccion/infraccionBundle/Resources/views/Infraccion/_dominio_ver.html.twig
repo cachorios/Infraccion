@@ -1,0 +1,36 @@
+<div class="row-fluid">
+    <div class="span4">Marca:</div>
+    <div class="span8">{{ entity.marca | default("-") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Modelo:</div>
+    <div class="span8">{{ entity.modelo | default("") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">DNI/CUIT:</div>
+    <div class="span8">{{ entity.dni | default("-") ~ '/' ~ entity.cuitCuil | default("-") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Rz. Social:</div>
+    <div class="span8">{{ entity.nombre | default("") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Domicilio:</div>
+    <div class="span8">{{ entity.domicilio | default("") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Localidad:</div>
+    <div class="span8">{{ entity.localidad | default("") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Cod. Postal:</div>
+    <div class="span8">{{ entity.codigoPostal | default("") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Provincia:</div>
+    <div class="span8">{{ entity.provincia | default("") }}</div>
+</div>
+<div class="row-fluid">
+    <div class="span4">Actualización:</div>
+    <div class="span8">{{ entity.ultimaActualizacion | default("") | date("d-m-Y") }}</div>
+</div>

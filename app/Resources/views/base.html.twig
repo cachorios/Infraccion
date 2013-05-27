@@ -12,6 +12,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/imperio.css') }}"/>
 
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/jquery.ui.all.css') }}"/>
+
+
     {% block stylesheets %}{% endblock %}
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -21,6 +24,19 @@
 
 
     <script type="text/javascript" src="{{ asset( 'js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset( 'js/jquery.mousewheel.js') }}"></script>
+
+
+
+
+    <script src="{{ asset( 'js/jquery.ui.core.js') }}"></script>
+    <script src="{{ asset( 'js/jquery.ui.widget.js') }}"></script>
+    <script src="{{ asset( 'js/jquery.ui.position.js') }}"></script>
+    <script src="{{ asset( 'js/jquery.ui.dialog.js') }}"></script>
+
+    {#<script src="{{ asset( 'js/jquery.ui.mouse.js') }}"></script>#}
+    {#<script src="{{ asset( 'js/jquery.ui.slider.js') }}"></script>#}
+
     <script type="text/javascript" src="{{ asset( 'js/jquery.blockUI.js') }}"></script>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>

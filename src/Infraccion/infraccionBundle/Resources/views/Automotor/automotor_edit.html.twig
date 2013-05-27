@@ -1,0 +1,14 @@
+<h3>Dominio: <span style="color: #802420; font-size: 18px">{{ entity.dominio }}</span></h3>
+<div class="row-fluid">
+    <div class="span1"></div>
+    <div class="span8 offset1">
+        <form id="formDominio" class="form-horizontal"
+              action="{{ path('infraccion_dominio_save', { 'id': entity.id }) }}"
+              method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+        </form>
+    </div>
+</div>
+
+
+

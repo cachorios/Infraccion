@@ -37,3 +37,12 @@ infraccion_filterparm:
 infraccion_filterparm_refubi:
     pattern:  /filterparm_refubi
     defaults: { _controller: "InfraccionBundle:Infraccion:refreshUbicaciones" }
+
+infraccion_dominio_edit:
+    pattern: /edit_dominio_ajax
+    defaults: { _controller: "InfraccionBundle:Automotor:domionioAjaxEdit" }
+
+infraccion_dominio_save:
+    pattern: /{id}/save_dominio_ajax
+    defaults: { _controller: "InfraccionBundle:Automotor:dominioAjaxSave" }
+    requirements: { _method: post }

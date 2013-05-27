@@ -60,13 +60,13 @@ class DefaultController extends Controller
 
             $web_dir = $this->container->getParameter('kernel.root_dir') . '/../web/unprocess/' . $relpathinfo;
 
-            $t = \DateTime::createFromFormat($formato_fecha, $relpathinfo);
+            $t = \DateTime::createFromFormat($formato_fecha, substr($relpathinfo,6));
 
             $log->info("Fecha->".print_r($t,true));
             /*$m = date('m', $t);
             $d = date('d', $t);
             $y = date('Y', $t); */
-            if ($t->format($formato_fecha) == $relpathinfo ){  //&& checkdate($m, $d, $y)) {
+            if ($t->format($formato_fecha) == substr($relpathinfo,6) ){  //&& checkdate($m, $d, $y)) {
                 try {
                     $file = $request->files->get('File')[0];
                     $file->move($web_dir, $file->getClientOriginalName());

@@ -9,11 +9,15 @@
 
 namespace Infraccion\infraccionBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\NonUniqueResultException;
+use Infraccion\VerificacionBundle\Entity\Automotor;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Finder;
 use Infraccion\infraccionBundle\Entity\Infraccion;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 
 class ImportarController extends Controller
@@ -32,6 +36,9 @@ class ImportarController extends Controller
     {
         $ret = array();
         $finder = new Finder();
+        if(!is_dir($this->container->getParameter("infraccion.unproccess.dir"))){
+            mkdir($this->container->getParameter("infraccion.unproccess.dir"));
+        }
         $finder->directories()->depth(0)->in($this->container->getParameter("infraccion.unproccess.dir"));
 
         foreach ($finder as $dir) {
@@ -193,6 +200,21 @@ class ImportarController extends Controller
             );
             $reg->setTipoInfraccion($em->getRepository("InfraccionBundle:TipoInfraccion")->findOneBy(array("codigo" => $tipoInfraccion)));
             $reg->setDominio($dominio);
+
+            try{
+                $auto = $em->getRepository("VerificacionBundle:Automotor")->findOneByDominio($dominio);
+                if($auto == null){
+                    $auto = new Automotor();
+                    $auto->setDominio($dominio);
+                }
+            }catch(\Exception $e){
+                throw( $e);
+            }
+
+            $reg->setAutomotor($auto);
+
+
+
             $reg->setFecha($dt);
             $reg->setEtapa(1);
 
