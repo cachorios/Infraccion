@@ -49,7 +49,7 @@ class ExportarController extends Controller
 
             // create the object see http://phpexcel.codeplex.com documentation
             $excelService->excelObj->getProperties()->setCreator("Rios Soft")
-                ->setLastModifiedBy("Maarten Balliauw")
+                ->setLastModifiedBy("Hugo")
                 ->setTitle("Office 2007 XLSX Test Document")
                 ->setSubject("Office 2007 XLSX Test Document")
                 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")

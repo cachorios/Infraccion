@@ -1104,6 +1104,9 @@ form {
     margin-right: 0;
     margin-top: 15px;
 }
+#mod_Infraccion h3{
+    font-size: 14px:;
+}
 
 #infraccion_infraccionbundle_tipoinfracciontype_cantidad_foto .radio{
     display: inline-block;
@@ -1117,12 +1120,23 @@ form {
     margin: 2px;
 }
 
+
 table div[class*="span"]{
     margin-top: 1px !important;
     margin-bottom: 1px !important;
     min-height: 12px !important;
     line-height: 15px;
     /*height: 15px !important;*/
+}
+
+#mod_Infraccion h3{
+    font-size: 14px;
+}
+
+.ver_dominio{
+    font-size: 14px;
+    color: #802420;
+    font-weight: bold
 }
 
 table div[class*="span4"]{
@@ -1132,4 +1146,16 @@ table div[class*="span8"]{
     font-size: 12px;
     font-weight: bold;
     color: #363636;
+}
+
+#myModal_auto_edit .control-group{
+    padding: 2px !important;
+    margin-bottom: 2px !important;
+}
+
+.modal{
+    background-color: #fdfdfd;
+}
+.modal-header{
+    background-color: lightslategrey;
 }

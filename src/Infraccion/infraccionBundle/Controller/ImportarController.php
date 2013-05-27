@@ -36,6 +36,9 @@ class ImportarController extends Controller
     {
         $ret = array();
         $finder = new Finder();
+        if(!is_dir($this->container->getParameter("infraccion.unproccess.dir"))){
+            mkdir($this->container->getParameter("infraccion.unproccess.dir"));
+        }
         $finder->directories()->depth(0)->in($this->container->getParameter("infraccion.unproccess.dir"));
 
         foreach ($finder as $dir) {
