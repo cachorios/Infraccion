@@ -4,8 +4,11 @@ namespace Infraccion\VerificacionBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ExecutionContext;
 
-
+/**
+ * @Assert\Callback(methods={"esFechaValido"})
+ */
 class Exportar
 {
     /**
@@ -33,10 +36,10 @@ class Exportar
 
     public function __construct()
     {
-        $fecha = new \DateTime('now');
 
-        $this->fechaFinal = $fecha;
-        $this->fechaInicio =  new \DateTime('-1 day'); //strtotime("$fecha -1 day") ;
+        $this->fechaInicio =  new \DateTime('-1 day');
+        $this->fechaFinal = new \DateTime('now');
+
     }
     /**
      * Set fechaInicio
@@ -128,6 +131,20 @@ class Exportar
     public function getUsarNull()
     {
         return $this->usarNull;
+    }
+
+    public function esFechaValido(ExecutionContext $context)
+    {
+        if($this->usarFecha ==true) {
+            if($this->getfechaInicio()->format('U') > $this->getFechaFinal()->format('U')){
+                $context->addViolationAtSubPath('dni', 'La fecha de inicio no puede ser mayor a la fecha de final.',array(),null);
+//                $context->addViolationAtSubPath('dni',(string) $this->getfechaInicio()->format('U'). 'inicio' ,array(),null);
+//                $context->addViolationAtSubPath('dni',(string) $this->getFechaFinal()->format('U'). 'final' ,array(),null);
+
+            }
+
+        }
+        return;
     }
 
 }
