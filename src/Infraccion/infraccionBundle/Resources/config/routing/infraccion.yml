@@ -46,3 +46,8 @@ infraccion_dominio_save:
     pattern: /{id}/save_dominio_ajax
     defaults: { _controller: "InfraccionBundle:Automotor:dominioAjaxSave" }
     requirements: { _method: post }
+
+infraccion_cambiar_foto:
+    pattern: /{id}/infraccion_cambiarfoto
+    defaults: { _controller: "InfraccionBundle:Infraccion:cambiarFoto" }
+    requirements: { _method: post }

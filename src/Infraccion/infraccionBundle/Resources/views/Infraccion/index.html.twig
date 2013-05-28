@@ -130,17 +130,13 @@
 
                 </td>
                 <td>
-                    <div class="dropdown">
-                        <a href="#" data-toggle="dropdown">
-                            <img class="fotoinfra"
-                                 src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}"
-                                 style="width: 200px;"/>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <li><a href="{{ path('perfil') }}">Editar Perfil</a></li>
-                            <li><a href="{{ path('infraccion') }}">Cambiar Fotografia</a></li>
-                        </ul>
-                    </div>
+
+
+                    <img class="fotoinfra"
+                         src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1) }}"
+                         style="width: 200px;"/>
+
+
                 </td>
                 {% if filtro.tipoInfraccion.cantidadFoto >= 2 %}
                     <td>
@@ -273,6 +269,54 @@
                         // returning anything other than false will allow the form submit to continue
                         return true;
                     }
+
+
+                    var menuImg = [
+                        {'Cambiar Fotografia': function (menuItem, menu) {
+
+                            $("<div>" + data + "</div>").dialog({
+                                resizable: false,
+                                title: "Cambiar de Foto",
+                                closeOnEscape: false,
+                                height: 400,
+                                width: 500,
+                                modal: true,
+                                autoOpen: true,
+                                buttons: {
+                                    "Subir": function () {
+                                        var dlg = $(this);
+                                        $('#cambiarFotografia').ajaxSubmit({
+                                            beforeSubmit: showRequest,
+                                            success: function (responseText, statusText, xhr, $form) {
+                                                if (statusText == 'success') {
+//                                                    $(".dominio_edit", $td).html(responseText);
+                                                    alert(responseText);
+//                                                    dlg.dialog("destroy");
+                                                }
+
+
+                                            } });
+                                    },
+                                    Cerrar: function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
+
+
+//                            $('#cambiarFotografia').modal({
+//                                backdrop: true
+//                            });
+                        } },
+                        $.contextMenu.separator,
+                        {'Option 2': function (menuItem, menu) {
+                            alert("You clicked Option 2!");
+                        } }
+                    ];
+
+                    $('.fotoinfra').contextMenu(menuImg, {thme: 'vista'});
+
+
                 });
 
             </script>
@@ -282,8 +326,32 @@
 
         </section>
 
+        <!-- Button to trigger modal -->
+        {#<a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>#}
+
+        <!-- Modal -->
+        <div id="cambiarFotografia" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Modal header</h3>
+            </div>
+            <form id="cambiarFotoForm" action="{{ path("infraccion_cambiar_foto", {id: }) }}" method="post" >
+            <div class="modal-body">
+                <label>Cambiar Fotografia</label>
+                <input type="file" id="files" name="file"  />
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button type="submit" class="btn btn-primary">Subir Foto</button>
+            </div>
+            </form>
+        </div>
 
     {% endblock %}
+
+
     {% block endscript %}
         <script src="{{ asset( 'js/jquery.form.min.js') }}"></script>
+        <script src="{{ asset( 'js/jquery.contextmenu.min.js') }}"></script>
+
     {% endblock endscript %}
