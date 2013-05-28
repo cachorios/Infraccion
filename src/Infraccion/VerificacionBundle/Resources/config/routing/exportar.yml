@@ -2,3 +2,6 @@ automotor_exportar:
     pattern:  /
     defaults: { _controller: "VerificacionBundle:Exportar:index" }
 
+automotor_exportar_exportar:
+    pattern:  /exportar
+    defaults: { _controller: "VerificacionBundle:Exportar:exportar" }

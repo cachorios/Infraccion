@@ -28,9 +28,9 @@ class ExportarType extends AbstractType
 
         ))
             ->add("usarFecha","checkbox", array("required"=>false, 'label' => 'Usar parametro Fechas', 'label_render' => true))
-            ->add("usarNull","checkbox", array("required"=>false, 'label' => 'Usar registros Null'
+//            ->add("usarNull","checkbox", array("required"=>false, 'label' => 'Usar registros Null'))
 
-        ))
+
 
         ;
     }

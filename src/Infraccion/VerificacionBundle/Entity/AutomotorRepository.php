@@ -37,15 +37,15 @@ class AutomotorRepository extends EntityRepository
         $em = $this->getEntityManager();
         $query = $em->createQueryBuilder("c")
             ->select('c.id,c.dominio')
-            ->add('from', 'VerificacionBundle:Automotor c')
-            ->setMaxResults(100);
-//            ->add('where', 'c.ultima_actualizacion = null')
-        ;
+            ->add('from', 'VerificacionBundle:Automotor c');
+        $query->Where($query->expr()->isNull('c.fechaPedido'));
+        $query->andWhere($query->expr()->isNull('c.ultimaActualizacion'));
 
         return $query;
     }
 
-    public function setUltimaActualizacion($ids){
+    public function setUltimaActualizacion($ids)
+    {
         $fecha = new \DateTime('now');
         $em = $this->getEntityManager();
 
