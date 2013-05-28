@@ -127,7 +127,7 @@ class Automotor
      */
     public function setDominio($dominio)
     {
-        $this->dominio = $dominio;
+        $this->dominio = strtoupper($dominio);
     
         return $this;
     }
