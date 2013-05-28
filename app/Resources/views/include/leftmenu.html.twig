@@ -1,9 +1,6 @@
 <ul class="nav">
     {#class="active"#}
     <li><a href="#"><span class="ico"><i class="icon-home"></i></span><span class="text">Monitor</span></a></li>
-
-
-
     {#<li><a href="#"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Verificar Personas</span></a></li>#}
     {#<li><a href="#"><span class="ico"><i class="icon-tint"></i></span><span class="text">Submenu One</span></a></li>#}
     <li>
@@ -30,8 +27,15 @@
 
     </li>
 
-    <li><a href="{{ path('automotor') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Automotores</span></a></li>
-    <li><a href="{{ path('automotor_importar') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Automotores Importar</span></a></li>
+    <li>
+        <a href="#"><span class="ico"><i class="icon-align-justify"></i></span><span class="text">Automotores<span class="indicator icon-chevron-right"></span></span></a>
+        <ul>
+            <li><a href="{{ path('automotor') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Automotores</span></a></li>
+            <li><a href="{{ path('automotor_importar') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Importar</span></a></li>
+            <li><a href="{{ path('automotor_exportar') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Exportar</span></a></li>
+        </ul>
+
+    </li>
 
     <li><a href="{{ path('usuario') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Usuario</span></a></li>
 

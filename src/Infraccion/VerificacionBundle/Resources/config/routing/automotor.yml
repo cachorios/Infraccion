@@ -9,3 +9,26 @@ automotor_show:
 automotor_mysql:
     pattern:  /mysql
     defaults: { _controller: "VerificacionBundle:Automotor:mysql" }
+
+automotor_new:
+    pattern:  /new
+    defaults: { _controller: "VerificacionBundle:Automotor:new" }
+
+automotor_create:
+    pattern:  /create
+    defaults: { _controller: "VerificacionBundle:Automotor:create" }
+    requirements: { _method: post }
+
+automotor_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "VerificacionBundle:Automotor:edit" }
+
+automotor_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "VerificacionBundle:Automotor:update" }
+    requirements: { _method: post }
+
+automotor_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "VerificacionBundle:Automotor:delete" }
+    requirements: { _method: post }

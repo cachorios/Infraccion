@@ -12,44 +12,21 @@ class ExportarController extends Controller
 {
     public function indexAction()
     {
-
         $request = $this->getRequest();
 
-        $exportar = new Exportar();
-        $form = $this->createForm(new ExportarType(), $exportar);
-
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-            if ($form->isValid()) {
-
-                try {
-                    $result = $this->procesar($exportar);
-                    $this->get('session')->getFlashBag()->add('success', "Finalizado..");
-                    return $result;
-                } catch (\Exception $e) {
-                    $this->get('session')->getFlashBag()->add('success', $e->getMessage());
-                }
-
-            } else {
-                $this->get('session')->getFlashBag()->add('error', 'error. !!!');
-            }
-
-        }
-
         return $this->render('VerificacionBundle:Exportar:index.html.twig', array(
-            'form' => $form->createView()
 
         ));
     }
 
-    public function procesar($exportar)
+    public function exportarAction()
     {
         try {
             $excelService = $this->get('xls.service_xls2007');
 
             // create the object see http://phpexcel.codeplex.com documentation
             $excelService->excelObj->getProperties()->setCreator("Rios Soft")
-                ->setLastModifiedBy("Hugo")
+                ->setLastModifiedBy("Maarten Balliauw")
                 ->setTitle("Office 2007 XLSX Test Document")
                 ->setSubject("Office 2007 XLSX Test Document")
                 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
@@ -58,7 +35,7 @@ class ExportarController extends Controller
             $excelService->excelObj->setActiveSheetIndex(0)
                 ->setCellValue('A1', 'Dominio');
 
-            $ids = $this->addRegistro($excelService->excelObj->setActiveSheetIndex(0), $exportar);
+            $ids = $this->addRegistro($excelService->excelObj->setActiveSheetIndex(0));
 
 
             $excelService->excelObj->getActiveSheet()->setTitle('Simple');
@@ -83,12 +60,14 @@ class ExportarController extends Controller
 
     }
 
-    public function addRegistro($excelObj, $exportar)
+    public function addRegistro($excelObj)
     {
+
         try {
             $em = $this->getDoctrine()->getManager();
             $query = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresExportar();
             $results = $query->getQuery()->getArrayResult();
+
             $cantidadPermitido = 10000;
             $ids = array();
             $row = 2;

@@ -31,42 +31,15 @@
                                 <div class="alert alert-block">
                                     <blockquote>
                                         <strong>
-                                            Nota: La exportación se realiza en un archivo Excel 2007, permitiendo un numero maximo de 10000 registros.
+                                            Nota: La exportación se realiza en un archivo Excel 2007, permitiendo un
+                                            numero maximo de 10000 registros.
                                         </strong>
                                     </blockquote>
                                 </div>
 
-                                <form action="{{ path('automotor_exportar') }}" method="post" {{ form_enctype(form) }}>
-                                    <div class="row-fluid">
-
-                                        <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; ">
-                                            {{ form_widget(form.usarFecha) }}
-
-                                            <div id="fechas" style="margin: 8px; display: none;">
-                                                {{ form_row(form.fechaInicio) }}
-                                                {{ form_row(form.fechaFinal) }}
-                                            </div>
-                                        </div>
-
-                                        <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; ">
-                                            {{ form_widget(form.usarNull) }}
-                                            <div class="alert alert-block">
-                                                <blockquote>
-                                                    <strong>
-                                                        Información: Exportar todos los registros que no dispongan de
-                                                        ultima fecha de pedido.
-                                                    </strong>
-                                                </blockquote>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{ form_widget(form) }}
-                                    <div class="form-actions">
-                                        <button class="btn btn-success brn_importar" type="submit">Procesar.
-                                        </button>
-                                    </div>
-                                </form>
-
+                                <div class="form-actions">
+                                    <a href="{{ path('automotor_exportar_exportar') }}" class="btn btn-success brn_importar" type="submit">Procesar.</a>
+                                </div>
 
                             </div>
                         </div>
@@ -77,27 +50,4 @@
                 {% endembed %}
         </section>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var checked = $('#infraccion_verificacionbundle_exportartype_usarFecha').is(':checked') ? 1 : 0;
-                showFechas(checked);
-
-                $('#infraccion_verificacionbundle_exportartype_usarFecha').click(function () {
-                    var checked = $('#infraccion_verificacionbundle_exportartype_usarFecha').is(':checked') ? 1 : 0;
-                    showFechas(checked);
-                });
-
-                function showFechas(fec) {
-                    if (fec == 1) {
-                        $('#fechas').show();
-                    } else {
-                        $('#fechas').hide();
-                    }
-                }
-
-
-            });
-
-
-        </script>
     {% endblock %}
