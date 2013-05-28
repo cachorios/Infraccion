@@ -115,11 +115,17 @@
 
                     <div class="row-fluid">
 
-                        <div class="span12" style="margin-top: 0;">
+                        <div class="span10">
                             {{ pagerHtml|raw }}
                         </div>
 
+                        <div class="span2">
+                            <a class="btn btn-primary likepaginator" href="{{ path('automotor_new') }}">
+                                {{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} Automotor
+                            </a>
+                        </div>
                     </div>
+
 
                     </section>
                 </div>

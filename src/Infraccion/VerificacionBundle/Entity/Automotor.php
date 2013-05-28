@@ -3,15 +3,15 @@
 namespace Infraccion\VerificacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
-
 /**
  * Automotor
  *
  * @ORM\Table(indexes= {@ORM\index(name="automotor_dominio_idx",columns={"dominio"}),@ORM\index(name="automotor_nombre_idx", columns={"nombre"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Infraccion\VerificacionBundle\Entity\AutomotorRepository")
- * @DoctrineAssert\UniqueEntity("dominio")
+ * @DoctrineAssert\UniqueEntity(fields="dominio", message="Error Dominio duplicado")
  *
  */
 class Automotor

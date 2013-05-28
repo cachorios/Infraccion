@@ -2,8 +2,8 @@
 
 namespace Infraccion\VerificacionBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Infraccion\VerificacionBundle\Entity\Automotor;
 use Infraccion\VerificacionBundle\Entity\AutomotorImportar;
 use Infraccion\VerificacionBundle\Form\AutomotorFilterType;
-use Infraccion\VerificacionBundle\Form\AutomotorType;
+use Infraccion\VerificacionBundle\Form\AutomotorNewType;
 
 
 /**
@@ -169,7 +169,7 @@ class AutomotorController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Automotor();
-        $form = $this->createForm(new AutomotorType(), $entity);
+        $form = $this->createForm(new AutomotorNewType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -198,7 +198,7 @@ class AutomotorController extends Controller
         $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
         $breadcrumbs->addItem("Nuevo" );
         $entity = new Automotor();
-        $form   = $this->createForm(new AutomotorType(), $entity);
+        $form   = $this->createForm(new AutomotorNewType(), $entity);
 
         return $this->render('VerificacionBundle:Automotor:new.html.twig', array(
             'entity' => $entity,
@@ -225,7 +225,7 @@ class AutomotorController extends Controller
             throw $this->createNotFoundException('Unable to find Automotor entity.');
         }
 
-        $editForm = $this->createForm(new AutomotorType(), $entity);
+        $editForm = $this->createForm(new AutomotorNewType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('VerificacionBundle:Automotor:edit.html.twig', array(
@@ -250,7 +250,7 @@ class AutomotorController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new AutomotorType(), $entity);
+        $editForm = $this->createForm(new AutomotorNewType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
