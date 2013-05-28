@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Infraccion\VerificacionBundle\Entity\Automotor;
 use Infraccion\VerificacionBundle\Entity\AutomotorImportar;
 use Infraccion\VerificacionBundle\Form\AutomotorFilterType;
+use Infraccion\VerificacionBundle\Form\AutomotorType;
 
 
 /**
@@ -161,5 +162,158 @@ class AutomotorController extends Controller
             'entity' => $entity,
         ));
     }
+    /**
+     * Creates a new Automotor entity.
+     *
+     */
+    public function createAction(Request $request)
+    {
+        $entity  = new Automotor();
+        $form = $this->createForm(new AutomotorType(), $entity);
+        $form->bind($request);
 
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+            return $this->redirect($this->generateUrl('automotor_show', array('id' => $entity->getId())));
+        }
+
+        return $this->render('VerificacionBundle:Automotor:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to create a new Automotor entity.
+     *
+     */
+    public function newAction()
+    {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
+        $breadcrumbs->addItem("Nuevo" );
+        $entity = new Automotor();
+        $form   = $this->createForm(new AutomotorType(), $entity);
+
+        return $this->render('VerificacionBundle:Automotor:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing Automotor entity.
+     *
+     */
+    public function editAction($id)
+    {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
+        $breadcrumbs->addItem("Editar" );
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('VerificacionBundle:Automotor')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Automotor entity.');
+        }
+
+        $editForm = $this->createForm(new AutomotorType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('VerificacionBundle:Automotor:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Edits an existing Automotor entity.
+     *
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('VerificacionBundle:Automotor')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Automotor entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new AutomotorType(), $entity);
+        $editForm->bind($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
+
+            return $this->redirect($this->generateUrl('automotor_edit', array('id' => $id)));
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
+        }
+
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+        $breadcrumbs->addItem("Automotor", $this->get("router")->generate("automotor"));
+        $breadcrumbs->addItem("Editar" );
+
+        return $this->render('VerificacionBundle:Automotor:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a Automotor entity.
+     *
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('VerificacionBundle:Automotor')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Automotor entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
+        }
+
+        return $this->redirect($this->generateUrl('automotor'));
+    }
+
+    /**
+     * Creates a form to delete a Automotor entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+            ;
+    }
 }

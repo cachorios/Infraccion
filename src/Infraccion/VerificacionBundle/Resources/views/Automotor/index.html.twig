@@ -99,6 +99,9 @@
                                                        href="{{ path('automotor_show', { 'id': entity.id }) }}">
                                                         {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
                                                     </a>
+                                                    <a class="btn btn-mini" href="{{ path('automotor_edit', { 'id': entity.id }) }}">
+                                                        {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                                                    </a>
                                                 </td>
                                             </tr>
                                         {% endfor %}
