@@ -17,8 +17,6 @@ use Infraccion\infraccionBundle\Form\InfraccionFilterType;
 use Infraccion\infraccionBundle\Form\FiltroParmType;
 use Symfony\Component\HttpFoundation\Response;
 
-use Infraccion\infraccionBundle\lib\Bitmap;
-
 /**
  * Infraccion controller.
  *
@@ -409,74 +407,4 @@ class InfraccionController extends Controller
         $response->setContent($opciones);
         return $response;
     }
-
-    public function cambiarFotoAction(Request $request, $id){
-
-        $foto= $request->files->get('foto');
-        $nroFoto = $request->get("nrofoto");
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('InfraccionBundle:Infraccion')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('No se encuentrta la entidad Municipio.');
-        }
-
-      //  ld($foto);
-      //  ld($foto->getClientOriginalExtension());
-
-
-
-
-        $filename = sprintf(
-                "%02u%02u%02u% 6s%s%d",
-                $entity->getMunicipio()->getCodigo(),
-                $entity->getUbicacion()->getCodigo(),
-                $entity->getTipoInfraccion()->getCodigo(),
-                $entity->getDominio(),
-                $entity->getFecha()->format('YmdHis'),
-                $nroFoto
-        );
-
-        $dir = $this->container->getParameter("infraccion.infracciones.dir");
-        $dir .= $entity->getFecha()->format('Ym');
-
-        if($foto->getClientOriginalExtension() == 'bmp'){
-            //$filename .= ".jpg";
-            //$this->ConvertBMP2GD($foto->getPathname(), $dir.'/'.$filename);
-
-
-            $foto->move($dir,$filename.".bmp");
-
-            $convert = new Bitmap($dir);
-            $convert->convertJpg($dir.'/'.$filename.".bmp",$dir.'/'.$filename.".jpg");
-            $filename.=".jpg";
-
-        }else{
-            $filename .= ".".$foto->getClientOriginalExtension();
-            $foto->move($dir, $filename );
-        }
-
-
-        if($nroFoto == 1 ){
-            $entity->setFoto1($filename);
-        }
-
-        if($nroFoto == 2 ){
-            $entity->setFoto2($filename);
-        }
-
-        if($nroFoto == 3 ){
-            $entity->setFoto3($filename);
-        }
-
-        $em->persist($entity);
-        $em->flush();
-
-        $response = new Response();
-
-        return $response->setContent($filename);
-    }
-
-
 }

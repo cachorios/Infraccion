@@ -91,7 +91,6 @@ class DefaultController extends Controller
 
     public function ConvertBMP2GD($src, $dest = false)
     {
-        $type="";
         if (!($src_f = fopen($src, "rb"))) {
             return false;
         }

@@ -2,7 +2,7 @@
 <div class="row-fluid">
     <div class="span1"></div>
     <div class="span8 offset1">
-        <form id="{{ formId }}" class="form-horizontal"
+        <form id="formDominio" class="form-horizontal"
               action="{{ path('infraccion_dominio_save', { 'id': entity.id }) }}"
               method="post" {{ form_enctype(form) }}>
             {{ form_widget(form) }}

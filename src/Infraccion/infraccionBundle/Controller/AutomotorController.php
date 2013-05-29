@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AutomotorController Extends Controller {
     public function domionioAjaxEditAction(){
         $id = $this->getRequest()->get("id");
-        $formId = $this->getRequest()->get("formId");
         $entity = $this->getDoctrine()->getRepository("VerificacionBundle:Automotor")->find($id);
 
         if (!$entity) {
@@ -28,8 +27,7 @@ class AutomotorController Extends Controller {
 
         return $this->render('InfraccionBundle:Automotor:automotor_edit.html.twig', array(
             'entity' => $entity,
-            'form' => $editForm->createView(),
-            'formId' => $formId
+            'form' => $editForm->createView()
         ));
 
     }
