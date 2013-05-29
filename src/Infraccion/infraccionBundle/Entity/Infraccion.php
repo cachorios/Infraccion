@@ -181,7 +181,9 @@ class Infraccion
      */
     public function getFoto1()
     {
-        return $this->foto1;
+
+
+        return null==$this->foto1 ?  "../../img/no-foto.png" : $this->foto1 ;
     }
 
     /**
@@ -192,7 +194,7 @@ class Infraccion
      */
     public function setFoto2($foto2)
     {
-        $this->foto2 = $foto2;
+        return null==$this->foto2 ?  "../../img/no-foto.png" : $this->foto2 ;
     
         return $this;
     }
@@ -227,7 +229,7 @@ class Infraccion
      */
     public function getFoto3()
     {
-        return $this->foto3;
+        return null==$this->foto3 ?  "../../img/no-foto.png" : $this->foto3 ;
     }
 
     /**
