@@ -1,0 +1,48 @@
+<td style="width: 60px;">
+    <span class="ver_dominio">
+        <a class="edit_infraccion"
+           href="{{ path("infraccion_edit", {id: entity.id}) }}"> {{ entity.automotor.dominio | default("") }} </a>
+    </span>
+</td>
+<td style="width: 50px;">{% if entity.fecha %}{{ entity.fecha|date('H:i:s') }}{% endif %}</td>
+<td style="width: 300px;">
+    <div class="dominio_edit">
+        {% include 'InfraccionBundle:Infraccion:_dominio_ver.html.twig' with {entity: entity.automotor} %}
+    </div>
+    <a class="btn_dom_edit pull-right" href="{{ path("infraccion_dominio_edit", {"id": entity.automotor.id}) }}"
+       class="pull-right">Editar</a>
+</td>
+<td>
+    <img class="fotoinfra" data-id="{{ entity.id }}" data-foto="1"
+         data-dir="{{ entity.fecha| date('Ym') ~ '/' }}"
+         src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1  ) }}"
+         style="width: 200px;" alt="No se encuentra la imagen"/>
+</td>
+{% if entity.tipoInfraccion.cantidadFoto >= 2 %}
+    <td>
+        <img class="fotoinfra" data-id="{{ entity.id }}" data-foto="2"
+             data-dir="{{ entity.fecha| date('Ym') ~ '/' }}"
+             src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
+             style="width: 200px;" alt="No se encuentra la imagen"/>
+    </td>
+{% endif %}
+{% if entity.tipoInfraccion.cantidadFoto == 3 %}
+    <td>
+        <img class="fotoinfra" data-id="{{ entity.id }}" data-foto="3"
+             data-dir="{{ entity.fecha| date('Ym') ~ '/' }}"
+             src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}"
+             style="width: 200px;" style="width: 200px;" " alt="No se encuentra la
+        imagen" />
+    </td>
+
+{% endif %}
+<td>{{ entity.etapa }}</td>
+<td>
+    <a class="btn btn-mini"
+       href="{{ path('infraccion_show', { 'id': entity.id }) }}">
+        {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+    </a>
+    <a class="btn btn-mini"
+       href="{{ path('infraccion_edit', { 'id': entity.id }) }}">
+        {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+    </a></td>

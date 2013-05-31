@@ -38,7 +38,7 @@
                             </div>
                             <div class="span3">
                                 Fecha
-                                <h3>{{ filtro.fecha |date('d-m-Y') }}</h3>
+                                <h2>{{ filtro.fecha |date('d-m-Y') }}</h2>
                             </div>
                         </div>
                     </div>
@@ -104,54 +104,8 @@
                         </thead>
                         <tbody>
                         {% for entity in entities %}
-
-                            <tr>
-                                <td style="width: 60px;"><span
-                                            class="ver_dominio">  {{ entity.automotor.dominio | default("") }} </span>
-                                </td>
-                                <td style="width: 50px;">{% if entity.fecha %}{{ entity.fecha|date('H:i:s') }}{% endif %}</td>
-                                <td style="width: 300px;">
-                                    <div class="dominio_edit">
-                                        {% include 'InfraccionBundle:Infraccion:_dominio_ver.html.twig' with {entity: entity.automotor} %}
-                                    </div>
-                                    <a class="btn_dom_edit pull-right"
-                                       href="{{ path("infraccion_dominio_edit", {"id": entity.automotor.id}) }}"
-                                       class="pull-right">Editar</a>
-                                </td>
-                                <td>
-                                    <img class="fotoinfra" data-id="{{ entity.id }}" data-foto="1"
-                                         data-dir="{{ entity.fecha| date('Ym') ~ '/' }}"
-                                         src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1  ) }}"
-                                         style="width: 200px;" alt="No se encuentra la imagen"/>
-                                </td>
-                                {% if filtro.tipoInfraccion.cantidadFoto >= 2 %}
-                                    <td>
-                                        <img class="fotoinfra" data-id="{{ entity.id }}" data-foto="2"
-                                             data-dir="{{ entity.fecha| date('Ym') ~ '/' }}"
-                                             src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
-                                             style="width: 200px;" alt="No se encuentra la imagen"/></td>
-                                {% endif %}
-                                {% if filtro.tipoInfraccion.cantidadFoto == 3 %}
-                                    <td>
-                                        <img class="fotoinfra" data-id="{{ entity.id }}" data-foto="3"
-                                             data-dir="{{ entity.fecha| date('Ym') ~ '/' }}"
-                                             src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}"
-                                             style="width: 200px;" style="width: 200px;" " alt="No se encuentra la
-                                        imagen" />
-                                    </td>
-
-                                {% endif %}
-                                <td>{{ entity.etapa }}</td>
-
-                                <td>
-                                    <a class="btn btn-mini"
-                                       href="{{ path('infraccion_show', { 'id': entity.id }) }}">
-                                        {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                                    </a>
-                                    <a class="btn btn-mini"
-                                       href="{{ path('infraccion_edit', { 'id': entity.id }) }}">
-                                        {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                                    </a></td>
+                            <tr id="{{ entity.id }}">
+                                {% include 'InfraccionBundle:Infraccion:_tr.html.twig' with {entity: entity} %}
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -178,161 +132,242 @@
             </div>
             <script>
 
-                $(function () {
-                    $(".fotoinfra").dblclick(function () {
-                        $(this).css('width', 200);
-                    });
+            $(function () {
+                $(".fotoinfra").dblclick(function () {
+                    $(this).css('width', 200);
+                });
 
 
-                    $(".fotoinfra").mousewheel(function (e, delta, deltaX, deltaY) {
-                        if (e.ctrlKey) {
-                            if (delta > 0) {
-                                $(this).css('width', this.width * 1.1);
-                            } else {
-                                $(this).css('width', this.width / 1.1);
+                $(".fotoinfra").mousewheel(function (e, delta, deltaX, deltaY) {
+                    if (e.ctrlKey) {
+                        if (delta > 0) {
+                            $(this).css('width', this.width * 1.1);
+                        } else {
+                            $(this).css('width', this.width / 1.1);
+                        }
+                        e.preventDefault();
+                    }
+                });
+
+                $(".btn_dom_edit").click(function (e) {
+                    var sUrl = this.href, $td = $(this).parent();
+                    var formId = "formDominio" + (new Date()).getTime();
+
+                    $.blockUI({ message: '<h1   > <img src="{{ asset("img/indicator.gif") }}" style="padding-right: 20px;"  /> Procesando...</h1>' });
+                    $.ajax({
+                        type: "POST",
+                        url: sUrl,
+                        data: {formId: formId},
+                        success: function (data) {
+                            $.unblockUI();
+
+                            if (data.length > 0) {
+                                $("<div>" + data + "</div>").dialog({
+                                    resizable: false,
+                                    title: "Edicion de Automotor",
+                                    closeOnEscape: false,
+                                    height: 600,
+                                    width: 500,
+                                    modal: true,
+                                    autoOpen: true,
+                                    target: '#myModal_auto_edit',
+                                    buttons: {
+                                        "Guardar": function () {
+                                            var dlg = $(this);
+                                            $('#' + formId).ajaxSubmit({
+                                                beforeSubmit: showRequest,
+                                                success: function (responseText, statusText, xhr, $form) {
+                                                    if (statusText == 'success') {
+                                                        $(".dominio_edit", $td).html(responseText);
+                                                        alert('Los datos del dominio se han actualizado.');
+                                                        dlg.dialog("destroy");
+                                                    }
+
+
+                                                } });
+                                        },
+                                        Cerrar: function () {
+                                            $(this).dialog("close");
+                                        }
+                                    }
+                                });
                             }
-                            e.preventDefault();
+
+                        },
+                        dataType: 'html'
+                    });
+                    e.preventDefault();
+
+
+                })
+
+                function showRequest(formData, jqForm, options) {
+                    // formData is an array; here we use $.param to convert it to a string to display it
+                    // but the form plugin does this for you automatically when it submits the data
+                    var queryString = $.param(formData);
+
+                    // jqForm is a jQuery object encapsulating the form element.  To access the
+                    // DOM element for the form do this:
+                    // var formElement = jqForm[0];
+
+                    //alert('About to submit: \n\n' + queryString);
+
+                    // here we could return false to prevent the form from being submitted;
+                    // returning anything other than false will allow the form submit to continue
+                    return true;
+                }
+
+                $(".edit_infraccion").click(function (e) {
+                    var sUrl = this.href, idForm = "formInfraccion" + (new Date()).getTime();
+
+                    e.preventDefault();
+
+                    $.blockUI({ message: '<h1   > <img src="{{ asset("img/indicator.gif") }}" style="padding-right: 20px;"  /> Procesando...</h1>' });
+                    $.ajax({
+                        type: "POST",
+                        url: sUrl,
+                        data: {idForm: idForm},
+                        dataType: 'html',
+                        success: function (ret) {
+                            $.unblockUI();
+                            dialogo(
+                                    "Infraccion",
+                                    ret,
+                                    {
+                                        Guardar: function () {
+                                            var dlg = this, formName = "#" + idForm;
+                                            //var a = $("#formInfraccion");
+                                            $(formName).ajaxSubmit({
+                                                dataType: 'json',
+                                                success: function (responseText, statusText, xhr, $form) {
+                                                    if (statusText == 'success') {
+                                                        if(responseText.ok == 1){
+                                                            $("#"+responseText.id).html(statusText.html)
+                                                            $(dlg).dialog("close");
+                                                        }
+                                                    }
+                                                },
+                                                error: function (responseText, statusText, xhr, $form) {
+                                                    var html = $(responseText.responseText), contenido;
+                                                    $(formName).html(html.html());
+                                                }
+                                            });
+                                        },
+                                        Cerrar: closeDlg },
+                                    500,
+                                    480);
                         }
                     });
 
-                    $(".btn_dom_edit").click(function (e) {
-                        var sUrl = this.href, $td = $(this).parent();
-                        var formId= "formDominio"+ (new Date()).getTime();
+                    return false;
+                })
+                ;
 
-                        $.blockUI({ message: '<h1   > <img src="{{ asset("img/indicator.gif") }}" style="padding-right: 20px;"  /> Procesando...</h1>' });
-                        $.ajax({
-                            type: "POST",
-                            url: sUrl,
-                            data: {formId: formId},
-                            success: function (data) {
-                                $.unblockUI();
+                var menuImg = [
+                    {'Cambiar Fotografia': function (menuItem, menu) {
+                        var lsForm = "" +
+                                "<form id=\"__form__\" method='post' action='__url__' enctype='multipart/form-data' > " +
+                                "<div class=\"modal-body\">" +
+                                "<h3>Fotografia Nro: <span class='nrofoto'>&nbsp;&nbsp;&nbsp;__foto__</span></h3><br>" +
+                                "<input type=\"hidden\" name=\"nrofoto\" value=\"__foto__\">" +
+                                "<label>Cambiar Fotografia: </label>" +
+                                "<input type=\"file\" id=\"fotoChange\" name=\"foto\"  />" +
+                                "</div>" +
+                                "</form>";
+                        formId = "cambiarFotografia" + (new Date()).getTime();
+                        foto = this;
+                        sUrl = "{{path("infraccion_cambiar_foto",{id: '__id__' }) }}";
+                        id = $(this).data('id');
+                        sdir = $(this).data('dir');
+                        idFoto = $(this).data('foto');
 
-                                if (data.length > 0) {
-                                    $("<div>" + data + "</div>").dialog({
-                                        resizable: false,
-                                        title: "Edicion de Automotor",
-                                        closeOnEscape: false,
-                                        height: 600,
-                                        width: 500,
-                                        modal: true,
-                                        autoOpen: true,
-                                        target: '#myModal_auto_edit',
-                                        buttons: {
-                                            "Guardar": function () {
-                                                var dlg = $(this);
-                                                $('#'+formId).ajaxSubmit({
-                                                    beforeSubmit: showRequest,
-                                                    success: function (responseText, statusText, xhr, $form) {
-                                                        if (statusText == 'success') {
-                                                            $(".dominio_edit", $td).html(responseText);
-                                                            alert('Los datos del dominio se han actualizado.');
-                                                            dlg.dialog("destroy");
-                                                        }
+                        lsForm = lsForm.replace(/__form__/g, formId);
+                        lsForm = lsForm.replace(/__url__/g, sUrl);
+                        lsForm = lsForm.replace(/__id__/g, id);
+                        lsForm = lsForm.replace(/__foto__/g, idFoto);
 
+                        $("<div>" + lsForm + "</div>").dialog({
+                            resizable: false,
+                            title: "Cambiar de Foto",
+                            closeOnEscape: false,
+                            height: 280,
+                            width: 400,
+                            modal: true,
+                            autoOpen: true,
+                            buttons: {
+                                "Subir": function () {
+                                    var dlg = $(this);
+                                    $('#' + formId).ajaxSubmit({
+                                        beforeSubmit: showRequest,
+                                        success: function (responseText, statusText, xhr, $form) {
+                                            if (statusText == 'success') {
+                                                //$(foto).attr("src","");
 
-                                                    } });
-                                            },
-                                            Cerrar: function () {
-                                                $(this).dialog("close");
+                                                sfile = "{{ asset(infraccion.infracciones.dir ) }}" + sdir + responseText + "?nocache=" + (new Date()).getTime();
+                                                $(foto).attr("src", sfile);
+                                                dlg.dialog("destroy");
                                             }
-                                        }
-                                    });
-                                }
 
-                            },
-                            dataType: 'html'
+
+                                        } });
+                                },
+                                Cerrar: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
                         });
-                        e.preventDefault();
-
-
-                    })
-
-                    function showRequest(formData, jqForm, options) {
-                        // formData is an array; here we use $.param to convert it to a string to display it
-                        // but the form plugin does this for you automatically when it submits the data
-                        var queryString = $.param(formData);
-
-                        // jqForm is a jQuery object encapsulating the form element.  To access the
-                        // DOM element for the form do this:
-                        // var formElement = jqForm[0];
-
-                        //alert('About to submit: \n\n' + queryString);
-
-                        // here we could return false to prevent the form from being submitted;
-                        // returning anything other than false will allow the form submit to continue
-                        return true;
-                    }
-
-
-                    var menuImg = [
-                        {'Cambiar Fotografia': function (menuItem, menu) {
-                            var lsForm = "" +
-                                    "<form id=\"__form__\" method='post' action='__url__' enctype='multipart/form-data' > " +
-                                    "<div class=\"modal-body\">" +
-                                    "<h3>Fotografia Nro: <span class='nrofoto'>&nbsp;&nbsp;&nbsp;__foto__</span></h3><br>" +
-                                    "<input type=\"hidden\" name=\"nrofoto\" value=\"__foto__\">" +
-                                    "<label>Cambiar Fotografia: </label>" +
-                                    "<input type=\"file\" id=\"fotoChange\" name=\"foto\"  />" +
-                                    "</div>" +
-                                    "</form>";
-                            formId= "cambiarFotografia"+ (new Date()).getTime();
-                            foto = this;
-                            sUrl = "{{path("infraccion_cambiar_foto",{id: '__id__' }) }}";
-                            id = $(this).data('id');
-                            sdir = $(this).data('dir');
-                            idFoto = $(this).data('foto');
-
-                            lsForm = lsForm.replace(/__form__/g, formId);
-                            lsForm = lsForm.replace(/__url__/g, sUrl);
-                            lsForm = lsForm.replace(/__id__/g, id);
-                            lsForm = lsForm.replace(/__foto__/g, idFoto);
-
-                            $("<div>" + lsForm + "</div>").dialog({
-                                resizable: false,
-                                title: "Cambiar de Foto",
-                                closeOnEscape: false,
-                                height: 280,
-                                width: 400,
-                                modal: true,
-                                autoOpen: true,
-                                buttons: {
-                                    "Subir": function () {
-                                        var dlg = $(this);
-                                        $('#'+formId).ajaxSubmit({
-                                            beforeSubmit: showRequest,
-                                            success: function (responseText, statusText, xhr, $form) {
-                                                if (statusText == 'success') {
-                                                    //$(foto).attr("src","");
-
-                                                    sfile = "{{ asset(infraccion.infracciones.dir ) }}" + sdir + responseText + "?nocache=" + (new Date()).getTime();
-                                                    $(foto).attr("src", sfile);
-                                                    dlg.dialog("destroy");
-                                                }
-
-
-                                            } });
-                                    },
-                                    Cerrar: function () {
-                                        $(this).dialog("close");
-                                    }
-                                }
-                            });
 
 
 //                            $('#cambiarFotografia').modal({
 //                                backdrop: true
 //                            });
-                        } },
+                    } },
 //                        $.contextMenu.separator,
 //                        {'Option 2': function (menuItem, menu) {
 //                            alert("You clicked Option 2!");
 //                        } }
-                    ];
+                ];
 
-                    $('.fotoinfra').contextMenu(menuImg, {thme: 'vista'});
+                $('.fotoinfra').contextMenu(menuImg, {thme: 'vista'});
 
 
+            })
+            ;
+
+            dialogo = function (title, content, aButtons, nW, nH) {
+
+                nW = nW == null ? 400 : nW;
+                nH = nH == null ? 280 : nH;
+
+                if (aButtons == null) {
+                    aButtons = {"Cerrar": closeDlg };
+                }
+
+
+                $("<div>" + content + "</div>").dialog({
+                    resizable: false,
+                    draggable: true,
+                    title: title,
+                    closeOnEscape: false,
+                    height: nH,
+                    width: nW,
+                    modal: true,
+                    autoOpen: true,
+                    show: {
+                        effect: "blind",
+                        duration: 500
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 500
+                    },
+                    buttons: aButtons
                 });
+            };
+
+            closeDlg = function () {
+                $(this).dialog("close");
+            }
 
             </script>
             {% endblock box_contenido %}

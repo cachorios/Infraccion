@@ -1,0 +1,27 @@
+Editar Infracción
+-----------------
+
+Para poder editar una infraccion, se presiona en el link del dominio.
+
+Los datos a editar son
+
+    Dominio: Por si se cambia el dominio, por mala lectura de la imagen.
+
+    Fecha: por mala lectura de la imagen.
+
+    Hora: por mala lectura de la imagen.
+
+    Observación: Para poder agregar una informacion util.
+
+    
+
+### Acciones:
+
+Si el dominio cambia, se verifica que el nuevo dominio exista, de no existir, se
+genera un alta en automotores con este dominio, para ambos caso se cambia en
+infracion el id de automotor; y al dominio anterior si no tiene fecha de
+actualizacion o fecha de pedido, se da de baja.
+
+
+
+

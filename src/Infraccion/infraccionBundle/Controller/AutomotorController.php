@@ -35,9 +35,7 @@ class AutomotorController Extends Controller {
     }
 
     public function  dominioAjaxSaveAction(Request $request, $id){
-        //
         $em = $this->getDoctrine()->getManager();
-        $log = $this->get("logger");
 
         $entity = $em->getRepository('VerificacionBundle:Automotor')->find($id);
         if (!$entity) {
@@ -56,9 +54,6 @@ class AutomotorController Extends Controller {
             ));
 
         }
-
-
-
 
         return $this->render('InfraccionBundle:Automotor:automotor_edit.html.twig', array(
             'entity'      => $entity,

@@ -12,15 +12,15 @@ class InfraccionType extends AbstractType
     {
         $builder
             ->add('dominio')
-            ->add('municipio')
-            ->add('ubicacion')
-            ->add('tipo_infraccion')
-            ->add('fecha')
-            ->add('foto1')
-            ->add('foto2')
-            ->add('foto3')
+//            ->add('municipio')
+//            ->add('ubicacion')
+//            ->add('tipo_infraccion')
+            ->add('fecha',"datetime",array('with_seconds'=> true ))
+//            ->add('foto1')
+//            ->add('foto2')
+//            ->add('foto3')
             ->add('observacion')
-            ->add('etapa')
+//            ->add('etapa')
         ;
     }
 

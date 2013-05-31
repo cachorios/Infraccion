@@ -1,6 +1,8 @@
 /* Main */
 body {
-    background-color: #f2f2f2;
+    background-color: #939393;
+
+        /*#f2f2f2;*/
 }
 a:hover {
     text-decoration: none;
@@ -1140,9 +1142,16 @@ table div[class*="span"]{
     font-size: 14px;
 }
 
-.ver_dominio{
+.ver_dominio a{
     font-size: 14px;
     color: #802420;
+    font-weight: bold
+}
+
+.ver_dominio a:hover{
+    font-size: 16px;
+    color: #da4f49;
+
     font-weight: bold
 }
 
@@ -1173,7 +1182,32 @@ table div[class*="span8"]{
     font-weight: bold;
 }
 
+#mod_Infraccion p{
+    color: #505050;
+    font-size: 11px;
+}
+
 .fotoinfra{
     width: 200px;
 
+}
+
+.ui-dialog .help-block{
+    color: indianred;
+    font-size: 10px;
+    /*padding-top: 3px !important;*/
+    margin-top: 3px;
+
+}
+
+.ui-dialog .error{
+    color: indianred;
+    font-size: 10px;
+    /*padding-top: 3px !important;*/
+    margin-top: 3px;
+
+}
+
+.error{
+    color: #AA3333;
 }

@@ -40,32 +40,22 @@ class InfraccionController extends Controller
 
         $data = $session->get('InfraccionFilterParm');
 
-        if(!$data){
+        if (!$data) {
             $session->getFlashBag()->add('error', 'Primero debe establecer los parametraos de trabajo.');
             return $this->redirect($this->generateUrl('infraccion_filterparm'));
         }
-
 
 
         $filtro = new Infraccion();
         $filtro->setMunicipio($data->getMunicipio());
         $filtro->setUbicacion($data->getUbicacion());
         $filtro->setTipoInfraccion($this->getDoctrine()->getRepository("InfraccionBundle:TipoInfraccion")->find($data->getTipoInfraccion()->getid()));
-
-
+        $filtro->setFecha($data->getFecha());
 
         list($filterForm, $queryBuilder) = $this->filter();
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
 
-/*
-        foreach($entities as $entity){
-            try{
-                $entity->setAutomotor($this->getDoctrine()->getRepository("VerificacionBundle:Automotor")->findOneByDominio($entity->getDominio()) );
-            }catch(\Exception $e){
-                $entity->setAutomotor(new Automotor());
-            }
-        }
-*/
+
         return $this->render('InfraccionBundle:Infraccion:index.html.twig', array(
             'entities' => $entities,
             'pagerHtml' => $pagerHtml,
@@ -87,9 +77,9 @@ class InfraccionController extends Controller
 
         $data = $session->get('InfraccionFilterParm');
 
-        if($data)
-            $queryBuilder = $em->getRepository('InfraccionBundle:Infraccion')->getInfraccionQuery($data->getMunicipio()->getId(),$data->getUbicacion()->getId(),$data->getTipoInfraccion()->getId(),$data->getFecha());
-        else{
+        if ($data)
+            $queryBuilder = $em->getRepository('InfraccionBundle:Infraccion')->getInfraccionQuery($data->getMunicipio()->getId(), $data->getUbicacion()->getId(), $data->getTipoInfraccion()->getId(), $data->getFecha());
+        else {
             return $this->redirect($this->generateUrl('infraccion_filterparm'));
         }
 
@@ -140,8 +130,7 @@ class InfraccionController extends Controller
 
         // Paginator - route generator
         $me = $this;
-        $routeGenerator = function($page) use ($me)
-        {
+        $routeGenerator = function ($page) use ($me) {
             return $me->generateUrl('infraccion', array('page' => $page));
         };
 
@@ -163,7 +152,7 @@ class InfraccionController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Infraccion();
+        $entity = new Infraccion();
         $form = $this->createForm(new InfraccionType(), $entity);
         $form->bind($request);
 
@@ -178,7 +167,7 @@ class InfraccionController extends Controller
 
         return $this->render('InfraccionBundle:Infraccion:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -191,13 +180,13 @@ class InfraccionController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
         $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
-        $breadcrumbs->addItem("Nuevo" );
+        $breadcrumbs->addItem("Nuevo");
         $entity = new Infraccion();
-        $form   = $this->createForm(new InfraccionType(), $entity);
+        $form = $this->createForm(new InfraccionType(), $entity);
 
         return $this->render('InfraccionBundle:Infraccion:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -210,7 +199,7 @@ class InfraccionController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
         $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
-        $breadcrumbs->addItem("Ver" );
+        $breadcrumbs->addItem("Ver");
 
         $em = $this->getDoctrine()->getManager();
 
@@ -223,8 +212,8 @@ class InfraccionController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('InfraccionBundle:Infraccion:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),));
     }
 
     /**
@@ -233,10 +222,11 @@ class InfraccionController extends Controller
      */
     public function editAction($id)
     {
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
-        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
-        $breadcrumbs->addItem("Editar" );
+        $idForm = $this->getRequest()->get("idForm");
+//        $breadcrumbs = $this->get("white_october_breadcrumbs");
+//        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
+//        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
+//        $breadcrumbs->addItem("Editar");
 
         $em = $this->getDoctrine()->getManager();
 
@@ -247,12 +237,12 @@ class InfraccionController extends Controller
         }
 
         $editForm = $this->createForm(new InfraccionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('InfraccionBundle:Infraccion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'idForm' => $idForm,
+            'error' => "",
         ));
     }
 
@@ -262,38 +252,88 @@ class InfraccionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $response = new Response();
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('InfraccionBundle:Infraccion')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Infraccion entity.');
+        $dominio = $entity->getDominio();
+        $fecha = $entity->getFecha();
+
+        try {
+            if (!$entity) {
+                throw new \Exception('No se puede editar, Id. inexistente.');
+            }
+
+            $editForm = $this->createForm(new InfraccionType(), $entity);
+            $editForm->bind($request);
+
+            $dir1 = $this->container->getParameter("infraccion.infracciones.dir") . $fecha->format('Ym');
+
+            if ($editForm->isValid()) {
+                $move = 0;
+                if($fecha->format("YmdHis") != $entity->getFecha()->format("YmdHis") ){
+                    if($entity->getFotoR1()!= null){
+                        $filename = $entity->getFoto1();
+                        $entity->setFoto1($this->getFotoName($entity,1).".jpg");
+                        $this->movefile($dir1.'/'.$filename,$dir1.'/'.$entity->getFoto1());
+                    }
+                    if($entity->getFotoR2()!= null){
+                        $filename = $entity->getFoto2();
+                        $entity->setFoto2($this->getFotoName($entity,2).".jpg");
+                        $this->movefile($dir1.'/'.$filename,$dir1.'/'.$entity->getFoto2());
+                    }
+                    if($entity->getFotoR2()!= null){
+                        $filename = $entity->getFoto3();
+                        $entity->setFoto3($this->getFotoName($entity,3).".jpg");
+                        $this->movefile($dir1.'/'.$filename,$dir1.'/'.$entity->getFoto3());
+                    }
+
+                    $dir2 = $this->container->getParameter("infraccion.infracciones.dir") . $entity->getFecha()->format('Ym');
+                    if($dir1 != $dir2){
+                        if(!is_dir($dir2)){
+                            mkdir($dir1);
+                        }
+                        $move = 1;
+                        if ($entity->getFotoR1()) {
+                            $this->movefile($dir1.'/'.$entity->getFoto1(),$dir2.'/'.$entity->getFoto1());
+                        }
+                        if ($entity->getFotoR2()) {
+                            $this->movefile($dir1.'/'.$entity->getFoto1(),$dir2.'/'.$entity->getFoto1());
+                        }
+                        if ($entity->getFotoR2()) {
+                            $this->movefile($dir1.'/'.$entity->getFoto1(),$dir2.'/'.$entity->getFoto1());
+                        }
+
+                    }
+
+                }
+
+
+                $em->persist($entity);
+                $em->flush();
+
+                $ret = array(
+                    "ok"=>1,
+                    "id"=>$entity->getId(),
+                    "html" =>$this->renderView('InfraccionBundle:Infraccion:_tr.html.twig', array('entity' => $entity)),
+                    "move" => $move
+                );
+                $response->setContent(json_encode($ret));
+            } else {
+                throw new \Exception('Datos invalidos.');
+            }
+        } catch (\Exception $e) {
+            //$this->get('session')->getFlashBag()->add('error', 'flash.update.error');
+            $response->setStatusCode(405);
+            $response->setContent($this->render('InfraccionBundle:Infraccion:edit.html.twig', array(
+                'entity' => $entity,
+                'edit_form' => $editForm->createView(),
+                'error' => $e->getMessage(),
+            )));
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new InfraccionType(), $entity);
-        $editForm->bind($request);
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
-
-            return $this->redirect($this->generateUrl('infraccion_edit', array('id' => $id)));
-        } else {
-            $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
-        }
-
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
-        $breadcrumbs->addItem("Infraccion", $this->get("router")->generate("infraccion"));
-        $breadcrumbs->addItem("Editar" );
-
-        return $this->render('InfraccionBundle:Infraccion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $response;
     }
 
     /**
@@ -334,21 +374,21 @@ class InfraccionController extends Controller
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
-            ->getForm()
-            ;
+            ->getForm();
     }
 
 
-    public function filterParmAction(){
+    public function filterParmAction()
+    {
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
 
-        $entity  = new Infraccion();
+        $entity = new Infraccion();
         $entity->setFecha(new \DateTime("now"));
 
         if ($request->getMethod() == 'POST') {
-            $muni  = $request->get("infraccion_infraccionbundle_FiltroParmtype")['municipio'];
+            $muni = $request->get("infraccion_infraccionbundle_FiltroParmtype")['municipio'];
 
             $form = $this->createForm(
                 new FiltroParmType(
@@ -364,13 +404,13 @@ class InfraccionController extends Controller
                 return $this->redirect($this->generateUrl('infraccion'));
             }
 
-        }else{
+        } else {
 
             $data = $session->get('InfraccionFilterParm');
-            if($data){
-                $entity->setMunicipio( $em->getRepository("InfraccionBundle:Municipio")->find($data->getMunicipio()->getid()));
-                $entity->setUbicacion( $em->getRepository("InfraccionBundle:Ubicacion")->find($data->getUbicacion()->getid()));
-                $entity->setTipoInfraccion(  $em->getRepository("InfraccionBundle:TipoInfraccion")->find($data->getTipoInfraccion()->getid()));
+            if ($data) {
+                $entity->setMunicipio($em->getRepository("InfraccionBundle:Municipio")->find($data->getMunicipio()->getid()));
+                $entity->setUbicacion($em->getRepository("InfraccionBundle:Ubicacion")->find($data->getUbicacion()->getid()));
+                $entity->setTipoInfraccion($em->getRepository("InfraccionBundle:TipoInfraccion")->find($data->getTipoInfraccion()->getid()));
                 $entity->setFecha($data->getFecha());
             }
 
@@ -381,7 +421,7 @@ class InfraccionController extends Controller
 
         return $this->render('InfraccionBundle:Infraccion:filterParm.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
 
     }
@@ -401,18 +441,19 @@ class InfraccionController extends Controller
 
         $id = $request->get("id");
         $tablas = $em->getRepository("InfraccionBundle:Ubicacion")->getUbicacionByMuni($id)->getQuery()->getResult();
-        $opciones="";
-        foreach($tablas as $tabla){
-            $opciones = $opciones."<option value='{$tabla->getid()}'>".$tabla."</option>";
+        $opciones = "";
+        foreach ($tablas as $tabla) {
+            $opciones = $opciones . "<option value='{$tabla->getid()}'>" . $tabla . "</option>";
         }
 
         $response->setContent($opciones);
         return $response;
     }
 
-    public function cambiarFotoAction(Request $request, $id){
+    public function cambiarFotoAction(Request $request, $id)
+    {
 
-        $foto= $request->files->get('foto');
+        $foto = $request->files->get('foto');
         $nroFoto = $request->get("nrofoto");
 
         $em = $this->getDoctrine()->getManager();
@@ -422,51 +463,44 @@ class InfraccionController extends Controller
             throw $this->createNotFoundException('No se encuentrta la entidad Municipio.');
         }
 
-      //  ld($foto);
-      //  ld($foto->getClientOriginalExtension());
+        $filename = $this->getFotoName($entity,$nroFoto);
 
-
-
-
-        $filename = sprintf(
-                "%02u%02u%02u% 6s%s%d",
-                $entity->getMunicipio()->getCodigo(),
-                $entity->getUbicacion()->getCodigo(),
-                $entity->getTipoInfraccion()->getCodigo(),
-                $entity->getDominio(),
-                $entity->getFecha()->format('YmdHis'),
-                $nroFoto
-        );
+//            sprintf(
+//            "%02u%02u%02u% 6s%s%d",
+//            $entity->getMunicipio()->getCodigo(),
+//            $entity->getUbicacion()->getCodigo(),
+//            $entity->getTipoInfraccion()->getCodigo(),
+//            $entity->getDominio(),
+//            $entity->getFecha()->format('YmdHis'),
+//            $nroFoto
+//        );
 
         $dir = $this->container->getParameter("infraccion.infracciones.dir");
         $dir .= $entity->getFecha()->format('Ym');
 
-        if($foto->getClientOriginalExtension() == 'bmp'){
-            //$filename .= ".jpg";
-            //$this->ConvertBMP2GD($foto->getPathname(), $dir.'/'.$filename);
+        if ($foto->getClientOriginalExtension() == 'bmp') {
 
-
-            $foto->move($dir,$filename.".bmp");
+            $foto->move($dir, $filename . ".bmp");
 
             $convert = new Bitmap($dir);
-            $convert->convertJpg($dir.'/'.$filename.".bmp",$dir.'/'.$filename.".jpg");
-            $filename.=".jpg";
+            $convert->convertJpg($dir . '/' . $filename . ".bmp", $dir . '/' . $filename . ".jpg");
+            $filename .= ".jpg";
 
-        }else{
-            $filename .= ".".$foto->getClientOriginalExtension();
-            $foto->move($dir, $filename );
+        } else {
+            $filename .= "." . $foto->getClientOriginalExtension();
+            $foto->move($dir, $filename);
         }
 
 
-        if($nroFoto == 1 ){
+        if ($nroFoto == 1) {
             $entity->setFoto1($filename);
         }
 
-        if($nroFoto == 2 ){
+        if ($nroFoto == 2) {
             $entity->setFoto2($filename);
         }
 
-        if($nroFoto == 3 ){
+        if ($nroFoto == 3) {
             $entity->setFoto3($filename);
         }
 
@@ -478,5 +512,28 @@ class InfraccionController extends Controller
         return $response->setContent($filename);
     }
 
+
+    private function getFotoName( $entity, $nroFoto){
+        $filename = sprintf(
+            "%02u%02u%02u% 6s%s%d",
+            $entity->getMunicipio()->getCodigo(),
+            $entity->getUbicacion()->getCodigo(),
+            $entity->getTipoInfraccion()->getCodigo(),
+            $entity->getDominio(),
+            $entity->getFecha()->format('YmdHis'),
+            $nroFoto
+        );
+        return $filename;
+    }
+
+    private function movefile($f1, $f2){
+        try{
+        if( copy($f1,$f2)) {
+            unlink($f1);
+        }
+        }catch( \Exception $e){
+            //
+        }
+    }
 
 }
