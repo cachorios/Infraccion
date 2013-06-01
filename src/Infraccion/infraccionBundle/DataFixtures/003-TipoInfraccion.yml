@@ -3,3 +3,4 @@ fixtures:
   ti1:
     codigo: 3
     nombre: "Semaforo Luz Roja"
+    cantidad_foto: 3
