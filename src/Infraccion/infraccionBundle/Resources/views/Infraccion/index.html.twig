@@ -237,7 +237,7 @@
                                                     if (responseText.ok == 1) {
 
                                                         $("#" + responseText.id).html(responseText.html)
-                                                        refreshDom();
+                                                        $('.fotoinfra').contextMenu(menuImg, {thme: 'vista'});
                                                         $(dlg).dialog("close");
                                                     }
                                                 }
@@ -256,12 +256,6 @@
 
                 return false;
             });
-
-
-
-
-
-
 
             var menuImg = [
                 {'Cambiar Fotografia': function (menuItem, menu) {

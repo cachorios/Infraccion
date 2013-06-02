@@ -271,7 +271,11 @@ class InfraccionController extends Controller
 
             if ($editForm->isValid()) {
                 $move = 0;
-                if($fecha->format("YmdHis") != $entity->getFecha()->format("YmdHis") ){
+
+                //Verificar el nuevo dominio exista
+                $this->CheckOrCreateDom($dominio, $entity);
+
+                if($fecha->format("YmdHis") != $entity->getFecha()->format("YmdHis") || $dominio == $entity->getDominio() ){
                     if($entity->getFotoR1()!= null){
                         $filename = $entity->getFoto1();
                         $entity->setFoto1($this->getFotoName($entity,1).".jpg");
@@ -282,7 +286,7 @@ class InfraccionController extends Controller
                         $entity->setFoto2($this->getFotoName($entity,2).".jpg");
                         $this->movefile($dir1.'/'.$filename,$dir1.'/'.$entity->getFoto2());
                     }
-                    if($entity->getFotoR2()!= null){
+                    if($entity->getFotoR3()!= null){
                         $filename = $entity->getFoto3();
                         $entity->setFoto3($this->getFotoName($entity,3).".jpg");
                         $this->movefile($dir1.'/'.$filename,$dir1.'/'.$entity->getFoto3());
@@ -291,23 +295,20 @@ class InfraccionController extends Controller
                     $dir2 = $this->container->getParameter("infraccion.infracciones.dir") . $entity->getFecha()->format('Ym');
                     if($dir1 != $dir2){
                         if(!is_dir($dir2)){
-                            mkdir($dir1);
+                            mkdir($dir2);
                         }
                         $move = 1;
                         if ($entity->getFotoR1()) {
                             $this->movefile($dir1.'/'.$entity->getFoto1(),$dir2.'/'.$entity->getFoto1());
                         }
                         if ($entity->getFotoR2()) {
-                            $this->movefile($dir1.'/'.$entity->getFoto1(),$dir2.'/'.$entity->getFoto1());
+                            $this->movefile($dir1.'/'.$entity->getFoto2(),$dir2.'/'.$entity->getFoto2());
                         }
                         if ($entity->getFotoR2()) {
-                            $this->movefile($dir1.'/'.$entity->getFoto1(),$dir2.'/'.$entity->getFoto1());
+                            $this->movefile($dir1.'/'.$entity->getFoto3(),$dir2.'/'.$entity->getFoto3());
                         }
-
                     }
-
                 }
-
 
                 $em->persist($entity);
                 $em->flush();
@@ -331,10 +332,9 @@ class InfraccionController extends Controller
                 'error' => $e->getMessage(),
             )));
         }
-
-
         return $response;
     }
+
 
     /**
      * Deletes a Infraccion entity.
@@ -362,7 +362,6 @@ class InfraccionController extends Controller
 
         return $this->redirect($this->generateUrl('infraccion'));
     }
-
     /**
      * Creates a form to delete a Infraccion entity by id.
      *
@@ -512,6 +511,20 @@ class InfraccionController extends Controller
         return $response->setContent($filename);
     }
 
+    private function CheckOrCreateDom($oldDominio, Infraccion $entity){
+        if($oldDominio == $entity->getDominio()){
+            return ;
+        }
+
+        $dominio = $this->getDoctrine()->getRepository("VerificacionBundle:Automotor")->findByDominio($entity->getDominio());
+        if($dominio == null){
+            $dominio =  new Automotor();
+            $dominio->setDominio($entity->getDominio());
+        }
+        $entity->setAutomotor($dominio);
+
+
+    }
 
     private function getFotoName( $entity, $nroFoto){
         $filename = sprintf(
