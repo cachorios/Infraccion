@@ -273,7 +273,7 @@
                     "Doctrine\\Common\\Collections\\": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -345,7 +345,7 @@
                     "Doctrine\\Common\\": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -477,7 +477,7 @@
                     "Doctrine\\DBAL\\": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -691,7 +691,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -806,7 +806,7 @@
                     "Doctrine\\ORM\\": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1335,7 +1335,7 @@
                     "JordiLlonch\\Bundle\\CrudGeneratorBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1410,12 +1410,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "de188e471f59918b0b523b8fc346761c2e4ff1a4"
+                "reference": "014f83418c1c790303e7d803dae873ae6b2a4f61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/de188e471f59918b0b523b8fc346761c2e4ff1a4",
-                "reference": "de188e471f59918b0b523b8fc346761c2e4ff1a4",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/014f83418c1c790303e7d803dae873ae6b2a4f61",
+                "reference": "014f83418c1c790303e7d803dae873ae6b2a4f61",
                 "shasum": ""
             },
             "require": {
@@ -1455,7 +1455,7 @@
                     "src/functions.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1473,7 +1473,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2013-05-29 08:54:41"
+            "time": "2013-06-01 22:07:54"
         },
         {
             "name": "lar/utiles-bundle",
@@ -1483,6 +1483,12 @@
                 "type": "git",
                 "url": "git@github.com:cachorios/UtilsBundle.git",
                 "reference": "a1decedb2b0dd31122d97ba4bc089654b027d166"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cachorios/UtilsBundle/zipball/a1decedb2b0dd31122d97ba4bc089654b027d166",
+                "reference": "a1decedb2b0dd31122d97ba4bc089654b027d166",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
@@ -1513,6 +1519,10 @@
                 "Imagen",
                 "admin"
             ],
+            "support": {
+                "source": "https://github.com/cachorios/UtilsBundle/tree/master",
+                "issues": "https://github.com/cachorios/UtilsBundle/issues"
+            },
             "time": "2013-03-24 21:37:56"
         },
         {
@@ -1660,7 +1670,7 @@
                     "Monolog": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1718,7 +1728,7 @@
                     "Mopa\\Bundle\\BootstrapBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1836,7 +1846,7 @@
                     "Pagerfanta\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1884,7 +1894,7 @@
                     "PhpOption\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -1925,7 +1935,7 @@
                     "Psr\\Log\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2067,7 +2077,7 @@
                     "Sensio\\Bundle\\DistributionBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2090,13 +2100,13 @@
             "target-dir": "Sensio/Bundle/FrameworkExtraBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sensio/SensioFrameworkExtraBundle.git",
-                "reference": "09041c1f95f4ad9c9a23eb9d23d9d110cde94a44"
+                "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
+                "reference": "v2.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioFrameworkExtraBundle/zipball/09041c1f95f4ad9c9a23eb9d23d9d110cde94a44",
-                "reference": "09041c1f95f4ad9c9a23eb9d23d9d110cde94a44",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/v2.2.2",
+                "reference": "v2.2.2",
                 "shasum": ""
             },
             "require": {
@@ -2114,7 +2124,7 @@
                     "Sensio\\Bundle\\FrameworkExtraBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2129,7 +2139,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2013-04-11 06:46:09"
+            "time": "2013-06-02 13:06:28"
         },
         {
             "name": "sensio/generator-bundle",
@@ -2137,13 +2147,13 @@
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sensio/SensioGeneratorBundle.git",
-                "reference": "781c1a93a705fc823e2b65dd85e322b4eb77fef8"
+                "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
+                "reference": "v2.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioGeneratorBundle/zipball/781c1a93a705fc823e2b65dd85e322b4eb77fef8",
-                "reference": "781c1a93a705fc823e2b65dd85e322b4eb77fef8",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/v2.2.2",
+                "reference": "v2.2.2",
                 "shasum": ""
             },
             "require": {
@@ -2166,7 +2176,7 @@
                     "Sensio\\Bundle\\GeneratorBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2177,7 +2187,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2013-05-07 13:40:47"
+            "time": "2013-06-02 13:07:01"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2207,7 +2217,7 @@
                     "lib/swift_required.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2271,7 +2281,7 @@
                     "Symfony\\Bundle\\AsseticBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2327,7 +2337,7 @@
                     "Symfony\\Bundle\\MonologBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2386,7 +2396,7 @@
                     "Symfony\\Bundle\\SwiftmailerBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2410,12 +2420,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "b67753820592f48539e9f5dd1dd7e20ec6f6dbd3"
+                "reference": "bc1bf3202dae3649387d4716b1816f580210fa9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/b67753820592f48539e9f5dd1dd7e20ec6f6dbd3",
-                "reference": "b67753820592f48539e9f5dd1dd7e20ec6f6dbd3",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/bc1bf3202dae3649387d4716b1816f580210fa9a",
+                "reference": "bc1bf3202dae3649387d4716b1816f580210fa9a",
                 "shasum": ""
             },
             "require": {
@@ -2482,7 +2492,7 @@
                     "src/Symfony/Component/Locale/Resources/stubs"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2501,7 +2511,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-05-31 14:46:43"
+            "time": "2013-06-02 16:01:55"
         },
         {
             "name": "twig/extensions",
@@ -2578,7 +2588,7 @@
                     "Twig_": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3"
             ],
