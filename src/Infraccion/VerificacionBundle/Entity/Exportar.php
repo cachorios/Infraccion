@@ -138,8 +138,6 @@ class Exportar
         if($this->usarFecha ==true) {
             if($this->getfechaInicio()->format('U') > $this->getFechaFinal()->format('U')){
                 $context->addViolationAtSubPath('dni', 'La fecha de inicio no puede ser mayor a la fecha de final.',array(),null);
-//                $context->addViolationAtSubPath('dni',(string) $this->getfechaInicio()->format('U'). 'inicio' ,array(),null);
-//                $context->addViolationAtSubPath('dni',(string) $this->getFechaFinal()->format('U'). 'final' ,array(),null);
 
             }
 

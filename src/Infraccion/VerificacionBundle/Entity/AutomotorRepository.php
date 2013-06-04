@@ -32,7 +32,7 @@ class AutomotorRepository extends EntityRepository
         return $qb;
     }
 
-    public function getAutomotoresExportar()
+    public function getAutomotoresExportar($exportar)
     {
         $em = $this->getEntityManager();
         $query = $em->createQueryBuilder("c")
@@ -40,6 +40,11 @@ class AutomotorRepository extends EntityRepository
             ->add('from', 'VerificacionBundle:Automotor c');
         $query->Where($query->expr()->isNull('c.fechaPedido'));
         $query->andWhere($query->expr()->isNull('c.ultimaActualizacion'));
+
+        if($exportar->getUsarFecha()){
+
+        }
+
 
         return $query;
     }
