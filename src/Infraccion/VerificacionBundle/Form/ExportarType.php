@@ -27,7 +27,7 @@ class ExportarType extends AbstractType
             'help_block' => "dd-mm-aaaa"
 
         ))
-            ->add("usarFecha","checkbox", array("required"=>false, 'label' => 'Usar parametro Fechas', 'label_render' => true))
+            ->add("usarFecha","checkbox", array("required"=>false, 'label' => 'Usar rango fechas de infraccion', 'label_render' => true))
 //            ->add("usarNull","checkbox", array("required"=>false, 'label' => 'Usar registros Null'))
 
 

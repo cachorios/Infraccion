@@ -10,16 +10,39 @@ use Infraccion\VerificacionBundle\Form\ExportarType;
 
 class ExportarController extends Controller
 {
+
+
     public function indexAction()
     {
         $request = $this->getRequest();
+        $exportar = new Exportar();
+        $form = $this->createForm(new ExportarType(), $exportar);
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+            if ($form->isValid()) {
+                try {
+                    $result = $this->procesar($exportar);
+
+                    $this->get('session')->getFlashBag()->add('success', "Finalizado..");
+                    return $result;
+                } catch (\Exception $e) {
+                    $this->get('session')->getFlashBag()->add('success', $e->getMessage());
+                }
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'error. !!!');
+            }
+        }
 
         return $this->render('VerificacionBundle:Exportar:index.html.twig', array(
+            'form' => $form->createView()
 
         ));
     }
 
-    public function exportarAction()
+
+//    public function exportarAction()
+    public function procesar($exportar)
     {
         try {
             $excelService = $this->get('xls.service_xls2007');
@@ -35,7 +58,7 @@ class ExportarController extends Controller
             $excelService->excelObj->setActiveSheetIndex(0)
                 ->setCellValue('A1', 'Dominio');
 
-            $ids = $this->addRegistro($excelService->excelObj->setActiveSheetIndex(0));
+            $ids = $this->addRegistro($excelService->excelObj->setActiveSheetIndex(0), $exportar);
 
 
             $excelService->excelObj->getActiveSheet()->setTitle('Simple');
@@ -60,20 +83,20 @@ class ExportarController extends Controller
 
     }
 
-    public function addRegistro($excelObj)
+    public function addRegistro($excelObj, $exportar)
     {
 
         try {
             $em = $this->getDoctrine()->getManager();
-            $query = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresExportar();
+            $query = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresExportar( $exportar);
             $results = $query->getQuery()->getArrayResult();
 
             $cantidadPermitido = 10000;
             $ids = array();
             $row = 2;
             if (count($results) != 0) {
-                if (count($results) > $cantidadPermitido){
-                    throw new \exception ('Error la cantidad de registros es de '.count($results).'.');
+                if (count($results) > $cantidadPermitido) {
+                    throw new \exception ('Error la cantidad de registros es de ' . count($results) . '.');
                 }
                 foreach ($results as $result) {
                     $excelObj->setCellValue('A' . $row, $result['dominio']);
@@ -93,4 +116,5 @@ class ExportarController extends Controller
         $em = $this->getDoctrine()->getManager();
         return $em->getRepository('VerificacionBundle:Automotor')->setUltimaActualizacion($ids);
     }
+
 }
