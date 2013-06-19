@@ -51,3 +51,7 @@ infraccion_cambiar_foto:
     pattern: /{id}/infraccion_cambiarfoto
     defaults: { _controller: "InfraccionBundle:Infraccion:cambiarFoto" }
     requirements: { _method: post }
+
+infraccion_cambiar_etapa:
+    pattern: /{id}/infraccion_cambiaretapa
+    defaults: { _controller: "InfraccionBundle:Infraccion:cambiarEtapa" }

@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap-responsive.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/jquery.contextmenu.css') }}"/>
-
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'css/dark.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/imperio.css') }}"/>
 
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/jquery.ui.all.css') }}"/>
@@ -47,6 +48,9 @@
 
 {% block body %}
 <body id="{% block id '' %}">
+<script>
+    var modeloNombre = "{{ block('id') }}";
+</script>
 
 <div class="container-fluid nopadding">
     <div class="row-fluid">
@@ -102,12 +106,18 @@
 <script type="text/javascript" src="{{ asset( 'js/jquery.flot.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset( 'js/jquery.flot.resize.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset( 'js/imperio.general.js') }}"></script>
-<script type="text/javascript" src="{{ asset( 'js/imperio.dashboard.js') }}"></script>
+<script type="text/javascript" src="{{ asset( 'js/infraccion.js') }}"></script>
+
+{#<script type="text/javascript" src="{{ asset( 'js/imperio.dashboard.js') }}"></script>#}
 
 
 {% block javascripts %}{% endblock %}
 
 {% block endscript %}{% endblock endscript %}
+
+
+
+
 
 </body>
 {% endblock body %}

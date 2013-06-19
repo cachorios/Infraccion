@@ -149,10 +149,11 @@ mopa_bootstrap:
                 icon: plus-sign
 
 avalanche_imagine:
-    source_root: "c:/web/"
-    #source_root: %kernel.root_dir%/../web
-    web_root:     "localhost/infraccion/"
-    #web_root:     %kernel.root_dir%/../web
+#    source_root: %kernel.root_dir%/../web
+#    web_root:    %kernel.root_dir%/../web
+
+    source_root: : C:/web/Infraccion/web/
+    web_root:    infraccion/
 
     cache_prefix: media/cache
     driver:       gd

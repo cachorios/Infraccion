@@ -36,13 +36,18 @@
     </td>
 
 {% endif %}
-<td>{{ entity.etapa }}</td>
-<td>
-    <a class="btn btn-mini"
-       href="{{ path('infraccion_show', { 'id': entity.id }) }}">
-        {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+<td style="text-align: center;">
+    <a href="#" class="cambiarEtapa">
+    <img src="{{ asset('img/etapa_'~entity.etapa ~'.png')}}" >
     </a>
-    <a class="btn btn-mini"
-       href="{{ path('infraccion_edit', { 'id': entity.id }) }}">
-        {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-    </a></td>
+</td>
+<td>
+    {#<a class="btn btn-mini"#}
+       {#href="{{ path('infraccion_show', { 'id': entity.id }) }}">#}
+        {#{{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}#}
+    {#</a>#}
+    {#<a class="btn btn-mini"#}
+       {#href="{{ path('infraccion_edit', { 'id': entity.id }) }}">#}
+        {#{{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}#}
+    {#</a>#}
+</td>

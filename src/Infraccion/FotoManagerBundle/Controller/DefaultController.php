@@ -4,7 +4,7 @@ namespace Infraccion\FotoManagerBundle\Controller;
 
 use Doctrine\Tests\ORM\Functional\CompositePrimaryKeyTest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Imagine\Image\ImageInterface;
+//use Imagine\Image\ImageInterface;
 use Symfony\Component\Form\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

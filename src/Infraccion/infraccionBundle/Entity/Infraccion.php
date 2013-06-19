@@ -241,7 +241,7 @@ class Infraccion
      */
     public function getFoto3()
     {
-        return null==$this->foto3 ?  "../../img/no-foto.png" : $this->foto3 ;
+        return null==$this->foto3 ?  "../../img/no-foto.jpg" : $this->foto3 ;
     }
 
     /**

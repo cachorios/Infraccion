@@ -1,0 +1,123 @@
+<ul class="nav">
+    <div id="menuIzq" class="accordion custom-acc">
+
+        <div class="accordion-group fs ">
+            <div class="accordion-heading">
+                <a href="#monitorsb" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Monitor
+                </a>
+            </div>
+            <div class="accordion-body collapse" id="monitorsb" style="height: 0px;">
+                <div class="accordion-inner">
+                    <ul class="nav nav-list">
+                        <li><a href="#"><i class="icon-large icon-th"></i> Monitor</a></li>
+                        <li><a href="#"><i class="icon-large icon-th"></i>Estadistica</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group  mod_fotosup_h mod_importar_h mod_filterInfraccion_h mod_Infraccion_h">
+            <div class="accordion-heading">
+                <a href="#infraccionLM" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Infracción
+                </a>
+            </div>
+            <div class="accordion-body collapse" id="infraccionLM" style="height: 0px;">
+                <div class="accordion-inner">
+                    <ul class="nav nav-list">
+                        <li class="mod_fotosup"><a href="{{ path('foto_manager_subirfoto') }}"><span class="ico"><i
+                                            class="icon-large icon-camera"></i></span><span
+                                        class="text">Subir Fotos</span></a></li>
+                        <li class="mod_importar"><a href="{{ path('importar_infraccion') }}"><span class="ico"><i
+                                            class="icon-large icon-file"></i></span><span
+                                        class="text">Importar</span></a></li>
+                        <li class="mod_filterInfraccion"><a href="{{ path('infraccion_filterparm') }}"><span
+                                        class="ico"><i class="icon-large icon-check"></i></span><span class="text">Filtro</span></a>
+                        </li>
+                        <li class="mod_Infraccion"><a href="{{ path('infraccion') }}"><span class="ico"><i
+                                            class="icon-large icon-check"></i></span><span
+                                        class="text">Verificación</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {#Tablas#}
+        <div class="accordion-group mod_Municipio_h mod_Ubicacion_h mod_TipoInfraccion_h">
+            <div class="accordion-heading ">
+                <a href="#tablasLM" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Tablas
+                </a>
+            </div>
+            <div class="accordion-body collapse" id="tablasLM" style="height: 0;">
+                <div class="accordion-inner">
+                    <ul class="nav nav-list">
+                        <li class="mod_Municipio"><a href="{{ path('municipio') }}"><span class="ico"><i
+                                            class="icon-th-list"></i></span><span class="text">Municipios</span></a>
+                        </li>
+                        <li class="mod_Ubicacion"><a href="{{ path('ubicacion') }}"><span class="ico"><i
+                                            class="icon-th-list"></i></span><span class="text">Lugares de Control</span></a>
+                        </li>
+                        <li class="mod_TipoInfraccion"><a href="{{ path('tipoinfraccion') }}"><span class="ico"><i
+                                            class="icon-th-list"></i></span><span
+                                        class="text">Tipos de Infracciones</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a href="#pagesb" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Pages
+                </a>
+            </div>
+            <div class="accordion-body collapse" id="pagesb" style="height: 0px;">
+                <div class="accordion-inner">
+                    <ul class="nav nav-list">
+                        <li><a href="pages.html"><i class="icon-large icon-th"></i> List</a></li>
+                        <li><a href="add-new-page.html"><i class="icon-large icon-th"></i> Add New</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a href="#commentsb" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Comments
+                </a>
+            </div>
+            <div class="accordion-body collapse" id="commentsb">
+                <div class="accordion-inner">
+                    <ul class="nav nav-list">
+                        <li><a href="comments.html"><i class="icon-large icon-th"></i> Comments</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</ul>
+
+<script>
+
+   $('#{{ modulo }} #sidebar .accordion-group.{{ modulo }}_h .accordion-heading').addClass('active-head');
+   $('#{{ modulo }} #sidebar .accordion-group.{{ modulo }}_h .accordion-body').addClass('in').css('height','auto');
+
+
+
+
+//    $('#sidebar .accordion-group .accordion-heading').click( function () {
+//       // alert("0");
+//        $('#sidebar .accordion-group .accordion-heading').removeClass('active-head');
+//        $(this).addClass('active-head');
+//    });
+//    $('#sidebar .nav.nav-list li a').live('click', function () {
+//        //alert("a");
+//        //$('#sidebar .nav.nav-list li').removeClass('active');
+//        //$(this).parent('li').addClass('active');
+//    });
+
+
+</script>

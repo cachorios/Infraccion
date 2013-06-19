@@ -216,7 +216,7 @@ class ImportarController extends Controller
 
 
             $reg->setFecha($dt);
-            $reg->setEtapa(1);
+            $reg->setEtapa(0);
 
             if ($foto == "1")
                 $reg->setFoto1($file);

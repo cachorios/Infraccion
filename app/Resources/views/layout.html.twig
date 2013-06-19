@@ -3,8 +3,8 @@
 
 {% block principal %}
     <div class="row-fluid">
-        <div class="span2 leftmenu">
-            {% include ':include:leftmenu.html.twig' %}
+        <div id="sidebar" class="span2 ">
+            {% include ':include:leftmenu_acord.html.twig' with { modulo:  block("id") } %}
         </div>
         <div class="span10" id="content">
             {% block page %}

@@ -549,4 +549,36 @@ class InfraccionController extends Controller
         }
     }
 
+    public function cambiarEtapaAction($id){
+        $ch=true;
+        $ret = array();
+        $em = $this->getDoctrine()->getManagerNames();
+
+        $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
+
+        if($entity->getEtapa() == 0){
+            $entity->setEtapa(1);
+        }elseif($entity->getEtapa() == 1){
+            $entity->setEtapa(0);
+        }else{
+            $ret = array("ok" => 0);
+            $ch = false;
+        }
+
+        if($ch){
+            $ret = array(
+                    "ok" => 1,
+                    "newEtapa" => $entity->getEtapa()
+                );
+            $em->persist($entity);
+            $em->flush();
+        }
+
+        $response = new Response();
+        $response->setContent( json_encode($ret) );
+
+        return $response;
+
+    }
+
 }

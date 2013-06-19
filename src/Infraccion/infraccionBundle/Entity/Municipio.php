@@ -87,6 +87,26 @@ class Municipio
     private $codigoPostal;
 
     /**
+     *
+     *  @ORM\Column(type="string", nullable=true)
+     *  @Assert\Image(
+     *     minWidth = 100,
+     *     maxWidth = 200,
+     *     minHeight = 50,
+     *     maxHeight = 250
+     * )
+     */
+    private $logo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="membrete", type="string", length=90)
+     * @Assert\Length(min = 4, max = 15)
+     */
+    private $membrete;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="cont_1_nombre", type="string", length=64)
@@ -587,4 +607,50 @@ class Municipio
     }
 
 
+
+    /**
+     * Set membrete
+     *
+     * @param string $membrete
+     * @return Municipio
+     */
+    public function setMembrete($membrete)
+    {
+        $this->membrete = $membrete;
+    
+        return $this;
+    }
+
+    /**
+     * Get membrete
+     *
+     * @return string 
+     */
+    public function getMembrete()
+    {
+        return $this->membrete;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     * @return Municipio
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string 
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
 }
