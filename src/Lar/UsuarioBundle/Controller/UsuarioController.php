@@ -200,7 +200,7 @@ class UsuarioController extends Controller
                 $directorioFotos = $this->container->getParameter(
                     'lar.usuario.imagenes'
                 );
-                //$entity->subirFoto($directorioFotos);
+                $entity->subirFoto($directorioFotos);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -214,7 +214,7 @@ class UsuarioController extends Controller
 
         return $this->render('UsuarioBundle:Usuario:new.html.twig', array(
             'entity' => $entity,
-            'form' => $form->createView(),
+            'edit_form' => $form->createView(),
         ));
     }
 

@@ -53,5 +53,9 @@ infraccion_cambiar_foto:
     requirements: { _method: post }
 
 infraccion_cambiar_etapa:
-    pattern: /{id}/infraccion_cambiaretapa
+    pattern: /infraccion_cambiaretapa
     defaults: { _controller: "InfraccionBundle:Infraccion:cambiarEtapa" }
+
+cedulagen:
+    pattern: /infraccion_cedula
+    defaults: { _controller: "InfraccionBundle:Infraccion:cedulaGen" }

@@ -1,0 +1,137 @@
+body {
+    background-color: #939393;
+    margin: 0;
+}
+
+#rep_hoja {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    width: 20.6cm;
+    height: 29.7cm;
+    margin: 0 auto;
+    /*margin-right: auto;*/
+    /*margin-top: 1cm;*/
+    color: #5F5F5F;
+    background-color: #ffffff;
+
+    line-height: 20px;
+}
+
+
+#rep_hoja p {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+    line-height: 18px;
+    margin: 0 0 9px;
+}
+
+.rep_margen{
+    padding: 1.0cm 1cm 0cm 1.2cm;
+}
+
+
+.rep_logo{
+    width: 2cm;
+}
+
+.rep_texto{
+    border-bottom: 1px dotted #AAAAAA;
+    padding-bottom: 15px;
+    line-height: 16px;
+
+}
+.rep_logo_text{
+    font-size: 11px;
+    float: right;
+    text-align: right;
+    line-height: 15px;
+    /*font-weight: bold;*/
+
+}
+
+.rep_header{
+    /*border-bottom: 1px dotted #AAAAAA;*/
+    padding-bottom: 0px;
+}
+
+.rep_contenido{
+    padding: 10px 0;
+    border-bottom: 1px dotted #AAAAAA;
+    text-align: justify;
+}
+.rep_titulo,
+.rep_lugar
+{
+
+}
+
+.rep_titulo{
+    font-size: 24.5px;
+    font-family: 'Lato',Arial,Helvetica,sans-serif;
+    text-align: center;
+    text-decoration: underline;
+    line-height: 20px;
+}
+.rep_titulo2{
+    font-size: 14.5px;
+    font-family: 'Lato',Arial,Helvetica,sans-serif;
+    text-align: center;
+    line-height: 30px;
+}
+
+#rep_hoja table th{
+   text-align: left !important;
+    border: 1px solid #AAAAAA;
+    line-height: 15px;
+}
+
+#rep_hoja table td{
+    text-align: left !important;
+    border: 1px solid #AAAAAA;
+    padding-left: 5px;
+    line-height: 15px;
+}
+.lugar{
+
+}
+
+.separador{
+    border-bottom: 1px dotted #AAAAAA;
+}
+#rep_hoja table{
+    border: 1px solid #AAAAAA;
+    width: 100%;
+}
+
+
+.rep_valores{
+    font-size: 14.5px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    border: 1px solid #AAAAAA;
+    line-height: 25px;
+}
+
+.rep_nota{
+    padding-bottom: 15px;
+    line-height: 18px;
+
+}
+.rep_voluntario{
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 20px;
+    text-decoration: underline;
+}
+
+.razon{
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+}
+.otrdestino{
+    line-height: 12px;
+}

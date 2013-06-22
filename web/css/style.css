@@ -778,7 +778,22 @@ base
 #mod_Municipio .mod_Municipio >a,
 #mod_Municipio .mod_Municipio >a:hover,
 #mod_TipoInfraccion .mod_TipoInfraccion >a,
-#mod_TipoInfraccion .mod_TipoInfraccion >a:hover
+#mod_TipoInfraccion .mod_TipoInfraccion >a:hover,
+#mod_Ubicacion .mod_Ubicacion >a,
+#mod_Ubicacion .mod_Ubicacion >a:hover,
+
+#mod_automotor .mod_automotor >a,
+#mod_automotor .mod_automotor >a:hover,
+#mod_automotor_imp .mod_automotor_imp >a,
+#mod_automotor_imp .mod_automotor_imp >a:hover,
+#mod_automotor_exp .mod_automotor_exp >a,
+#mod_automotor_exp .mod_automotor_exp >a:hover,
+
+#mod_usuario .mod_usuario >a,
+#mod_usuario .mod_usuario >a:hover
+
+
+
 {
     background-color: #aaa !important;
     color:#232323  !important;

@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="accordion-group  mod_fotosup_h mod_importar_h mod_filterInfraccion_h mod_Infraccion_h">
+        <div class="accordion-group  mod_fotosup_h mod_importar_h mod_filterInfraccion_h mod_Infraccion_h mod_cedulagen_h">
             <div class="accordion-heading">
                 <a href="#infraccionLM" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
                     <i class="icon-large icon-th-large head_icon"></i> Infracción
@@ -35,9 +35,11 @@
                         <li class="mod_filterInfraccion"><a href="{{ path('infraccion_filterparm') }}"><span
                                         class="ico"><i class="icon-large icon-check"></i></span><span class="text">Filtro</span></a>
                         </li>
-                        <li class="mod_Infraccion"><a href="{{ path('infraccion') }}"><span class="ico"><i
-                                            class="icon-large icon-check"></i></span><span
+                        <li class="mod_Infraccion"><a href="{{ path('infraccion') }}"><span class="ico"><iclass="icon-large icon-check"></i></span><span
                                         class="text">Verificación</span></a></li>
+
+                        <li class="mod_cedulagen"><a href="{{ path('cedulagen') }}"><span class="ico"><iclass="icon-large icon-check"></i></span><span
+                                        class="text">Generar cedula</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -67,32 +69,38 @@
             </div>
         </div>
 
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a href="#pagesb" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
-                    <i class="icon-large icon-th-large head_icon"></i> Pages
+
+
+
+
+        {#Automotor#}
+        <div class="accordion-group mod_automotor_h mod_automotor_imp_h mod_automotor_exp_h">
+            <div class="accordion-heading ">
+                <a href="#automotorLM" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Automotor
                 </a>
             </div>
-            <div class="accordion-body collapse" id="pagesb" style="height: 0px;">
+            <div class="accordion-body collapse" id="automotorLM" style="height: 0;">
                 <div class="accordion-inner">
                     <ul class="nav nav-list">
-                        <li><a href="pages.html"><i class="icon-large icon-th"></i> List</a></li>
-                        <li><a href="add-new-page.html"><i class="icon-large icon-th"></i> Add New</a></li>
+                        <li class="mod_automotor"><a href="{{ path('automotor') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Automotores</span></a></li>
+                        <li class="mod_automotor_imp"><a href="{{ path('automotor_importar') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Importar</span></a></li>
+                        <li class="mod_automotor_exp"><a href="{{ path('automotor_exportar') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Exportar</span></a></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="accordion-group">
+        <div class="accordion-group mod_usuario_h" >
             <div class="accordion-heading">
-                <a href="#commentsb" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
-                    <i class="icon-large icon-th-large head_icon"></i> Comments
+                <a href="#usuarioLM" data-parent="#menuIzq" data-toggle="collapse" class="accordion-toggle">
+                    <i class="icon-large icon-th-large head_icon"></i> Usuario
                 </a>
             </div>
-            <div class="accordion-body collapse" id="commentsb">
+            <div class="accordion-body collapse" id="usuarioLM">
                 <div class="accordion-inner">
                     <ul class="nav nav-list">
-                        <li><a href="comments.html"><i class="icon-large icon-th"></i> Comments</a></li>
+                        <li class="mod_usuario"><a href="{{ path('usuario') }}"><span class="ico"><i class="icon-th-list"></i></span><span class="text">Usuario</span></a></li>
                     </ul>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 //
 ******************************/
 body {
-	background: url(../examples/17.png) #454545;
+	/*background: url(../examples/17.png) #454545;*/
 }
 .widget_container {
 	background:rgba(0,0,0,0.1);
@@ -49,7 +49,7 @@ body {
 	
 #sidebar .custom-acc .accordion-heading.active-head {
 	text-shadow: 1px 1px 1px rgba(24,39,62, .3);
-	background:url(../examples/17.png) #898989;
+	/*background:url(../examples/17.png) #898989;*/
 }
 .dropdown-menu li > a:hover,
 .dropdown-menu .active > a,

@@ -43,7 +43,7 @@ class FiltroParmType extends AbstractType
                 'required' => true
             ))
             ->add('fecha', "date", array(
-                'label' => "Fecah de Proceso (dd - mm - aaaa)",
+                'label' => "Fecha de Proceso (dd - mm - aaaa)",
                 'widget' => "text",
                 'format' => 'dd-MM-yyyy',
                 'help_block' => "dd-mm-aaaa"

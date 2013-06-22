@@ -123,6 +123,9 @@ class MunicipioController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+            if (null != $entity->getLogo()) {
+                $entity->subirLogo();
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -227,9 +230,28 @@ class MunicipioController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new MunicipioType(), $entity);
+
+        $logoOriginal = $editForm->getData()->getLogo();
+
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+
+            if (null == $entity->getLogo() ) {
+                // La foto original no se modifica, recuperar su ruta
+                $entity->setLogo($logoOriginal);
+            } else {
+                // La foto se ha modificado
+                if ($logoOriginal != $entity->getLogo()  ) {
+                    $entity->subirlogo();
+                    // Borrar la foto anterior
+                    if(file_exists('uploads/' . $logoOriginal) && $logoOriginal != '') {
+                        unlink('uploads/' . $logoOriginal);
+                    }
+                }
+            }
+
+
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');

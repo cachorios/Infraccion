@@ -5,6 +5,7 @@ namespace Infraccion\infraccionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Municipio
@@ -89,22 +90,32 @@ class Municipio
     /**
      *
      *  @ORM\Column(type="string", nullable=true)
-     *  @Assert\Image(
-     *     minWidth = 100,
-     *     maxWidth = 200,
-     *     minHeight = 50,
-     *     maxHeight = 250
-     * )
      */
     private $logo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="membrete", type="string", length=90)
-     * @Assert\Length(min = 4, max = 15)
+     * @ORM\Column(name="membrete", type="string", length=255)
+     * @Assert\Length(min = 4, max = 255)
      */
     private $membrete;
+
+    /**
+     * @var bigint
+     *
+     * @ORM\Column(name="num_cedula", type="bigint")
+     */
+    private $num_cedula;
+
+    /**
+     * @var bigint
+     *
+     * @ORM\Column(name="num_cedula", type="decimal", , scale="10", precision="3")
+     */
+    private $unidad_fiscal;
+
+
 
     /**
      * @var string
@@ -653,4 +664,18 @@ class Municipio
     {
         return $this->logo;
     }
+
+    public function subirLogo()
+    {
+        $directorioDestino ="uploads";
+        if(null === $this->logo) {
+            return;
+        }
+        $foto = new File('uploads/' . $this->logo, true);
+        $nombreArchivoLogo = 'logo_'.$this->getId().'.'.$foto->guessExtension();
+        $foto->move($directorioDestino, $nombreArchivoLogo);
+
+        $this->setLogo($nombreArchivoLogo);
+    }
+
 }

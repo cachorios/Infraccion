@@ -108,7 +108,7 @@
                                     <th>Etapa</th>
 
 
-                                    <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
+                                    {#<th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>#}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -328,7 +328,7 @@
             $('.fotoinfra').contextMenu(menuImg, {thme: 'vista'});
 
 
-        }) ;
+        });
 
         dialogo = function (title, content, aButtons, nW, nH) {
 
@@ -373,6 +373,32 @@
             return true;
         }
 
+        /**
+         * Cambio de estado
+         */
+
+        $("#Infraccion").delegate(".cambiarEtapa", "click", function (e) {
+            var id = $(this).data("id");
+            miUrl = "{{ path('infraccion_cambiar_etapa') }}";
+            e.preventDefault();
+            lnkclick = this;
+            $.ajax({
+                type: "POST",
+                url: miUrl,
+                data: {id: id},
+                dataType: 'json',
+                success: function (ret) {
+                    $.unblockUI();
+                    if(ret.ok == 1){
+                        $(lnkclick).html(ret.img);
+                    }
+                }
+            });
+
+
+            return false;
+
+        })
 
         </script>
 

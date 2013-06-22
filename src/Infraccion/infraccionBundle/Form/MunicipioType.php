@@ -13,10 +13,26 @@ class MunicipioType extends AbstractType
         $builder
             ->add('codigo','integer',array('label' =>'Código'))
             ->add('nombre')
+            ->add('membrete',"textarea")
+
             ->add('email','email',array('label' =>'eMail'))
             ->add('telefono')
             ->add('direccion')
             ->add('localidad')
+            ->add('provincia')
+
+            ->add('logo','hidden',array(
+                'larutils_enabled' => true,
+//                'div_img' => 'foto',
+                'larutils' => array(
+                    'uploader'  =>'lar_utils_upload',
+                    'folderUpload' => 'uploads',
+                    'queueID' => 'fotoUp',
+                    'buttonText' => 'Cambiar Logo',
+                    'width'     => '100%',
+                    'height'    => 28),
+                'read_only' => true
+            ))
             ->add('codigoPostal',null,array('label' =>'Código Postal'))
             ->add('cont1Nombre',null,array('label' =>'Apellido y Nombre'))
             ->add('cont1Cargo',null,array('label' =>'Cargo'))

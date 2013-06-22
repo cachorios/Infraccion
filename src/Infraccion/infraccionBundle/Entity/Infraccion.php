@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Doctrine\ORM\Mapping\Index as Index;
-
+use Infraccion\infraccionBundle\validator as acDom;
 /**
  * Infraccion
  *
@@ -52,6 +52,7 @@ class Infraccion
      *
      * @ORM\Column(name="dominio", type="string", length=6)
      * @Assert\Length(min = 6, max = 6)
+     * @acDom\ConstrainsDominio
      */
 
     private $dominio;
