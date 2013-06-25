@@ -530,26 +530,26 @@ base
 // INPUT FLUID SIZE AND CUSTOM FORM
 //
 ******************************/
-.input-xxlarge-fluid {
-  width: 98%;
-  font-size:18px;
-  line-height:30px;
-  height:30px;
-}
-.input-xlarge-fluid {
-  width: 90%;
-}
-.input-large-fluid {
-  width: 75%;
-}
-.slogin .btn {
-	width:90%;
-}
-.help-block {
-	font-size:11px;
-	color:#898989;
-	margin-top:-5px;
-}
+/*.input-xxlarge-fluid {*/
+  /*width: 98%;*/
+  /*font-size:18px;*/
+  /*line-height:30px;*/
+  /*height:30px;*/
+/*}*/
+/*.input-xlarge-fluid {*/
+  /*width: 90%;*/
+/*}*/
+/*.input-large-fluid {*/
+  /*width: 75%;*/
+/*}*/
+/*.slogin .btn {*/
+	/*width:90%;*/
+/*}*/
+/*.help-block {*/
+	/*font-size:11px;*/
+	/*color:#898989;*/
+	/*margin-top:-5px;*/
+/*}*/
 
 /*****************************
 //
@@ -791,8 +791,6 @@ base
 
 #mod_usuario .mod_usuario >a,
 #mod_usuario .mod_usuario >a:hover
-
-
 
 {
     background-color: #aaa !important;

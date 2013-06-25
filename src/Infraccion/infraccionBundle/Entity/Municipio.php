@@ -94,24 +94,16 @@ class Municipio
     private $logo;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="membrete", type="string", length=255)
-     * @Assert\Length(min = 4, max = 255)
-     */
-    private $membrete;
-
-    /**
      * @var bigint
      *
-     * @ORM\Column(name="num_cedula", type="bigint")
+     * @ORM\Column(name="num_cedula", type="bigint", nullable= true)
      */
     private $num_cedula;
 
     /**
-     * @var bigint
+     * @var decimal(10,2)
      *
-     * @ORM\Column(name="num_cedula", type="decimal", , scale="10", precision="3")
+     * @ORM\Column(name="unidad_fiscal", type="decimal", scale=3, precision =12,  nullable= true)
      */
     private $unidad_fiscal;
 
@@ -620,29 +612,6 @@ class Municipio
 
 
     /**
-     * Set membrete
-     *
-     * @param string $membrete
-     * @return Municipio
-     */
-    public function setMembrete($membrete)
-    {
-        $this->membrete = $membrete;
-    
-        return $this;
-    }
-
-    /**
-     * Get membrete
-     *
-     * @return string 
-     */
-    public function getMembrete()
-    {
-        return $this->membrete;
-    }
-
-    /**
      * Set logo
      *
      * @param string $logo
@@ -678,4 +647,50 @@ class Municipio
         $this->setLogo($nombreArchivoLogo);
     }
 
+
+    /**
+     * Set unidad_fiscal
+     *
+     * @param float $unidadFiscal
+     * @return Municipio
+     */
+    public function setUnidadFiscal($unidadFiscal)
+    {
+        $this->unidad_fiscal = $unidadFiscal;
+    
+        return $this;
+    }
+
+    /**
+     * Get unidad_fiscal
+     *
+     * @return float 
+     */
+    public function getUnidadFiscal()
+    {
+        return $this->unidad_fiscal;
+    }
+
+    /**
+     * Set num_cedula
+     *
+     * @param integer $numCedula
+     * @return Municipio
+     */
+    public function setNumCedula($numCedula)
+    {
+        $this->num_cedula = $numCedula;
+    
+        return $this;
+    }
+
+    /**
+     * Get num_cedula
+     *
+     * @return integer 
+     */
+    public function getNumCedula()
+    {
+        return $this->num_cedula;
+    }
 }

@@ -44,6 +44,13 @@ class TipoInfraccion
     private $nombre;
 
     /**
+     * Valoe en unidades fiscal
+     * @var Decimal
+     * @ORM\Column(name="importe", type="decimal", precision = 10, scale=2)
+     */
+    private $importe;
+
+    /**
      * @var integer
      * @ORM\Column(name="cantidad_foto", type="integer")
      * @Assert\Length(min = 1, max = 3)
@@ -162,5 +169,28 @@ class TipoInfraccion
     public function getCantidadFoto()
     {
         return $this->cantidad_foto;
+    }
+
+    /**
+     * Set importe
+     *
+     * @param float $importe
+     * @return TipoInfraccion
+     */
+    public function setImporte($importe)
+    {
+        $this->importe = $importe;
+    
+        return $this;
+    }
+
+    /**
+     * Get importe
+     *
+     * @return float 
+     */
+    public function getImporte()
+    {
+        return $this->importe;
     }
 }

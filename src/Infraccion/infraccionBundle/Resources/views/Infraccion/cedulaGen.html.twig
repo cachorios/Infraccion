@@ -1,0 +1,125 @@
+{% extends '::layout.html.twig' %}
+{% block id 'mod_filterInfraccion' %}
+    {% block title %}
+        {{ parent() }} - Generación de Cedula
+    {% endblock %}
+
+    {% block page %}
+
+        <section id="Infraccion">
+
+            {% embed 'box.html.twig' with {'box_titulo': 'Generación de Cedula' } %}
+
+                {% block box_contenido %}
+                    {% for type, flashMessages in app.session.flashbag.all() %}
+                        {% for flashMessage in flashMessages %}
+                            <div class='alert alert-{{ type }}'>
+                                {{ flashMessage|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <form action="{{ path('cedulagen') }}" method="post" {{ form_enctype(form) }}>
+                        <div class="row-fluid">
+                            <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; height: 150px; ">
+                                {{ form_row(form.municipio) }}
+                            </div>
+                            <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; height: 150px;">
+                                {{ form_row(form.fecha_desde) }}
+
+                                {{ form_row(form.fecha_hasta) }}
+
+                            </div>
+                            <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; height: 150px;">
+                                {{ form_widget(form) }}
+                            </div>
+
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12" style="border: #aaaaaa solid thin; padding: 8px;">
+                                <p>
+                                    <strong>Generar Cedula e Imprime:</strong> Recorre todas las infracciones, del municipio seleccionado, y para el rango de fecha, genera el nro de cedula, cambia el estado a, e imprime.<br>
+                                    <strong>Generar Cedula:</strong> Idem. anterior, pero no imprime.<br>
+                                    <strong>Imprimir Cedula:</strong> Imprime cedulas, generadas con los pasos anteriores.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <p>
+                            <button type="submit" value="1" name="accion">Generar Cedula e Imprimir</button>
+                            <button type="submit" value="2" name="accion">Generar Cedula</button>
+                            <button type="submit" value="3" name="accion">Imprimir Cedula</button>
+
+                            {#<button type="submit" value="1" name="infraccion_infraccionbundle_CedulaParmtype[accion]">Generar Cedula e Imprimir</button>#}
+                            {#<button type="submit" value="2" name="infraccion_infraccionbundle_CedulaParmtype[accion]">Generar Cedula</button>#}
+                            {#<button type="submit" value="3" name="infraccion_infraccionbundle_CedulaParmtype[accion]">Imprimir Cedula</button>#}
+                        </p>
+                    </form>
+                {% endblock box_contenido %}
+            {% endembed %}
+
+
+        </section>
+
+        <script>
+
+
+            $('#infraccion_infraccionbundle_CedulaParmtype_fecha_desde').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                showWeek: true,
+                firstDay: 1,
+                defaultDate: "-2w",
+                numberOfMonths: 2,
+                onClose: function( selectedDate ) {
+                    $( "#infraccion_infraccionbundle_CedulaParmtype_fecha_hasta" ).datepicker( "option", "minDate", selectedDate );
+                }
+            });
+            $('#infraccion_infraccionbundle_CedulaParmtype_fecha_hasta').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                showWeek: true,
+                firstDay: 1,
+                defaultDate: "-2w",
+                numberOfMonths: 2,
+                onClose: function( selectedDate ) {
+                    $( "#infraccion_infraccionbundle_CedulaParmtype_fecha_desde" ).datepicker( "option", "maxDate", selectedDate );
+                }
+            });
+
+            $('#infraccion_infraccionbundle_CedulaParmtype_primer_vencimiento').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                showWeek: true,
+                firstDay: 1,
+                defaultDate: "-2w",
+                numberOfMonths: 2,
+                onClose: function( selectedDate ) {
+                    $( "#infraccion_infraccionbundle_CedulaParmtype_segundo_vencimiento" ).datepicker( "option", "minDate", selectedDate );
+                }
+            });
+            $('#infraccion_infraccionbundle_CedulaParmtype_segundo_vencimiento').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                showWeek: true,
+                firstDay: 1,
+                defaultDate: "-2w",
+                numberOfMonths: 2,
+                onClose: function( selectedDate ) {
+                    $( "#infraccion_infraccionbundle_CedulaParmtype_primer_vencimiento" ).datepicker( "option", "maxDate", selectedDate );
+                }
+            });
+
+
+
+
+
+        </script>
+
+
+    {% endblock %}
+
+
+
+

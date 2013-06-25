@@ -25,5 +25,5 @@ _imagine:
 
 home_page:
     pattern:   /
-    defaults: { _controller: "FotoManagerBundle:Default:uploadFoto" }
+    defaults: { _controller: "InfraccionBundle:Infraccion:filterParm" }
 

@@ -13,6 +13,7 @@ use Pagerfanta\View\TwitterBootstrapView;
 use Infraccion\infraccionBundle\Entity\Infraccion;
 use Infraccion\infraccionBundle\Form\InfraccionType;
 use Infraccion\infraccionBundle\Form\InfraccionFilterType;
+use Infraccion\infraccionBundle\Form\CedulaParmType;
 
 use Infraccion\infraccionBundle\Form\FiltroParmType;
 use Symfony\Component\HttpFoundation\Response;
@@ -389,7 +390,9 @@ class InfraccionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = new Infraccion();
+        $entity->setDominio("AAA000");
         $entity->setFecha(new \DateTime("now"));
+
 
         if ($request->getMethod() == 'POST') {
             $muni = $request->get("infraccion_infraccionbundle_FiltroParmtype")['municipio'];
@@ -596,37 +599,39 @@ class InfraccionController extends Controller
     {
         $request = $this->getRequest();
         $session = $request->getSession();
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = new Infraccion();
-        $entity->setFecha(new \DateTime("now"));
+        //$em = $this->getDoctrine()->getManager();
 
         if ($request->getMethod() == 'POST') {
-            $muni = $request->get("infraccion_infraccionbundle_FiltroParmtype")['municipio'];
+            $accion = $request->get("accion");
 
-            $form = $this->createForm(
-                new FiltroParmType(
-                    $em->getRepository("InfraccionBundle:Ubicacion"),
-                    $muni),
-                $entity);
+            $form = $this->createForm( new CedulaParmType() );
             $form->bind($request);
 
             if ($form->isValid()) {
+                $dato = $form->getData();
+
                 $session->getFlashBag()->add('success', 'Filtro creado con exito');
                 $filterData = $form->getData();
-                $session->set('InfraccionFilterParm', $filterData);
+
                 return $this->redirect($this->generateUrl('infraccion'));
             }
-
         }
 
-        $form = $this->createForm(new FiltroParmType($em->getRepository("InfraccionBundle:Ubicacion")), $entity);
+        $form = $this->createForm(new CedulaParmType());
 
-
-        return $this->render('InfraccionBundle:Infraccion:filterParm.html.twig', array(
-            'entity' => $entity,
+        return $this->render('InfraccionBundle:Infraccion:cedulaGen.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    private function generarCedula($municipio, $desde, $hasta)
+    {
+
 
     }
+
+    private function imprimirCedula($municipio, $desde, $hasta, $vto1, $vto2){
+
+    }
+
 }

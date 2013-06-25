@@ -13,7 +13,7 @@ class MunicipioType extends AbstractType
         $builder
             ->add('codigo','integer',array('label' =>'Código'))
             ->add('nombre')
-            ->add('membrete',"textarea")
+
 
             ->add('email','email',array('label' =>'eMail'))
             ->add('telefono')
@@ -34,6 +34,10 @@ class MunicipioType extends AbstractType
                 'read_only' => true
             ))
             ->add('codigoPostal',null,array('label' =>'Código Postal'))
+            ->add('num_cedula',null,array('label' => "Siguiente Cedula"))
+            ->add('unidad_fiscal',null,array('label' => "Valor Unidad Fiscal"))
+
+
             ->add('cont1Nombre',null,array('label' =>'Apellido y Nombre'))
             ->add('cont1Cargo',null,array('label' =>'Cargo'))
             ->add('cont1Celular',null,array('label' =>'Nro. de Celular'))

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FiltroParmType extends AbstractType
+class CedulaParmType extends AbstractType
 {
 //    private $rep;
 //    private $muni;
@@ -33,14 +33,25 @@ class FiltroParmType extends AbstractType
 
             ->add('fecha_desde', "date", array(
                 'label' => "Fecha de Proceso (dd/mm/aaaa)",
-                'widget' => "singletext",
+                'widget' => "single_text",
                 'format' => 'dd/MM/yyyy',
                 'help_block' => "dd/mm/aaaa"
             ))
 
             ->add('fecha_hasta', "date", array(
                 'label' => "Fecha de Proceso (dd/mm/aaaa)",
-                'widget' => "singletext",
+                'widget' => "single_text",
+                'format' => 'dd/MM/yyyy',
+                'help_block' => "dd/mm/aaaa"
+            ))
+            ->add('primer_vencimiento', "date", array(
+                'widget' => "single_text",
+                'format' => 'dd/MM/yyyy',
+                'help_block' => "dd/mm/aaaa"
+            ))
+
+            ->add('segundo_vencimiento', "date", array(
+                'widget' => "single_text",
                 'format' => 'dd/MM/yyyy',
                 'help_block' => "dd/mm/aaaa"
             ));
@@ -49,12 +60,12 @@ class FiltroParmType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Infraccion\infraccionBundle\Entity\Infraccion'
+            'allow_extra_fields' => true
         ));
     }
 
     public function getName()
     {
-        return 'infraccion_infraccionbundle_FiltroParmtype';
+        return 'infraccion_infraccionbundle_CedulaParmtype';
     }
 }
