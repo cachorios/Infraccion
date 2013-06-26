@@ -9,17 +9,26 @@
 
 {% block page %}
     <section id="form">
-        <header>
-            <h1>Edición de Usuario - <span style="color: #0064cd"> {{ entity }}</span></h1>
-        </header>
-        {{ wo_render_breadcrumbs() }}
-        {% for type, flashMessages in app.session.flashbag.all() %}
-            {% for flashMessage in flashMessages %}
-                <div class="alert alert-{{ type }}">
-                    {{ flashMessage|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+        {% embed 'box.html.twig' with {'box_titulo': 'Edición de Usuario ' } %}
+        {% block box_contenido %}
+        <div class="row-fluid">
+            <div class="span12" style="margin-top: 0;">
+                {{ wo_render_breadcrumbs() }}
+
+                {% for type, flashMessages in app.session.flashbag.all() %}
+                    {% for flashMessage in flashMessages %}
+                        <div class='alert alert-{{ type }}'>
+                            {{ flashMessage|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {#<header>#}
+            {#<h1>Edición de Usuario - <span style="color: #0064cd"> {{ entity }}</span></h1>#}
+        {#</header>#}
+
 
         <div class="row-fluid">
             <div class="span12">
@@ -53,6 +62,8 @@
                 </form>
             </div>
         </div>
+        {% endblock box_contenido %}
+        {% endembed %}
     </section>
 
     <script>
