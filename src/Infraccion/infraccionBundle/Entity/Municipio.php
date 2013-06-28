@@ -94,6 +94,12 @@ class Municipio
     private $logo;
 
     /**
+     *
+     *  @ORM\Column(type="string", nullable=true)
+     */
+    private $firma;
+
+    /**
      * @var bigint
      *
      * @ORM\Column(name="num_cedula", type="bigint", nullable= true)
@@ -647,6 +653,19 @@ class Municipio
         $this->setLogo($nombreArchivoLogo);
     }
 
+    public function subirFirma()
+    {
+        $directorioDestino ="uploads";
+        if(null === $this->firma) {
+            return;
+        }
+        $foto = new File('uploads/' . $this->firma, true);
+        $nombreArchivoFirma = 'firma_'.$this->getId().'.'.$foto->guessExtension();
+        $foto->move($directorioDestino, $nombreArchivoFirma);
+
+        $this->setFirma($nombreArchivoFirma);
+    }
+
 
     /**
      * Set unidad_fiscal
@@ -692,5 +711,28 @@ class Municipio
     public function getNumCedula()
     {
         return $this->num_cedula;
+    }
+
+    /**
+     * Set firma
+     *
+     * @param string $firma
+     * @return Municipio
+     */
+    public function setFirma($firma)
+    {
+        $this->firma = $firma;
+    
+        return $this;
+    }
+
+    /**
+     * Get firma
+     *
+     * @return string 
+     */
+    public function getFirma()
+    {
+        return $this->firma;
     }
 }

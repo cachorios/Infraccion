@@ -38,7 +38,10 @@
 {% endif %}
 <td style="text-align: center;">
     <a href="#" class="cambiarEtapa" data-id="{{ entity.id }}">
-        <img src="{{ asset('img/etapa_'~entity.etapa ~'.png')}}" >
+        <img src="{{ asset('img/etapa_'~entity.etapa ~'.png')}}" ><br><br>
+        {% if entity.etapa == 2 %}
+            <a href="{{ path("infraccion_ver_cedula", {id : entity.id }) }}" class="btn">Ver infracción</a>
+        {% endif %}
     </a>
 </td>
 {#<td>#}

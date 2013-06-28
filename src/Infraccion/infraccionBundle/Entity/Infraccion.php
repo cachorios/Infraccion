@@ -101,6 +101,19 @@ class Infraccion
 
 
     /**
+     * @var integer
+     * @ORM\Column(name="nro_infraccion", type="integer", nullable=true)
+     */
+    private $nro_infraccion;
+
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="fecha_cedula", type="datetime", nullable=true)
+     */
+
+    private $fecha_cedula;
+    /**
      * @ORM\ManyToOne(targetEntity="Infraccion\VerificacionBundle\Entity\Automotor", cascade={"persist"} )
      */
     private $automotor;
@@ -396,5 +409,51 @@ class Infraccion
     public function getAutomotor()
     {
         return $this->automotor;
+    }
+
+    /**
+     * Set nro_infraccion
+     *
+     * @param integer: $nroInfraccion
+     * @return Infraccion
+     */
+    public function setNroInfraccion($nroInfraccion)
+    {
+        $this->nro_infraccion = $nroInfraccion;
+    
+        return $this;
+    }
+
+    /**
+     * Get nro_infraccion
+     *
+     * @return integer:
+     */
+    public function getNroInfraccion()
+    {
+        return $this->nro_infraccion;
+    }
+
+    /**
+     * Set fecha_cedula
+     *
+     * @param \DateTime $fechaCedula
+     * @return Infraccion
+     */
+    public function setFechaCedula($fechaCedula)
+    {
+        $this->fecha_cedula = $fechaCedula;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha_cedula
+     *
+     * @return \DateTime 
+     */
+    public function getFechaCedula()
+    {
+        return $this->fecha_cedula;
     }
 }

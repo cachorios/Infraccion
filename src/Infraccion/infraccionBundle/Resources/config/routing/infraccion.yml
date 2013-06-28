@@ -59,3 +59,7 @@ infraccion_cambiar_etapa:
 cedulagen:
     pattern: /infraccion_cedula
     defaults: { _controller: "InfraccionBundle:Infraccion:cedulaGen" }
+
+infraccion_ver_cedula:
+    pattern: /{id}/verCedula
+    defaults: { _controller: "InfraccionBundle:Infraccion:verCedula" }

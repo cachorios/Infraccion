@@ -20,6 +20,7 @@ class TipoInfraccionType extends AbstractType
                 'expanded' => true,
 
             ))
+            ->add('importe',null,array("label" => "Importe (en unidad fiscal)"))
             ->add('observacion')
         ;
     }

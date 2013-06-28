@@ -1046,9 +1046,9 @@ a.fc-event,
     #container {
         margin-top: 20px;   
     }
-    #content {
-        width: 82% !important;
-    }
+    /*#content {*/
+        /*width: 82% !important;*/
+    /*}*/
     .box.login .box-content .controls {
         margin-left: 0px;
     }
@@ -1077,13 +1077,13 @@ a.fc-event,
         float: left;
     }
 
-    #content {
-        position: absolute;
-        margin-left: 50px;
-        width: 87%;
-        max-width: 84%;
-        margin-right: 50px;
-    }
+    /*#content {*/
+        /*position: absolute;*/
+        /*margin-left: 50px;*/
+        /*width: 87%;*/
+        /*max-width: 84%;*/
+        /*margin-right: 50px;*/
+    /*}*/
 
     .quick-actions [class*="span"] {
         width: 31.9149%; 

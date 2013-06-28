@@ -6,8 +6,8 @@ Generación de Cedula
 Se procesan las infracciones en un rango de fecha, una empresa para todos los
 tipos de infraccion.  Se recorren todas las infracciones ordenados por fecha y
 hora + tipo de infraccion, para el rango de fecha y empresa, y se inserta el nro
-de acta de infraccion (Nro correlativo), con este nro de acta se toma la imagen
-de codigo de barra con este nro. y se lo mueve a la carpeta de
+de acta de infraccion (Nro correlativo), y estado = 2, con este nro de acta se
+toma la imagen de codigo de barra con este nro. y se lo mueve a la carpeta de
 infracciones\cbarra, para despejar la carpeta de codigo  de barra solicitado.
 
 Com estos datos, ya se puede generar la impresion de notificaciones y generar el

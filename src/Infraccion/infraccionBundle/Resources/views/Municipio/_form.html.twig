@@ -13,7 +13,33 @@
     <div class="tab-pane active" id="tab1">
         <fieldset>
             <div class="row-fluid">
-                <div class="span4">
+                <div class="span2">
+                    <div class="row-fluid" style="margin-left: 30px; text-align: center;">
+                        <div class="span12">
+                            <div id="fotoUp"></div>
+                            <div id="foto">
+                                <img alt="{{ entity }}" src="{{ asset('uploads/' ~entity.logo ) }}"
+                                     class="empresa_logo">
+                            </div>
+                            {{ form_row(edit_form.logo) }}
+
+                        </div>
+                    </div>
+                    <div class="row-fluid" style="margin-left: 30px; text-align: center;">
+                        <div class="span12">
+                            <div id="firmaUp"></div>
+                            <div id="firma">
+                                <img alt="{{ entity }}" src="{{ asset('uploads/' ~entity.firma ) }}"
+                                     class="empresa_firma">
+                            </div>
+
+                                {{ form_row(edit_form.firma) }}
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="span10">
 
 
                     {{ form_row(edit_form.codigo) }}
@@ -29,16 +55,6 @@
                     {{ form_row(edit_form.num_cedula) }}
                     {{ form_row(edit_form.unidad_fiscal) }}
                 </div>
-                <div class="span4">
-                    <div id="fotoUp"></div>
-                    <div id="foto">
-                        <img alt="{{ entity }}" src="{{ asset('uploads/' ~entity.logo ) }}" class="empresa_logo">
-                    </div>
-                    <div class="span3">
-                        {{ form_row(edit_form.logo) }}
-                    </div>
-                </div>
-
 
 
             </div>

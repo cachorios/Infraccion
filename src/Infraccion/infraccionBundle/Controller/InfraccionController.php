@@ -405,7 +405,6 @@ class InfraccionController extends Controller
             $form->bind($request);
 
             if ($form->isValid()) {
-                $session->getFlashBag()->add('success', 'Filtro creado con exito');
                 $filterData = $form->getData();
                 $session->set('InfraccionFilterParm', $filterData);
                 return $this->redirect($this->generateUrl('infraccion'));
@@ -610,6 +609,10 @@ class InfraccionController extends Controller
             if ($form->isValid()) {
                 $dato = $form->getData();
 
+                if($accion == 1){
+                    $this->generarCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'] );
+                }
+
                 $session->getFlashBag()->add('success', 'Filtro creado con exito');
                 $filterData = $form->getData();
 
@@ -626,11 +629,50 @@ class InfraccionController extends Controller
 
     private function generarCedula($municipio, $desde, $hasta)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $nro = $municipio->getNumCedula();
+        $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedula($municipio->getId(), $desde, $hasta);
+        foreach($infracciones as $infraccion){
+            $infraccion->setEtapa(2);
+            $infraccion->setNroInfraccion($nro); $nro++;
+            $infraccion->setFechaCedula( new \DateTime("now"));
+
+            $municipio->setNumCedula($nro);
+
+            $em->persist($infraccion);
+            $em->persist($municipio);
+        }
+
+        $em->flush();
+
+
+        return;
 
 
     }
 
     private function imprimirCedula($municipio, $desde, $hasta, $vto1, $vto2){
+
+    }
+
+
+    public function verCedulaAction(Request $request){
+        $id = $request->get("id");
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
+        $fecha = new \DateTime('now');
+        $vto1 = new \DateTime('now'); $vto1->modify("+10 day");
+        $vto2 = new \DateTime('now'); $vto2->modify("+24 day");
+        return $this->render('InfraccionBundle:Infraccion:cedula.html.twig',
+            array(
+                'entity' => $entity,
+                'fecha' => $fecha ,
+                'vto1'  =>  $vto1,
+                'vto2'  =>  $vto2
+            )
+        );
 
     }
 

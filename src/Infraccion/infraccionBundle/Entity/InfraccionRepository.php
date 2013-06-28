@@ -48,4 +48,19 @@ class InfraccionRepository extends EntityRepository
         return $a;
     }
 
+    public function getInfraccionToCedula($muni, $desde, $hasta){
+        $res = $this->_em->createQuery("
+            SELECT  i
+            FROM    InfraccionBundle:Infraccion i
+            WHERE   i.municipio = :muni
+            AND     i.fecha BETWEEN :desde AND :hasta
+            AND     i.etapa = 1
+            ORDER BY i.fecha")
+            ->setParameter("muni",$muni)
+            ->setParameter('desde',$desde)
+            ->setParameter('hasta',$hasta->setTime(23,59))
+            ->getResult();
+
+        return $res;
+    }
 }

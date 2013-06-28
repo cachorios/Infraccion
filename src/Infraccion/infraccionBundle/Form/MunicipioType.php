@@ -23,12 +23,24 @@ class MunicipioType extends AbstractType
 
             ->add('logo','hidden',array(
                 'larutils_enabled' => true,
-//                'div_img' => 'foto',
+                'div_img' => 'foto',
                 'larutils' => array(
                     'uploader'  =>'lar_utils_upload',
                     'folderUpload' => 'uploads',
                     'queueID' => 'fotoUp',
                     'buttonText' => 'Cambiar Logo',
+                    'width'     => '100%',
+                    'height'    => 28),
+                'read_only' => true
+            ))
+            ->add('firma','hidden',array(
+                'larutils_enabled' => true,
+                'div_img' => 'firma',
+                'larutils' => array(
+                    'uploader'  =>'lar_utils_upload',
+                    'folderUpload' => 'uploads',
+                    'queueID' => 'firmaUp',
+                    'buttonText' => 'Cambiar Firma',
                     'width'     => '100%',
                     'height'    => 28),
                 'read_only' => true

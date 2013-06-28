@@ -41,7 +41,7 @@ body {
 
 }
 .rep_logo_text{
-    font-size: 11px;
+    font-size: 9px;
     float: right;
     text-align: right;
     line-height: 15px;
@@ -79,15 +79,22 @@ body {
     line-height: 30px;
 }
 
-#rep_hoja table th{
-   text-align: left !important;
-    border: 1px solid #AAAAAA;
+#tabla_vto  td,
+#tabla_vto  th
+{
+    text-align: center !important;
+    border: 0.1em solid #AAAAAA;
+}
+
+.tab_infra th{
+   text-align: left !important ;
+    border: 0.1em solid #AAAAAA;
     line-height: 15px;
 }
 
-#rep_hoja table td{
-    text-align: left !important;
-    border: 1px solid #AAAAAA;
+.tab_infra td{
+    text-align: left ;
+    border: 0.1em solid #AAAAAA;
     padding-left: 5px;
     line-height: 15px;
 }
@@ -135,3 +142,4 @@ body {
 .otrdestino{
     line-height: 12px;
 }
+

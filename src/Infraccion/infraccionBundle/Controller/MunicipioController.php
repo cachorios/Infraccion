@@ -232,6 +232,7 @@ class MunicipioController extends Controller
         $editForm = $this->createForm(new MunicipioType(), $entity);
 
         $logoOriginal = $editForm->getData()->getLogo();
+        $firmaOriginal = $editForm->getData()->getFirma();
 
         $editForm->bind($request);
 
@@ -243,7 +244,7 @@ class MunicipioController extends Controller
             } else {
                 // La foto se ha modificado
                 if ($logoOriginal != $entity->getLogo()  ) {
-                    $entity->subirlogo();
+                    $entity->subirLogo();
                     // Borrar la foto anterior
                     if(file_exists('uploads/' . $logoOriginal) && $logoOriginal != '') {
                         unlink('uploads/' . $logoOriginal);
@@ -251,6 +252,17 @@ class MunicipioController extends Controller
                 }
             }
 
+            if (null == $entity->getFirma() ) {
+                $entity->setFirma($firmaOriginal);
+            } else {
+                if ($firmaOriginal != $entity->getFirma()  ) {
+                    $entity->subirFirma();
+                    // Borrar la foto anterior
+                    if(file_exists('uploads/' . $firmaOriginal) && $firmaOriginal != '') {
+                        unlink('uploads/' . $firmaOriginal);
+                    }
+                }
+            }
 
             $em->persist($entity);
             $em->flush();
