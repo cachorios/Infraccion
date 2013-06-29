@@ -12,9 +12,10 @@ if (!function_exists('intl_get_error_code')) {
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
-//$loader->registerNamespaces(array(
-//    // ...
-//    'APY' => __DIR__.'/../vendor/bundles',
-//));
+//$loader->registerNamespaces(
+//    array(
+//        'tcpdf' => __DIR__.'/../vendor/tecnick.com/tcpdf'
+//    )
+//);
 
 return $loader;

@@ -13,3 +13,7 @@ services:
             - { name: doctrine.event_listener, event: prePersist, method: prePersist }
             - { name: doctrine.event_listener, event: preUpdate,  method: preUpdate }
 
+    lar.twig.lar_extension:
+        class: Lar\UsuarioBundle\Twig\LarExtension
+        tags:
+            - { name: twig.extension }

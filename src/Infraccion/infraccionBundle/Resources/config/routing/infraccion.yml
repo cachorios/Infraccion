@@ -61,5 +61,9 @@ cedulagen:
     defaults: { _controller: "InfraccionBundle:Infraccion:cedulaGen" }
 
 infraccion_ver_cedula:
-    pattern: /{id}/verCedula
+    pattern: /{id}/vercedula
     defaults: { _controller: "InfraccionBundle:Infraccion:verCedula" }
+
+infraccion_ver_acta:
+    pattern: /{id}/veracta
+    defaults: { _controller: "InfraccionBundle:Infraccion:verActa" }
