@@ -2,14 +2,14 @@
 {% block id  'mod_automotor_exp' %}
 
     {% block title %}
-        {{ parent() }} - Automotor {{ 'views.index.list'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        {{ parent() }} - Exportación de Dominios para pedido
     {% endblock %}
 
 
     {% block page %}
         <section id="automotor">
 
-            {% embed 'box.html.twig' with {'box_titulo': 'Exportar datos para actualización de dominio.' } %}
+            {% embed 'box.html.twig' with {'box_titulo': 'Exportar Dominios datos para pedidos de Info.' } %}
             {% block rigth_title %}
             {% endblock %}
             {% block box_contenido %}
@@ -27,22 +27,19 @@
 
                         <div class="row-fluid">
                             <div class="span12">
-
                                 <div class="alert alert-block">
-                                    <blockquote>
-                                        <strong>
-                                            Nota: La exportación se realiza en un archivo Excel 2007, permitiendo un
-                                            numero maximo de 10000 registros.
-                                        </strong>
-                                    </blockquote>
+                                    <strong>
+                                        Nota: La exportación se realiza en un archivo Excel 2007, permitiendo un
+                                        numero maximo de 10000 registros.
+                                    </strong>
                                 </div>
                                 <form action="{{ path('automotor_exportar') }}" method="post" {{ form_enctype(form) }}>
                                     <div class="row-fluid">
 
                                         <div class="span4" style="border: #aaaaaa solid thin; padding: 8px; ">
-                                            {{ form_widget(form.usarFecha) }}
+                                            {#{{ form_widget(form.usarFecha) }}#}
 
-                                            <div id="fechas" style="margin: 8px; display: none;">
+                                            <div id="fechas" style="margin: 8px; ">
                                                 {{ form_row(form.fechaInicio) }}
                                                 {{ form_row(form.fechaFinal) }}
                                             </div>
@@ -58,34 +55,57 @@
                             </div>
                         </div>
                     </section>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            var checked = $('#infraccion_verificacionbundle_exportartype_usarFecha').is(':checked') ? 1 : 0;
-                            showFechas(checked);
 
-                            $('#infraccion_verificacionbundle_exportartype_usarFecha').click(function () {
-                                var checked = $('#infraccion_verificacionbundle_exportartype_usarFecha').is(':checked') ? 1 : 0;
-                                showFechas(checked);
-                            });
-
-                            function showFechas(fec) {
-                                if (fec == 1) {
-                                    $('#fechas').show();
-                                } else {
-                                    $('#fechas').hide();
-                                }
-                            }
-
-
-                        });
-
-
-                    </script>
 
                 </div>
 
                 {% endblock box_contenido %}
                 {% endembed %}
         </section>
+        <script type="text/javascript">
+            //                        $(document).ready(function () {
+            //                            var checked = $('#infraccion_verificacionbundle_exportartype_usarFecha').is(':checked') ? 1 : 0;
+            //                            showFechas(checked);
+            //
+            //                            $('#infraccion_verificacionbundle_exportartype_usarFecha').click(function () {
+            //                                var checked = $('#infraccion_verificacionbundle_exportartype_usarFecha').is(':checked') ? 1 : 0;
+            //                                showFechas(checked);
+            //                            });
+            //
+            //                            function showFechas(fec) {
+            //                                if (fec == 1) {
+            //                                    $('#fechas').show();
+            //                                } else {
+            //                                    $('#fechas').hide();
+            //                                }
+            //                            }
+            //
+            //
+            //                        });
 
+            $('#infraccion_verificacionbundle_exportartype_fechaInicio').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                showWeek: true,
+                firstDay: 1,
+                defaultDate: "-2w",
+                numberOfMonths: 1,
+                onClose: function (selectedDate) {
+                    $("#infraccion_verificacionbundle_exportartype_fechaFinal").datepicker("option", "minDate", selectedDate);
+                }
+            });
+            $('#infraccion_verificacionbundle_exportartype_fechaFinal').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                showWeek: true,
+                firstDay: 1,
+//                            defaultDate: "",
+                numberOfMonths: 1,
+                onClose: function (selectedDate) {
+                    $("#infraccion_verificacionbundle_exportartype_fechaInicio").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+
+        </script>
     {% endblock %}

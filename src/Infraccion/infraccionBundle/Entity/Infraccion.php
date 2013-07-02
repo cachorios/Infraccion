@@ -113,6 +113,17 @@ class Infraccion
      */
 
     private $fecha_cedula;
+
+    /**
+     * @var datetime
+     * @ORM\Column(name="vto1", type="datetime", nullable = true)
+     */
+    private $vto1;
+    /**
+     * @var datetime
+     * @ORM\Column(name="vto2", type="datetime", nullable = true)
+     */
+    private $vto2;
     /**
      * @ORM\ManyToOne(targetEntity="Infraccion\VerificacionBundle\Entity\Automotor", cascade={"persist"} )
      */
@@ -455,5 +466,51 @@ class Infraccion
     public function getFechaCedula()
     {
         return $this->fecha_cedula;
+    }
+
+    /**
+     * Set vto1
+     *
+     * @param \DateTime $vto1
+     * @return Infraccion
+     */
+    public function setVto1($vto1)
+    {
+        $this->vto1 = $vto1;
+    
+        return $this;
+    }
+
+    /**
+     * Get vto1
+     *
+     * @return \DateTime 
+     */
+    public function getVto1()
+    {
+        return $this->vto1;
+    }
+
+    /**
+     * Set vto2
+     *
+     * @param \DateTime $vto2
+     * @return Infraccion
+     */
+    public function setVto2($vto2)
+    {
+        $this->vto2 = $vto2;
+    
+        return $this;
+    }
+
+    /**
+     * Get vto2
+     *
+     * @return \DateTime 
+     */
+    public function getVto2()
+    {
+        return $this->vto2;
     }
 }

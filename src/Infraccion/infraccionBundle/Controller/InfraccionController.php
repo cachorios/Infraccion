@@ -23,6 +23,7 @@ use Infraccion\infraccionBundle\lib\Bitmap;
 use TCPDF;
 
 
+
 /**
  * Infraccion controller.
  *
@@ -605,7 +606,7 @@ class InfraccionController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $accion = $request->get("accion");
-
+            $pdf = null;
             $form = $this->createForm(new CedulaParmType());
             $form->bind($request);
 
@@ -613,24 +614,35 @@ class InfraccionController extends Controller
                 $dato = $form->getData();
 
                 if ($accion == 1) {
-                    $this->generarCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta']);
+                    $this->generarCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
+                    $pdf = $this->imprimirCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
+                }
+                if ($accion == 2) {
+                    $this->generarCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
+                }
+                if ($accion == 3) {
+                    $pdf = $this->imprimirCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
                 }
 
-                $session->getFlashBag()->add('success', 'Filtro creado con exito');
-                $filterData = $form->getData();
+                if($pdf){
+                    return $this->render('InfraccionBundle:Infraccion:verPdf.html.twig',
+                        array(
+                            'titulo' =>'Impresion de Cedulas',
+                            'pdf' => $pdf)
+                    );
+                }else{
+                    return $this->redirect($this->generateUrl('infraccion'));
+                }
 
-                return $this->redirect($this->generateUrl('infraccion'));
             }
         }
-
         $form = $this->createForm(new CedulaParmType());
-
         return $this->render('InfraccionBundle:Infraccion:cedulaGen.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
-    private function generarCedula($municipio, $desde, $hasta)
+    private function generarCedula($municipio, $desde, $hasta, $vto1, $vto2)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -641,15 +653,15 @@ class InfraccionController extends Controller
             $infraccion->setNroInfraccion($nro);
             $nro++;
             $infraccion->setFechaCedula(new \DateTime("now"));
+            $infraccion->setVto1($vto1);
+            $infraccion->setVto2($vto2);
 
             $municipio->setNumCedula($nro);
 
             $em->persist($infraccion);
             $em->persist($municipio);
         }
-
         $em->flush();
-
 
         return;
 
@@ -658,82 +670,56 @@ class InfraccionController extends Controller
 
     private function imprimirCedula($municipio, $desde, $hasta, $vto1, $vto2)
     {
-
-    }
-
-
-    public function verCedulaAction(Request $request)
-    {
-        $id = $request->get("id");
-//        $dir = $this->container->getParameter("kernel.root_dir");
-//
-//        require_once($dir . "/../vendor/tecnick.com/tcpdf/config/tcpdf_config.php");
-
         $em = $this->getDoctrine()->getManager();
+        $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedulaPrn($municipio->getId(), $desde, $hasta);
 
-        $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
-        $fecha = new \DateTime('now');
-        $vto1 = new \DateTime('now');
-        $vto1->modify("+10 day");
-        $vto2 = new \DateTime('now');
-        $vto2->modify("+24 day");
+        if ($infracciones) {
+            $pdf = $this->getPdf("Infraccion");
+            $fecha = new \DateTime("now");
+            foreach ($infracciones as $infraccion) {
+                $infraccion->setVto1($vto1);
+                $infraccion->setVto2($vto2);
+                $em->persist($infraccion);
+                $pdf = $this->getPdfCedula($pdf, $infraccion, $fecha);
+            }
 
-//        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            // reset pointer to the last page
+            $pdf->lastPage();
+            $nombrePdf = 'pdf/' . "cedula_" . sprintf("%s", $fecha->format('Y-m-d')) . '.pdf';
 
-//        $pdf->SetCreator(PDF_CREATOR);
-//        $pdf->SetAuthor('Nicola Asuni');
-//        $pdf->SetTitle('TCPDF Example 006');
-//        $pdf->SetSubject('TCPDF Tutorial');
-//        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+            $pdf->Output($nombrePdf, 'F');
 
-        // set default header data
-        //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 006', PDF_HEADER_STRING);
-
-// set header and footer fonts
-//        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-//        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-// set default monospaced font
-//        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-// set margins
-//        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-//        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-//        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-// set auto page breaks
-//        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-// set image scale factor
-//        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-//        $pdf->AddPage();
-
-        $html = $this->renderView('InfraccionBundle:Infraccion:cedula.html.twig',
-            array(
-                'entity' => $entity,
-                'fecha' => $fecha,
-                'vto1' => $vto1,
-                'vto2' => $vto2
-            )
-        );
-
-//        $pdf->writeHTML($html, true, false, true, false, '');
-
-        // reset pointer to the last page
-//        $pdf->lastPage();
-//        $pdf->Output('prueba.pdf', 'I');
-        return $this->render('InfraccionBundle:Infraccion:cedula.html.twig',
-            array(
-                'entity' => $entity,
-                'fecha' => $fecha,
-                'vto1' => $vto1,
-                'vto2' => $vto2
-            )
-        );
-
+            return $nombrePdf;
+            $em->flush();
+        }
+        return null;
 
     }
+
+
+//    public function verCedulaAction(Request $request)
+//    {
+//        $id = $request->get("id");
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
+//        $fecha = new \DateTime('now');
+//        $vto1 = new \DateTime('now');
+//        $vto1->modify("+10 day");
+//        $vto2 = new \DateTime('now');
+//        $vto2->modify("+24 day");
+//
+//        return $this->render('InfraccionBundle:Infraccion:cedula.html.twig',
+//            array(
+//                'entity' => $entity,
+//                'fecha' => $fecha,
+//                'vto1' => $vto1,
+//                'vto2' => $vto2
+//            )
+//        );
+//
+//
+//    }
 
     public function verActaAction(Request $request)
     {
@@ -741,22 +727,123 @@ class InfraccionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
-        $fecha = new \DateTime('now');
-        $vto1 = new \DateTime('now');
-        $vto1->modify("+10 day");
-        $vto2 = new \DateTime('now');
-        $vto2->modify("+24 day");
 
-        return $this->render('InfraccionBundle:Infraccion:acta.html.twig',
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Infraccion entity.');
+        }
+        if ($entity->getEtapa() < 2) {
+            throw new \Exception('La etapa no es valida.');
+        }
+
+        $fecha = new \DateTime('now');
+
+        $pdf = $this->getPdf("Acta");
+        $pdf->SetMargins(12, 0, 10);
+        $pdf->AddPage();
+
+        $html = $this->renderView('InfraccionBundle:Infraccion:actapdf.html.twig',
             array(
                 'entity' => $entity,
-                'fecha' => $fecha,
-                'vto1' => $vto1,
-                'vto2' => $vto2
+                'fecha' => $fecha
             )
         );
 
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        // reset pointer to the last page
+        $pdf->lastPage();
+        $nombrePdf = 'pdf/' . "acta_" . sprintf("%08d", $entity->getNroInfraccion()) . $entity->getAutomotor()->getDominio() . '.pdf';
+
+        $pdf->Output($nombrePdf, 'F');
+
+        return $this->render('InfraccionBundle:Infraccion:verPdf.html.twig',
+            array(
+                'titulo' => "Acta - ".$nombrePdf,
+                'pdf' => $nombrePdf)
+        );
 
     }
 
+    public function verCedulaPdfAction(Request $request)
+    {
+        $id = $request->get("id");
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Infraccion entity.');
+        }
+        if ($entity->getEtapa() < 2) {
+            throw new \Exception('La etapa no es valida.');
+        }
+
+        $fecha = new \DateTime('now');
+
+        $pdf = $this->getPdf("Infraccion");
+
+        $pdf = $this->getPdfCedula($pdf, $entity, $fecha);
+        // reset pointer to the last page
+        $pdf->lastPage();
+        $nombrePdf = 'pdf/' . "cedula_" . sprintf("%08d", $entity->getNroInfraccion()) . '.pdf';
+
+        $pdf->Output($nombrePdf, 'F');
+
+        return $this->render('InfraccionBundle:Infraccion:verPdf.html.twig',
+            array(
+                'titulo' =>'Cedula - '.$nombrePdf,
+                'pdf' => $nombrePdf)
+        );
+    }
+
+    private function getPdfCedula($pdf, $entity, $fecha)
+    {
+        $pdf->AddPage();
+
+        $html = $this->renderView('InfraccionBundle:Infraccion:cedulapdf.html.twig',
+            array(
+                'entity' => $entity,
+                'fecha' => $fecha,
+            )
+        );
+
+        $pdf->writeHTML($html, true, false, true, false, '');
+        return $pdf;
+    }
+
+    /**
+     * getPdf
+     * @param $titulo
+     * @return TCPDF
+     */
+    private function getPdf($titulo)
+    {
+        $dir = $this->container->getParameter("kernel.root_dir");
+        require_once($dir . "/../vendor/tecnick.com/tcpdf/config/tcpdf_config.php");
+
+        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetCreator("LAR");
+        $pdf->SetAuthor('Infraccion by LAR');
+        $pdf->SetTitle($titulo);
+        // remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        // set margins
+        $pdf->SetMargins(12, -5, 10);
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, 10);
+        // set image scale factor
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        $l = Array();
+        // PAGE META DESCRIPTORS --------------------------------------
+        $l['a_meta_charset'] = 'UTF-8';
+        $l['a_meta_dir'] = 'ltr';
+        $l['a_meta_language'] = 'es';
+        // TRANSLATIONS --------------------------------------
+        $l['w_page'] = 'página';
+        $pdf->setLanguageArray($l);
+        $pdf->SetDisplayMode('fullwidth');
+        return $pdf;
+    }
 }

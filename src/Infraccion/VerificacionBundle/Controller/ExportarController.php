@@ -11,7 +11,6 @@ use Infraccion\VerificacionBundle\Form\ExportarType;
 class ExportarController extends Controller
 {
 
-
     public function indexAction()
     {
         $request = $this->getRequest();
@@ -24,10 +23,10 @@ class ExportarController extends Controller
                 try {
                     $result = $this->procesar($exportar);
 
-                    $this->get('session')->getFlashBag()->add('success', "Finalizado..");
+//                    $this->get('session')->getFlashBag()->add('success', "Finalizado..");
                     return $result;
                 } catch (\Exception $e) {
-                    $this->get('session')->getFlashBag()->add('success', $e->getMessage());
+                    $this->get('session')->getFlashBag()->add('error', $e->getMessage());
                 }
             } else {
                 $this->get('session')->getFlashBag()->add('error', 'error. !!!');
@@ -36,7 +35,6 @@ class ExportarController extends Controller
 
         return $this->render('VerificacionBundle:Exportar:index.html.twig', array(
             'form' => $form->createView()
-
         ));
     }
 
@@ -88,8 +86,8 @@ class ExportarController extends Controller
 
         try {
             $em = $this->getDoctrine()->getManager();
-            $query = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresExportar( $exportar);
-            $results = $query->getQuery()->getArrayResult();
+            $results = $em->getRepository('VerificacionBundle:Automotor')->getAutomotoresExportar( $exportar);
+            //$results = $query->getQuery()->getArrayResult();
 
             $cantidadPermitido = 10000;
             $ids = array();
@@ -99,8 +97,8 @@ class ExportarController extends Controller
                     throw new \exception ('Error la cantidad de registros es de ' . count($results) . '.');
                 }
                 foreach ($results as $result) {
-                    $excelObj->setCellValue('A' . $row, $result['dominio']);
-                    $ids[] = $result['id'];
+                    $excelObj->setCellValue('A' . $row, $result->getDominio() );
+                    $ids[] = $result->getAutomotor()->getId();
                     $row++;
                 }
 

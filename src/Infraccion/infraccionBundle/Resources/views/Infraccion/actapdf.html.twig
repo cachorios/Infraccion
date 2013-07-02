@@ -1,0 +1,232 @@
+{% set dom = entity.automotor %}
+{% spaceless %}
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8"/>
+        <style>
+
+            #rep_hoja {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size: 8px;
+                width: 100;
+                color: #5F5F5F;
+                background-color: #ffffff;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            .rep_logo {
+                width: 2cm;
+            }
+            .rep_logo_text {
+                font-size: 8px;
+                float: right;
+                text-align: right;
+                line-height: 1.5px;
+                font-weight: bold;
+            }
+            .rep_header {
+                /*border-bottom: 1px dotted #AAAAAA;*/
+                padding-bottom: 0px;
+            }
+
+            .rep_titulo {
+                position: absolute;
+                font-size: 16px;
+                font-weight: bold;
+                font-family: 'Lato', Arial, Helvetica, sans-serif;
+                text-align: center;
+                text-decoration: underline;
+                line-height: 1.6px;
+
+            }
+            .rep_titulo2 {
+                font-size: 12px;
+                font-family: 'Lato', Arial, Helvetica, sans-serif;
+                text-align: center;
+                line-height: 1.0px;
+            }
+
+            .rep_contenido {
+                font-size: 10px;
+                padding: 10px 0;
+                text-align: justify;
+                line-height: 1px;
+            }
+            .separador {
+                border-bottom: 1px dotted #AAAAAA;
+                line-height: 0.8px;
+            }
+            #rep_hoja table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                border: 1px solid #AAAAAA;
+                width: 100%;
+            }
+
+            .tab_infra {
+                line-height: 1.9px;
+                border-collapse: collapse;
+                border-spacing: 0;
+                border: 0.1em solid #AAAAAA;
+                font-size: 9px;
+            }
+            .tab_infra th {
+                text-align: left !important;
+                background-color: #F2F2F2;
+                background-image: -moz-linear-gradient(center top, #F3F3F3, #EDEDED);
+                font-weight: bold;
+                vertical-align: middle;
+                border: 0.1em solid #AAAAAA;
+                /*border-right: 0.1em solid #AAAAAA;*/
+            }
+
+            .tab_infra td {
+                text-align: left;
+                border: 0.1em solid #aaaaaa;
+                padding-left: 2px;
+                vertical-align: middle;
+                border-left: 0.1em solid #AAAAAA;
+                border-right: 0.1em solid #AAAAAA;
+            }
+
+        </style>
+    </head>
+    <body>
+
+    <div id="rep_hoja">
+        <div class="rep_header" style="line-height: 1px; ">
+            <div style="position: relative; line-height: 0px;  ">
+                <table style="line-height: 0px;"><tr>
+                        <td><img src="{{ asset('uploads/' ~ entity.municipio.logo ) }}" class="rep_logo"></td>
+                        <td>
+                            <div class="rep_logo_text"><strong
+                                        style="font-size: 10px">{{ entity.municipio.nombre | upper }}</strong><BR>
+                                <strong style="font-size: 9px">{{ 'Provincia de '~entity.municipio.provincia }}</strong><BR>
+                                {{ entity.municipio.direccion }}<br>
+                                {{ entity.municipio.codigoPostal ~ ', '~ entity.municipio.localidad ~ ' - ' ~ entity.municipio.provincia }}
+                            </div>
+                        </td>
+                    </tr></table>
+            </div>
+            <div class="rep_titulo" style="line-height:0px; ">ACTA DE INFRACCION DE TRANSITO</div>
+        </div>
+        <div class="rep_contenido row-fluid" style="">
+            <div><strong>Nº de Acta: S{{ "%08d" | format(entity.nroInfraccion) }}</strong></div><BR>
+            <div class="" style="">
+                <table class="tab_infra" style="width: 100%; ">
+                    <tr>
+                        <th colspan="1" style="width: 30%;">Apellido y Nombre:</th>
+                        <th colspan="1" style="width: 30%;">DNI/CUIT:</th>
+                        <th colspan="3" style="width: 40%;">Infracción Imputada:</th>
+                    </tr>
+                    <tr>
+                        <td colspan="1">{{ dom.nombre }}</td>
+                        <td colspan="1">
+                            {% if dom.dni and dom.CuitCuil %}
+                                DNI {{ dom.dni | number_format(0, ',', '.') }} - CUIT {{ dom.CuitCuil | cuitformat }}
+                            {% else %}
+                                {% if dom.dni %}
+                                    DNI {{ dom.dni | number_format(0, ',', '.') }}
+                                {% endif %}
+                                {% if dom.CuitCuil %}
+                                    CUIT {{ dom.CuitCuil | cuitformat }}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td colspan="3">{{ entity.tipoInfraccion }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="width: 60%;">Domicilio:</th>
+                        <th colspan="3" style="width: 40%;">Lugar:</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{{ dom.domicilio }}</td>
+                        <td colspan="3">{{ entity.ubicacion }}</td>
+                    </tr>
+                    <tr>
+                        <th>Localidad:</th>
+                        <th>Cód. Postal</th>
+                        <th colspan="1">Fecha:</th>
+                        <th colspan="1">Hora:</th>
+                        <th>Dominio:</th>
+                    </tr>
+                    <tr>
+                        <td>{{ dom.localidad }}</td>
+                        <td>{{ dom.codigoPostal }}</td>
+                        <td>{{ entity.fecha | date('d/m/Y') }}</td>
+                        <td>{{ entity.fecha | date('H:i:s') }}</td>
+                        <td rowspan="1"><strong style="font-size: 14px;">{{ dom.dominio }}</strong></td>
+
+                    </tr>
+                    <tr>
+                        <th colspan="2">Provincia</th>
+                        <th colspan="1">Marca:</th>
+                        <th colspan="2">Modelo:</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{{ dom.provincia }}</td>
+                        <td colspan="1">{{ dom.marca }}</td>
+                        <td colspan="2">{{ dom.modelo }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="separador">
+                <table><tr>
+                        <td style="width: 70%"><p style="line-height: 0.8px; font-size: 9px;">Disposición legal infringida: <strong>Ley Nacional de
+                                    Tránsito N°24.449, Mod. Y Reg. Vigente CC.</strong><br><br></p>
+                        </td>
+                        <td style="text-align: right;width: 30%"><img src="{{ asset( 'uploads/' ~ entity.municipio.firma) }}" style="width: 4.5cm;"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="">
+                {% if entity.tipoInfraccion.cantidadFoto <= 2 %}
+                    <div class="separador">
+                        <h5>Foto Nro. 1</h5>
+                        <img class="fotoinfra"
+                             src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1  ) }}"
+                             style="width: 300px"/>
+                    </div>
+                    {% if entity.tipoInfraccion.cantidadFoto == 2 %}
+
+                        <div class="separador" style="line-height: 1.5px;">
+                            <h5>Foto Nro. 2</h5>
+                            <img class="fotoinfra"
+                                 src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
+                                 style="width: 300px"/>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if entity.tipoInfraccion.cantidadFoto >= 3 %}
+                    <div class="separador pull-right">
+                        <h5>Foto Nro. 2</h5>
+                        <img class="fotoinfra"
+                             src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto2) }}"
+                             style="width: 300px"/>
+                    </div>
+                    <div class="separador">
+                        <h5>Foto Nro. 1</h5>
+                        <img class="fotoinfra"
+                             src="{{ asset(infraccion.infracciones.dir~ entity.fecha| date('Ym') ~ '/' ~ entity.foto1  ) }}"
+                             style="width: 300px"/>
+                    </div>
+
+                    <div class="separador">
+                        <h5>Foto Nro. 3</h5>
+                        <img class="fotoinfra"
+                             src="{{ asset(infraccion.infracciones.dir ~ entity.fecha| date('Ym') ~ '/' ~ entity.foto3) }}"
+                             style="width: 300px"/>
+                    </div>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+    </body>
+    </html>
+{% endspaceless %}

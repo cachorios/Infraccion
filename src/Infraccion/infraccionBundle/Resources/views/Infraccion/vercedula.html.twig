@@ -1,0 +1,34 @@
+{% extends '::layout.html.twig' %}
+{% block id 'mod_Infraccion' %}
+
+{% block title %}
+    {{ parent() }} - VerCedula
+{% endblock %}
+
+{% block page %}
+
+    <section id="Infraccion">
+        <div id="pdf">
+            <object	data="{{ asset(pdf) }}#toolbar=1&amp;navpanes=0&amp;scrollbar=1&amp;page=1&amp;view=FitH,top"
+                       type="application/pdf"
+                       width="98%"
+                       height="100%">
+
+                <p>Parece que no tienes un plugin PDF para este navegador. No hay problema... Podes baja de aqui <a href="{{ asset(pdf) }}">click para bajar el archivo</a></p>
+            </object>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function(){
+            $("#pdf").css('height',$(window).height() *.85);
+        });
+        $(window).resize(function(){
+            $("#pdf").css('height',$(window).height() *.85);
+        });
+
+
+    </script>
+{% endblock page %}
+
+
