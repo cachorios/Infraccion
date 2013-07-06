@@ -1,13 +1,13 @@
 ﻿;by LAR
 ;Cacho
 [reglas]
-r1=Garupa - Semaforo km12 1
+r1=Garupa - Semaforo km 7,5
 r2=Cande - Semaforo km12 1
 reglas=2
-[Garupa - Semaforo km12 1]
+[Garupa - Semaforo km 7,5]
 entrada=^@@@###-######-F#.BMP$
-salida=250103[2][1][3][4].[5]
-carpeta=250103[1]
+salida=250101[2][1][3][4].[5]
+carpeta=250101[1]
 r1=000000Fecha
 r2=001006Dominio
 r3=008006Hora Infraccion
