@@ -20,8 +20,9 @@ use Infraccion\infraccionBundle\Form\FiltroParmType;
 use Symfony\Component\HttpFoundation\Response;
 
 use Infraccion\infraccionBundle\lib\Bitmap;
-use TCPDF;
 
+use TCPDF;
+use Infraccion\InfraccionBundle\pdf\infraPdf;
 
 
 /**
@@ -663,12 +664,15 @@ class InfraccionController extends Controller
         }
         $em->flush();
 
+
+
+
         return;
 
 
     }
 
-    private function imprimirCedula($municipio, $desde, $hasta, $vto1, $vto2)
+    private function imprimirCedula2($municipio, $desde, $hasta, $vto1, $vto2)
     {
         $em = $this->getDoctrine()->getManager();
         $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedulaPrn($municipio->getId(), $desde, $hasta);
@@ -696,30 +700,63 @@ class InfraccionController extends Controller
 
     }
 
+    private function imprimirCedula($municipio, $desde, $hasta, $vto1, $vto2)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedulaPrn($municipio->getId(), $desde, $hasta);
 
-//    public function verCedulaAction(Request $request)
-//    {
-//        $id = $request->get("id");
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $entity = $em->getRepository("InfraccionBundle:Infraccion")->find($id);
-//        $fecha = new \DateTime('now');
-//        $vto1 = new \DateTime('now');
-//        $vto1->modify("+10 day");
-//        $vto2 = new \DateTime('now');
-//        $vto2->modify("+24 day");
-//
-//        return $this->render('InfraccionBundle:Infraccion:cedula.html.twig',
-//            array(
-//                'entity' => $entity,
-//                'fecha' => $fecha,
-//                'vto1' => $vto1,
-//                'vto2' => $vto2
-//            )
-//        );
-//
-//
-//    }
+        if ($infracciones) {
+            $pdf = new infraPdf();
+            $pdf->init();
+
+            $pdf->SetHeaderData(
+                "uploads/".$infracciones[0]->getMunicipio()->getLogo(), 30,
+                "CEDULA DE NOTIFICACIÓN",
+                "COMPARENDO ADMINISTRATIVO",
+                array(95,96,95),
+                array(),
+                array(
+                    array( strtoupper($infracciones[0]->getMunicipio()->getNombre()),8 ,'B'),
+                    array( "Provincia de " . $infracciones[0]->getMunicipio()->getProvincia(),8, 'B' ),
+                    array(  $infracciones[0]->getMunicipio()->getDireccion(),7, 'N' ),
+                    array(  $infracciones[0]->getMunicipio()->getCodigoPostal().', '.$infracciones[0]->getMunicipio()->getLocalidad().' - '.$infracciones[0]->getMunicipio()->getProvincia(),7, 'N' ),
+                )
+            );
+
+            $pdf->SetTextColorArray(96,95,95);
+            $fecha = new \DateTime("now");
+            foreach ($infracciones as $infraccion) {
+                $infraccion->setVto1($vto1);
+                $infraccion->setVto2($vto2);
+                $em->persist($infraccion);
+                $pdf = $this->getPdfCedula($pdf, $infraccion, $fecha);
+            }
+
+            // reset pointer to the last page
+            $pdf->lastPage();
+            $nombrePdf = 'pdf/' . "cedula_" . sprintf("%s", $fecha->format('Y-m-d')) . '.pdf';
+
+            $pdf->Output($nombrePdf, 'F');
+
+            return $nombrePdf;
+            $em->flush();
+        }
+        return null;
+
+    }
+
+    protected function generarActa($municipio, $desde, $hasta){
+        $em = $this->getDoctrine()->getManager();
+        $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedula($municipio->getId(), $desde, $hasta);
+        $fecha = new \DateTime('now');
+        foreach ($infracciones as $infraccion) {
+            $pdf = $this->getPdf("Acta");
+            $pdf->SetMargins(12, 0, 10);
+            $pdf->AddPage();
+        }
+
+    }
+
 
     public function verActaAction(Request $request)
     {
@@ -779,15 +816,40 @@ class InfraccionController extends Controller
 
         $fecha = new \DateTime('now');
 
-        $pdf = $this->getPdf("Infraccion");
+        $pdf = new infraPdf();
+        $pdf->init();
 
+        $pdf->SetHeaderData(
+            "uploads/".$entity->getMunicipio()->getLogo(), 30,
+            "CEDULA DE NOTIFICACIÓN",
+            "COMPARENDO ADMINISTRATIVO",
+            array(95,96,95),
+            array(),
+            array(
+                array( strtoupper($entity->getMunicipio()->getNombre()),8 ,'B'),
+                array( "Provincia de " . $entity->getMunicipio()->getProvincia(),8, 'B' ),
+                array(  $entity->getMunicipio()->getDireccion(),7, 'N' ),
+                array(  $entity->getMunicipio()->getCodigoPostal().', '.$entity->getMunicipio()->getLocalidad().' - '.$entity->getMunicipio()->getProvincia(),7, 'N' ),
+            )
+        );
+
+        $pdf->SetTextColorArray(96,95,95);
         $pdf = $this->getPdfCedula($pdf, $entity, $fecha);
-        // reset pointer to the last page
+
         $pdf->lastPage();
-        $nombrePdf = 'pdf/' . "cedula_" . sprintf("%08d", $entity->getNroInfraccion()) . '.pdf';
+        $nombrePdf = 'pdf/' . "cedula_" . sprintf("%s", $fecha->format('Y-m-d')) . '.pdf';
 
         $pdf->Output($nombrePdf, 'F');
 
+
+//        $pdf = $this->getPdf("Infraccion");
+//        $pdf = $this->getPdfCedula($pdf, $entity, $fecha);
+//        // reset pointer to the last page
+//        $pdf->lastPage();
+//        $nombrePdf = 'pdf/' . "cedula_" . sprintf("%08d", $entity->getNroInfraccion()) . '.pdf';
+//
+//        $pdf->Output($nombrePdf, 'F');
+//
         return $this->render('InfraccionBundle:Infraccion:verPdf.html.twig',
             array(
                 'titulo' =>'Cedula - '.$nombrePdf,
@@ -795,7 +857,7 @@ class InfraccionController extends Controller
         );
     }
 
-    private function getPdfCedula($pdf, $entity, $fecha)
+    private function getPdfCedula2($pdf, $entity, $fecha)
     {
         $pdf->AddPage();
 
@@ -810,6 +872,14 @@ class InfraccionController extends Controller
         return $pdf;
     }
 
+
+    private function getPdfCedula($pdf, $entity, $fecha)
+    {
+        $pdf->AddPage();
+        $pdf->cedulaBody($entity, $fecha);
+        return $pdf;
+    }
+
     /**
      * getPdf
      * @param $titulo
@@ -817,8 +887,8 @@ class InfraccionController extends Controller
      */
     private function getPdf($titulo)
     {
-        $dir = $this->container->getParameter("kernel.root_dir");
-        require_once($dir . "/../vendor/tecnick.com/tcpdf/config/tcpdf_config.php");
+        require_once("c:/web/infraccion/web/tcpdf/tcpdf_include.php");
+
 
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator("LAR");
@@ -844,6 +914,7 @@ class InfraccionController extends Controller
         $l['w_page'] = 'página';
         $pdf->setLanguageArray($l);
         $pdf->SetDisplayMode('fullwidth');
+        $pdf->setFontSubsetting(false);
         return $pdf;
     }
 }

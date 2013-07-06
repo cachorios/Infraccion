@@ -323,7 +323,7 @@
                 <table style="width: 100%;">
                     <tr>
                         <td style="width: 20%;">
-                            <img src="{{ asset( 'img/medio_pago.png') }}"/>
+                            <img src="{{ asset( 'img/medio_pago.jpg') }}"/>
                         </td>
                         <td style="width: 50%;">
                             <table class="tabla_vto">
@@ -354,7 +354,7 @@
                             </table>
                         </td>
                         <td style="width: 30%;">
-                            <img src="{{ asset(  'cbarra/'~entity.municipio.codigo~'/1.png') }} ">
+                            <img src="{{ asset(  'cbarra/'~entity.municipio.codigo~'/'~ entity.nroInfraccion ~'.jpg') }} ">
                         </td>
                     </tr>
                 </table>
@@ -382,7 +382,7 @@
                         <span class="otrodestino">{{ dom.localidad ~', CP '~ dom.codigoPostal ~' - '~ dom.provincia }}  </span>
 
                     </td>
-                    <td style="width: 30%; text-align: right;"><br><br><br><br><img src="{{ asset('img/franqueo.png') }}" style="width: 4.2cm;"></td>
+                    <td style="width: 30%; text-align: right;"><br><br><br><br><img src="{{ asset('img/franqueo.jpg') }}" style="width: 4.2cm;"></td>
                 </tr>
             </table>
         </div>

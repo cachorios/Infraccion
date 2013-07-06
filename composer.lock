@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0fcc94aae0af8158d1f97130c09ea7e1",
+    "hash": "d844fae8bad2b505164e3a249bb584ee",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -770,16 +770,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "2.4.0-RC2"
+                "reference": "dc2be816a861265ce23d54283ec956902b0aaad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2.4.0-RC2",
-                "reference": "2.4.0-RC2",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/dc2be816a861265ce23d54283ec956902b0aaad9",
+                "reference": "dc2be816a861265ce23d54283ec956902b0aaad9",
                 "shasum": ""
             },
             "require": {
-                "doctrine/collections": ">=1.1,<2.0",
+                "doctrine/collections": "~1.1",
                 "doctrine/dbal": ">=2.4-beta,<2.5-dev",
                 "ext-pdo": "*",
                 "php": ">=5.3.2",
@@ -837,7 +837,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-06-30 08:38:02"
+            "time": "2013-07-02 17:20:28"
         },
         {
             "name": "imagine/imagine",
@@ -2056,12 +2056,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "2d08b14923e56645229551c12da788a824b1e998"
+                "reference": "5cfbd3cb7779cf7b3006488cff2403b0288bb416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/2d08b14923e56645229551c12da788a824b1e998",
-                "reference": "2d08b14923e56645229551c12da788a824b1e998",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/5cfbd3cb7779cf7b3006488cff2403b0288bb416",
+                "reference": "5cfbd3cb7779cf7b3006488cff2403b0288bb416",
                 "shasum": ""
             },
             "require": {
@@ -2093,7 +2093,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2013-06-24 20:15:30"
+            "time": "2013-07-04 10:39:24"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2111,8 +2111,8 @@
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": ">=2.2,<3.0",
-                "symfony/framework-bundle": ">=2.2,<3.0"
+                "doctrine/common": "~2.2",
+                "symfony/framework-bundle": "~2.2"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2158,8 +2158,8 @@
                 "shasum": ""
             },
             "require": {
-                "symfony/console": ">=2.0,<3.0",
-                "symfony/framework-bundle": ">=2.2,<3.0"
+                "symfony/console": "~2.0",
+                "symfony/framework-bundle": "~2.2"
             },
             "require-dev": {
                 "doctrine/orm": ">=2.2,<3.0,>=2.2.3",
@@ -2257,7 +2257,7 @@
             "require": {
                 "kriswallsmith/assetic": "1.1.x",
                 "php": ">=5.3.0",
-                "symfony/framework-bundle": ">=2.1,<3.0"
+                "symfony/framework-bundle": "~2.1"
             },
             "require-dev": {
                 "symfony/class-loader": ">=2.1,<3.0",
@@ -2318,11 +2318,11 @@
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": ">=1.3,<2.0",
+                "monolog/monolog": "~1.3",
                 "php": ">=5.3.2",
-                "symfony/config": ">=2.2-beta2,<3.0",
-                "symfony/dependency-injection": ">=2.2-beta2,<3.0",
-                "symfony/monolog-bridge": ">=2.2-beta2,<3.0"
+                "symfony/config": "~2.2-beta2",
+                "symfony/dependency-injection": "~2.2-beta2",
+                "symfony/monolog-bridge": "~2.2-beta2"
             },
             "require-dev": {
                 "symfony/yaml": ">=2.2-beta2,<3.0"
@@ -2378,7 +2378,7 @@
             "require": {
                 "php": ">=5.3.2",
                 "swiftmailer/swiftmailer": ">=4.2.0,<5.1-dev",
-                "symfony/swiftmailer-bridge": ">=2.1,<3.0"
+                "symfony/swiftmailer-bridge": "~2.1"
             },
             "require-dev": {
                 "symfony/config": ">=2.1,<3.0",
@@ -2421,12 +2421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "107852b3300d25509aa1d4f52b0a3b2b47aa8ae6"
+                "reference": "6dbd1e102b38b0bebfce3245edec469ec581c4b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/107852b3300d25509aa1d4f52b0a3b2b47aa8ae6",
-                "reference": "107852b3300d25509aa1d4f52b0a3b2b47aa8ae6",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/6dbd1e102b38b0bebfce3245edec469ec581c4b3",
+                "reference": "6dbd1e102b38b0bebfce3245edec469ec581c4b3",
                 "shasum": ""
             },
             "require": {
@@ -2512,64 +2512,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-07-02 07:41:46"
-        },
-        {
-            "name": "tecnick.com/tcpdf",
-            "version": "6.0.020",
-            "source": {
-                "type": "git",
-                "url": "http://git.code.sf.net/p/tcpdf/code",
-                "reference": "6.0.020"
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "fonts",
-                    "config",
-                    "include",
-                    "tcpdf.php",
-                    "tcpdf_parser.php",
-                    "tcpdf_import.php",
-                    "tcpdf_barcodes_1d.php",
-                    "tcpdf_barcodes_2d.php",
-                    "include/tcpdf_colors.php",
-                    "include/tcpdf_filters.php",
-                    "include/tcpdf_font_data.php",
-                    "include/tcpdf_fonts.php",
-                    "include/tcpdf_images.php",
-                    "include/tcpdf_static.php",
-                    "include/barcodes/datamatrix.php",
-                    "include/barcodes/pdf417.php",
-                    "include/barcodes/qrcode.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Nicola Asuni",
-                    "email": "info@tecnick.com",
-                    "homepage": "http://nicolaasuni.tecnick.com"
-                }
-            ],
-            "description": "TCPDF is a PHP class for generating PDF documents.",
-            "homepage": "http://www.tcpdf.org/",
-            "keywords": [
-                "PDFD32000-2008",
-                "TCPDF",
-                "barcodes",
-                "datamatrix",
-                "pdf",
-                "pdf417",
-                "qrcode"
-            ],
-            "time": "2013-06-04 21:06:38"
+            "time": "2013-07-02 12:51:26"
         },
         {
             "name": "twig/extensions",
