@@ -1211,3 +1211,20 @@ table div[class*="span8"]{
 .error{
     color: #AA3333;
 }
+
+#pdf {
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+    /*border: 1px solid #6699FF;*/
+
+}
+
+#pdf p {
+    padding: 1em;
+}
+
+#pdf object {
+    display: block;
+    border: solid 1px #666;
+}

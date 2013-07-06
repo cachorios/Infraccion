@@ -65,6 +65,7 @@ class ImportarController extends Controller
         $em = $this->getDoctrine()->getManager();
         $ret = array();
 
+
         $ret[0] = substr($dir_name, 0, 2);
         $muni = $em->getRepository("InfraccionBundle:Municipio")->findBy(array("codigo" => $ret[0]))[0];
         $ret[1] = $muni->getNombre();
@@ -73,6 +74,7 @@ class ImportarController extends Controller
         $ret[3] = $em->getRepository("InfraccionBundle:Ubicacion")->findBy(array("codigo" => $ret[2],'municipio' => $muni))[0]->getReferencia();
 
         $ret[4] = substr($dir_name, 4, 2);
+        ld($ret[4]);
         $ret[5] = $em->getRepository("InfraccionBundle:TipoInfraccion")->findBy(array("codigo" => $ret[4]))[0]->getNombre();
 
         $ret[6] = substr($dir_name, 6);

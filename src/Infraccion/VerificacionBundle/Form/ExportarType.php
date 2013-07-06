@@ -15,19 +15,19 @@ class ExportarType extends AbstractType
     {
         $builder
             ->add('fechaInicio', "date", array(
-            'label' => "Fecha inicio del Proceso (dd - mm - aaaa)",
-            'widget' => "text",
-            'format' => 'dd-MM-yyyy',
-            'help_block' => "dd-mm-aaaa"
+            'label' => "Fecha Desde (dd/mm/aaaa)",
+            'widget' => "single_text",
+            'format' => 'dd/MM/yyyy',
+            'help_block' => "dd/mm/aaaa"
         ))
             ->add('fechaFinal', "date", array(
-            'label' => "Fecha final del Proceso (dd - mm - aaaa)",
-            'widget' => "text",
-            'format' => 'dd-MM-yyyy',
+            'label' => "Fecha Hasta (dd/mm/aaaa)",
+            'widget' => "single_text",
+            'format' => 'dd/MM/y',
             'help_block' => "dd-mm-aaaa"
 
         ))
-            ->add("usarFecha","checkbox", array("required"=>false, 'label' => 'Usar rango fechas de infraccion', 'label_render' => true))
+//            ->add("usarFecha","checkbox", array("required"=>false, 'label' => 'Usar rango fechas de infraccion', 'label_render' => true))
 //            ->add("usarNull","checkbox", array("required"=>false, 'label' => 'Usar registros Null'))
 
 

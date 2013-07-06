@@ -2,10 +2,12 @@
     #header, #sidebar, .sf-toolbarreset {
         display: none !important;
     }
-
     body {
         background-color: #ffffff;
         margin: 0;
+        color: #5F5F5F;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 12px;
     }
 
     #rep_hoja {
@@ -21,7 +23,10 @@
 
         line-height: 20px;
     }
-
+    table{
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+    }
     #rep_hoja p {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 10px;
@@ -84,23 +89,32 @@
         line-height: 30px;
     }
 
+    #tabla_vto  th {
+        background-color: #F2F2F2;
+        background-image: -moz-linear-gradient(center top , #F3F3F3, #EDEDED);
+    }
     #tabla_vto  td,
     #tabla_vto  th {
         text-align: center !important;
         border: 0.1em solid #AAAAAA;
+        font-size: 12px;
     }
 
     .tab_infra th {
         text-align: left !important;
         border: 0.1em solid #AAAAAA;
-        line-height: 15px;
+        line-height: 18px;
+        background-color: #F2F2F2;
+        background-image: -moz-linear-gradient(center top , #F3F3F3, #EDEDED);
+        font-size: 12px;
     }
 
     .tab_infra td {
         text-align: left;
         border: 0.1em solid #AAAAAA;
         padding-left: 5px;
-        line-height: 15px;
+        line-height: 18px;
+        font-size: 12px;
     }
 
     .lugar {
@@ -143,18 +157,22 @@
     .razon {
         font-size: 12px;
         font-weight: bold;
-        line-height: 12px;
+        line-height: 18px;
     }
 
     .otrdestino {
-        line-height: 12px;
+        line-height: 18px;
     }
 }
 
-/*body {*/
-    /*background-color: #afafaf;*/
-    /*margin: 0;*/
-/*}*/
+
+body {
+    background-color: #ffffff;
+    margin: 0;
+    color: #5F5F5F;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+}
 
 #rep_hoja {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -169,7 +187,10 @@
 
     line-height: 20px;
 }
-
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 #rep_hoja p {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
@@ -232,23 +253,32 @@
     line-height: 30px;
 }
 
+#tabla_vto  th {
+    background-color: #F2F2F2;
+    background-image: -moz-linear-gradient(center top , #F3F3F3, #EDEDED);
+}
 #tabla_vto  td,
 #tabla_vto  th {
     text-align: center !important;
     border: 0.1em solid #AAAAAA;
+    font-size: 12px;
 }
 
 .tab_infra th {
     text-align: left !important;
     border: 0.1em solid #AAAAAA;
-    line-height: 15px;
+    line-height: 18px;
+    background-color: #F2F2F2;
+    background-image: -moz-linear-gradient(center top , #F3F3F3, #EDEDED);
+    font-size: 12px;
 }
 
 .tab_infra td {
     text-align: left;
     border: 0.1em solid #AAAAAA;
     padding-left: 5px;
-    line-height: 15px;
+    line-height: 18px;
+    font-size: 12px;
 }
 
 .lugar {
@@ -291,9 +321,9 @@
 .razon {
     font-size: 12px;
     font-weight: bold;
-    line-height: 12px;
+    line-height: 18px;
 }
 
 .otrdestino {
-    line-height: 12px;
+    line-height: 18px;
 }

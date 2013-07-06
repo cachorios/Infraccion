@@ -27,15 +27,22 @@ class LarExtension extends \Twig_Extension
 
     public function cuitformatFilter($number)
     {
-        if( strlen($number) == 11){
-           $s = substr($number,0,2);
-           $d = substr($number,2,8);
-           $v = substr($number,10,1);
-           $cuit = $s ."-". substr('0000000000'. number_format($d,0, ',', '.'),-10).'/'.$v ;
 
-           return $cuit;
+        return LarExtension::cuitformat($number);
+    }
+
+    static public function cuitformat($number)
+    {
+        if( strlen($number) == 11){
+            $s = substr($number,0,2);
+            $d = substr($number,2,8);
+            $v = substr($number,10,1);
+            $cuit = $s ."-". substr('0000000000'. number_format($d,0, ',', '.'),-10).'/'.$v ;
+
+            return $cuit;
         }else{
             return "//";
         }
+
     }
 }

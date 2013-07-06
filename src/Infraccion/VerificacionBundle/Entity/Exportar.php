@@ -14,10 +14,13 @@ class Exportar
     /**
      *
      */
+    /**
+     * @var \DateTime
+     */
     private $fechaInicio;
 
     /**
-     *
+     * @var \DateTime
      */
     private $fechaFinal;
 
@@ -37,7 +40,7 @@ class Exportar
     public function __construct()
     {
 
-        $this->fechaInicio =  new \DateTime('-1 day');
+        $this->fechaInicio =  new \DateTime('previous monday');
         $this->fechaFinal = new \DateTime('now');
 
     }

@@ -7,8 +7,7 @@
             {% include ':include:leftmenu_acord.html.twig' with { modulo:  block("id") } %}
         </div>
         <div class="span10" id="content">
-            {% block page %}
-            {% endblock page %}
+            {% block page %}{% endblock page %}
         </div>
     </div>
 {% endblock principal %}

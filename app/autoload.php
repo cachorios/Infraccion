@@ -1,8 +1,25 @@
 <?php
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-
+///
+use Symfony\Component\ClassLoader\UniversalClassLoader;
 $loader = require __DIR__.'/../vendor/autoload.php';
+
+///
+$universalLoader = new UniversalClassLoader();
+
+//$loader->registerNamespace('tcpdf_', __DIR__.'/../web/tcpdf');
+
+/*
+$loader->registerPrefixes(array(
+    'Html2Pdf_'        => __DIR__.'/../vendor/html2pdf/lib',
+));
+*/
+///
+$universalLoader->registerNamespace("TCPDF", __DIR__.'/../web/tcpdf/');
+$universalLoader->register();
+
+
 
 // intl
 if (!function_exists('intl_get_error_code')) {
@@ -12,10 +29,9 @@ if (!function_exists('intl_get_error_code')) {
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
-//$loader->registerNamespaces(
-//    array(
-//        'tcpdf' => __DIR__.'/../vendor/tecnick.com/tcpdf'
-//    )
-//);
+
+
+
+
 
 return $loader;

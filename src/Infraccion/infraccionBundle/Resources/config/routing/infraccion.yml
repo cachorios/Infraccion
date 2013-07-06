@@ -64,6 +64,10 @@ infraccion_ver_cedula:
     pattern: /{id}/vercedula
     defaults: { _controller: "InfraccionBundle:Infraccion:verCedula" }
 
+infraccion_ver_cedula_pdf:
+    pattern: /{id}/vercedulapdf
+    defaults: { _controller: "InfraccionBundle:Infraccion:verCedulaPdf" }
+
 infraccion_ver_acta:
     pattern: /{id}/veracta
     defaults: { _controller: "InfraccionBundle:Infraccion:verActa" }
