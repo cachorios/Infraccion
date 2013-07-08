@@ -36,18 +36,19 @@ fixtures:
             - gr2
 
 
-    Usr1:
-        nombre: Ruben
-        apellido: Cardozo
-        email: ruben@hotmail.com
-        dni: 3
-        password: 111111
-        direccion: Av. 1
+    Hugo:
+        nombre: Hugo Gabriel
+        apellido: Goncalvez
+        email: hugogoncalvez@gmail.com
+        dni: 22665937
+        password: 381037
+        direccion: Bº 140 Viv. Mz. R Casa 10
         permite_email: 1
         is_active: 1
         is_deleted: 0
         foto: user-511970d001595-foto1.jpg
-        fecha_nacimiento: 15-01-1951
+        fecha_nacimiento: 25-08-1972
         grupos:
             - gr1
+	    - gr2
 
