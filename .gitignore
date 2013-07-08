@@ -5,14 +5,22 @@ app/config/parameters.yml
 app/cache/*
 app/logs/*
 vendor/*
+pb/*
+
 web/bundles/*
 #web/css/*
 #web/js/*
 web/uploads/imp*
 web/uploads/importar/*
 web/media/*
-web/infracciones/*
+
 web/unpro*
+
+web/uploads/*
+web/cbarra/*
+web/infracciones/*
+web/pdf/*
+web/unprocess - copia/*
 
 
 # -- Composer -----------------------------------------

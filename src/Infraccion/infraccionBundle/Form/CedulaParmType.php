@@ -8,41 +8,47 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CedulaParmType extends AbstractType
 {
-//    private $rep;
-//    private $muni;
-//    public function __construct(){
-//
-//    }
+    private $session;
+    public function __construct($session){
+        $this->session = $session;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-//        $reg = $builder->getData();
-//        if($this->muni)
-//            $muni = $this->muni;
-//        elseif ($reg->getMunicipio()) {
-//            $muni = $reg->getMunicipio()->getId();
-//        }else{
-//            $muni = 1;
-//        }
+
+        $dataFiltro = $this->session->get('InfraccionFilterParm');
+        if($dataFiltro){
+            $m =  $dataFiltro->getMunicipio()->getId();
+            $f1 = $dataFiltro->getFecha()->setTime(0,0);
+            $f2 = $dataFiltro->getFecha()->setTime(23,59);
+        }else{
+            $f1 = new \DateTime('now');
+            $f2 = new \DateTime('now');
+            $m=null;
+        }
+
 
         $builder
             ->add('municipio', 'entity', array(
                 'class' => "InfraccionBundle:Municipio",
-                'required' => true
+                'required' => true,
+                'data' => $m
             ))
 
             ->add('fecha_desde', "date", array(
                 'label' => "Fecha de Proceso (dd/mm/aaaa)",
                 'widget' => "single_text",
                 'format' => 'dd/MM/yyyy',
-                'help_block' => "dd/mm/aaaa"
+                'help_block' => "dd/mm/aaaa",
+                'data' => $f1
             ))
 
             ->add('fecha_hasta', "date", array(
                 'label' => "Fecha de Proceso (dd/mm/aaaa)",
                 'widget' => "single_text",
                 'format' => 'dd/MM/yyyy',
-                'help_block' => "dd/mm/aaaa"
+                'help_block' => "dd/mm/aaaa",
+                'data' => $f2
             ))
             ->add('primer_vencimiento', "date", array(
                 'widget' => "single_text",

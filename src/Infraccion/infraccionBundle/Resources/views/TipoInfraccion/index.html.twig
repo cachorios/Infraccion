@@ -73,7 +73,7 @@
                 {% for entity in entities %}
                 <tr>
                             <td>
-                                <a href="{{ path('tipoinfraccion_show', { 'id': entity.codigo }) }}">{{ entity.id }}</a>
+                                <a href="{{ path('tipoinfraccion_show', { 'id': entity.codigo }) }}">{{ entity.codigo }}</a>
                             </td>
                             <td>{{ entity.nombre }}</td>
                             <td style="text-align: center;">{{ entity.cantidadFoto }}</td>

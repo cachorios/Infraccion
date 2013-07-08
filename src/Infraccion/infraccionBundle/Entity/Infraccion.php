@@ -211,14 +211,25 @@ class Infraccion
         return null==$this->foto1 ?  "../../img/no-foto.png" : $this->foto1 ;
     }
 
+    /**
+     * @return string
+     */
     public function getFotoR1()
     {
         return $this->foto1 ;
     }
+
+    /**
+     * @return string
+     */
     public function getFotoR2()
     {
         return $this->foto2 ;
     }
+
+    /**
+     * @return string
+     */
     public function getFotoR3()
     {
         return $this->foto3 ;
@@ -383,20 +394,6 @@ class Infraccion
     {
         return $this->tipo_infraccion;
     }
-//
-//    /**
-//     * Get Automotor
-//     *
-//     * @return \Infraccion\VerificacionBundle\Entity\Automotor
-//     */
-//    public function getAutomotor(){
-//
-//        return $this->automotor;
-//    }
-//
-//    public function setAutomotor($auto){
-//        $this->automotor = $auto;
-//    }
 
 
     /**

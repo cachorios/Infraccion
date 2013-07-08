@@ -15,7 +15,7 @@ class ExportarController extends Controller
     {
         $request = $this->getRequest();
         $exportar = new Exportar();
-        $form = $this->createForm(new ExportarType(), $exportar);
+        $form = $this->createForm(new ExportarType($this->getRequest()->getSession()), $exportar);
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);

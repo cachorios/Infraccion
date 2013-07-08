@@ -11,8 +11,22 @@ use Doctrine\ORM\EntityRepository;
 
 class ExportarType extends AbstractType
 {
+    private $session;
+    public function __construct($session){
+        $this->session = $session;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
+        $dataFiltro = $this->session->get('InfraccionFilterParm');
+        if($dataFiltro){
+            $data = $builder->getData();
+            $data->setFechaInicio($dataFiltro->getFecha()->setTime(0,0));
+            $data->setFechaFinal($dataFiltro->getFecha()->setTime(23,59));
+        }
+
+
         $builder
             ->add('fechaInicio', "date", array(
             'label' => "Fecha Desde (dd/mm/aaaa)",

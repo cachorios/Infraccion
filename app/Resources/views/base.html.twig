@@ -61,17 +61,17 @@
                 </a>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div class="hright">
-                        <div id="search" class="column">
-                            <div class="search">
-                                <form method="post" action="#">
-                                    <input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword" />
-                                </form>
-                            </div>
-                        </div>
+                        {#<div id="search" class="column">#}
+                            {#<div class="search">#}
+                                {#<form method="post" action="#">#}
+                                    {#<input type="text" placeholder="Busqueda" value="Busqueda" name="keyword" id="keyword" />#}
+                                {#</form>#}
+                            {#</div>#}
+                        {#</div>#}
                         <div id="userinfo" class="column">
                             <a class="userinfo dropown-toggle" data-toggle="dropdown" href="#userinfo">
 
-                                <img class="avatar" src="{{ asset( usuario_imagenes ~ app.user.foto) | apply_filter('foto_login') }}">
+                                <img class="avatar" src="{{ asset( usuario_imagenes ~ app.user.fotoToView) | apply_filter('foto_login') }}">
                                 <span><strong>{{ app.user  }}</strong></span>
                             </a>
                             <ul class="dropdown-menu">

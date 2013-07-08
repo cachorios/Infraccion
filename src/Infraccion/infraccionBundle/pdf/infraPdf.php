@@ -316,9 +316,10 @@ class infraPdf extends  tcpdf {
         $this->Ln();
         $this->Ln();
         $this->Ln();
+        $this->Ln();
 
         $this->SetFont('helvetica', 'BU', 12);
-        $this->Cell(0, 0, "DOCUMENTACION CON VENCIMIENTO", 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 0, "DOCUMENTACION CON VENCIMIENTO", 0, false, 'L', 0, '', 0, false, 'M', 'M');
 
         $this->Ln();
         $this->Ln();
@@ -343,7 +344,7 @@ class infraPdf extends  tcpdf {
         $this->Cell(120, 0, $entity->getAutomotor()->getDomicilio(), 0, false, 'L', 0, '', 0, false, 'M', 'M');$this->Ln();
         $this->Cell(120, 0, $entity->getAutomotor()->getLocalidad().', CP '. $entity->getAutomotor()->getCodigoPostal() .' - ' .$entity->getAutomotor()->getProvincia() , 0, false, 'L', 0, '', 0, false, 'M', 'M');$this->Ln();
 
-        $this->Image("img/franqueo.jpg", 150, $this->getY() -15, 40, 25, 'JPEG', '', 'M', false, 300, '', false, false, 0, "RM", false, false);
+        $this->Image("img/franqueo.jpg", 162, $this->getY() -47, 35, 20, 'JPEG', '', 'M', false, 300, '', false, false, 0, "RM", false, false);
 
     }
 

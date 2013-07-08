@@ -31,6 +31,7 @@ class InfraccionRepository extends EntityRepository
      */
     public function getInfraccionQuery($muni, $ubi, $tipo,$fecha)
     {
+
         $fecha2 = clone($fecha);
         $a = $this->createQueryBuilder("r")
 //            ->leftJoin("VerificacionBundle:Automotor","a",\Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,"r.dominio = a.dominio")
@@ -42,7 +43,7 @@ class InfraccionRepository extends EntityRepository
             ->setParameter("muni", $muni)
             ->setParameter("ubic", $ubi)
             ->setParameter("tipo", $tipo)
-            ->setParameter("fechaDesde", $fecha)
+            ->setParameter("fechaDesde", $fecha->setTime(0,0))
             ->setParameter("fechaHasta", $fecha2->setTime(23,59) )
             ;
         return $a;
@@ -57,7 +58,7 @@ class InfraccionRepository extends EntityRepository
             AND     i.etapa = 1
             ORDER BY i.fecha")
             ->setParameter("muni",$muni)
-            ->setParameter('desde',$desde)
+            ->setParameter('desde',$desde->setTime(0,0))
             ->setParameter('hasta',$hasta->setTime(23,59))
             ->getResult();
 
@@ -73,7 +74,7 @@ class InfraccionRepository extends EntityRepository
             AND     i.etapa = 2
             ORDER BY i.fecha")
             ->setParameter("muni",$muni)
-            ->setParameter('desde',$desde)
+            ->setParameter('desde',$desde->setTime(0,0))
             ->setParameter('hasta',$hasta->setTime(23,59))
             ->getResult();
 

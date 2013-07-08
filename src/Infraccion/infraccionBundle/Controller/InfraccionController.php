@@ -608,7 +608,7 @@ class InfraccionController extends Controller
         if ($request->getMethod() == 'POST') {
             $accion = $request->get("accion");
             $pdf = null;
-            $form = $this->createForm(new CedulaParmType());
+            $form = $this->createForm(new CedulaParmType($request->getSession()));
             $form->bind($request);
 
             if ($form->isValid()) {
@@ -616,10 +616,12 @@ class InfraccionController extends Controller
 
                 if ($accion == 1) {
                     $this->generarCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
+                    $this->generarActa($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta']);
                     $pdf = $this->imprimirCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
                 }
                 if ($accion == 2) {
                     $this->generarCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
+                    $this->generarActa($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta']);
                 }
                 if ($accion == 3) {
                     $pdf = $this->imprimirCedula($dato['municipio'], $dato['fecha_desde'], $dato['fecha_hasta'], $dato['primer_vencimiento'], $dato['segundo_vencimiento']);
@@ -637,7 +639,7 @@ class InfraccionController extends Controller
 
             }
         }
-        $form = $this->createForm(new CedulaParmType());
+        $form = $this->createForm(new CedulaParmType($request->getSession()));
         return $this->render('InfraccionBundle:Infraccion:cedulaGen.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -663,6 +665,7 @@ class InfraccionController extends Controller
             $em->persist($municipio);
         }
         $em->flush();
+
 
 
 
@@ -747,12 +750,22 @@ class InfraccionController extends Controller
 
     protected function generarActa($municipio, $desde, $hasta){
         $em = $this->getDoctrine()->getManager();
-        $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedula($municipio->getId(), $desde, $hasta);
+        $infracciones = $em->getRepository("InfraccionBundle:Infraccion")->getInfraccionToCedulaPrn($municipio->getId(), $desde, $hasta);
         $fecha = new \DateTime('now');
         foreach ($infracciones as $infraccion) {
             $pdf = $this->getPdf("Acta");
             $pdf->SetMargins(12, 0, 10);
             $pdf->AddPage();
+            $html = $this->renderView('InfraccionBundle:Infraccion:actapdf.html.twig',
+                array(
+                    'entity' => $infraccion,
+                    'fecha' => $fecha
+                )
+            );
+            $pdf->writeHTML($html, true, false, true, false, '');
+            $nombrePdf = 'pdf/' . "acta_" . sprintf("%08d", $infraccion->getNroInfraccion()) . $infraccion->getAutomotor()->getDominio() . '.pdf';
+
+            $pdf->Output($nombrePdf, 'F');
         }
 
     }

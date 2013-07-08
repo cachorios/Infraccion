@@ -25,7 +25,7 @@
                 <div class="span9 offset3">
                     <!--| apply_filter('miniatura')-->
                     <div id="foto">
-                        <img  alt="{{ entity }}" src="{{ asset(usuario_imagenes ~entity.foto ) | apply_filter('foto_usuario')    }}" class="usuario_foto">
+                        <img  alt="{{ entity }}" src="{{ asset(usuario_imagenes ~entity.fotoToView ) | apply_filter('foto_usuario')    }}" class="usuario_foto">
                     </div>
 
                     <div id="fotoUp"></div>

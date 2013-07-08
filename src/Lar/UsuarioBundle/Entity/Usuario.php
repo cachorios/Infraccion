@@ -161,24 +161,7 @@ class Usuario implements AdvancedUserInterface
 		//$this->contenedor = new ParameterBag();
 	}
 
-	/**
-	 * @return Symfony\Component\DependencyInjection\ParameterBag\ParameterBag
-	 */
-	public function getContenedor()
-	{
-		if($this->contenedor == null) {
-			$this->contenedor = new ParameterBag();
-		}
 
-
-		return $this->contenedor;
-	}
-
-	public function setContenedor($contenedor)
-	{
-		$this->contenedor = $contenedor;
-		return $this;
-	}
 
 
 	/**
@@ -623,11 +606,21 @@ class Usuario implements AdvancedUserInterface
 	 */
 	public function getFoto()
 	{
-		if(!$this->foto) {
-			$this->foto = "anonimo.jpg";
-		}
 		return $this->foto;
 	}
+
+    /**
+     * Get foto
+     *
+     * @return string
+     */
+    public function getFotoToView()
+    {
+        if(!$this->foto) {
+            $this->foto = "anonimo.jpg";
+        }
+        return $this->foto;
+    }
 
 
 	/**

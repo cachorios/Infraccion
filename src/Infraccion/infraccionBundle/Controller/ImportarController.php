@@ -42,9 +42,16 @@ class ImportarController extends Controller
         $finder->directories()->depth(0)->in($this->container->getParameter("infraccion.unproccess.dir"));
 
         foreach ($finder as $dir) {
-            $aux = $this->getDetalle($dir->getFilename());
-            if($aux)
-                $ret[] = $aux;
+            try{
+                $aux = $this->getDetalle($dir->getFilename());
+                if($aux)
+                    $ret[] = $aux;
+                else
+                    $ret[] = array("00","Carpeta invalida",$dir->getFilename());
+            }catch (\Exception $e){
+                $ret[] = array("00",$e->getMessage(),$dir->getFilename());
+            }
+
         }
         return $ret;
     }
@@ -65,17 +72,32 @@ class ImportarController extends Controller
         $em = $this->getDoctrine()->getManager();
         $ret = array();
 
-
         $ret[0] = substr($dir_name, 0, 2);
-        $muni = $em->getRepository("InfraccionBundle:Municipio")->findBy(array("codigo" => $ret[0]))[0];
-        $ret[1] = $muni->getNombre();
+
+        $muni = $em->getRepository("InfraccionBundle:Municipio")->findOneBy(array("codigo" => $ret[0]));
+        if($muni){
+            $ret[1] = $muni->getNombre();
+        }else{
+            throw new \Exception("No se encuentra el municipio {$ret[0]}");
+        }
 
         $ret[2] = substr($dir_name, 2, 2);
-        $ret[3] = $em->getRepository("InfraccionBundle:Ubicacion")->findBy(array("codigo" => $ret[2],'municipio' => $muni))[0]->getReferencia();
+
+        $entity = $em->getRepository("InfraccionBundle:Ubicacion")->findOneBy(array("codigo" => $ret[2],'municipio' => $muni));
+        if($entity){
+            $ret[3] = $entity->getReferencia();
+        }else{
+            throw new \Exception("No se encuentra la ubicacion {$ret[2]}");
+        }
 
         $ret[4] = substr($dir_name, 4, 2);
-        ld($ret[4]);
-        $ret[5] = $em->getRepository("InfraccionBundle:TipoInfraccion")->findBy(array("codigo" => $ret[4]))[0]->getNombre();
+
+        $entity = $em->getRepository("InfraccionBundle:TipoInfraccion")->findOneBy(array("codigo" => $ret[4]));
+        if($entity){
+            $ret[5] = $entity->getNombre();
+        }else{
+            throw new \Exception("No se encuentra la ubicacion {$ret[4]}");
+        }
 
         $ret[6] = substr($dir_name, 6);
         $ret[7] = $dir_name;
@@ -107,19 +129,19 @@ class ImportarController extends Controller
                 $foto = substr($file->getFileName(), 26, 1);
                 $msgFoto = "";
                 if ($foto == "1"){
-                    if($reg->getFoto1() == null )
+                    if($reg->getFotoR1() == null )
                         $reg->setFoto1($file->getFileName());
                     else
                         $msgFoto = "La foto1 ya fue asignada ".$file;
                 }
                 if ($foto == "2"){
-                    if($reg->getFoto2() == null )
+                    if($reg->getFotoR2() == null )
                         $reg->setFoto2($file->getFileName());
                     else
                         $msgFoto = "La foto2 ya fue asignada ".$file;
                 }
                 if ($foto == "3"){
-                    if($reg->getFoto3() == null )
+                    if($reg->getFotoR3() == null )
                         $reg->setFoto3($file->getFileName());
                     else
                         $msgFoto = "La foto3 ya fue asignada ".$file;
@@ -160,9 +182,8 @@ class ImportarController extends Controller
     }
 
 
-    /**
-     * generarRegistro
-     * @return Infraccion
+    /*
+     *
      * $file
      * 250103AAA145201305251239112.jpg
      * 1,2: Empresa nn
@@ -172,7 +193,13 @@ class ImportarController extends Controller
      *13,8: fecha
      *21,6: Hora
      *27,1: Nro de foto
-     **/
+     */
+    /**
+     * generarRegistro
+     * @param $file
+     * @return Infraccion
+     * @throws \Exception
+     */
     private function generarRegistro($file)
     {
         $empresa = substr($file, 0, 2);
