@@ -57,12 +57,25 @@ class InfraccionRepository extends EntityRepository
 
 
         $sql = 'select      i.municipio_id,
+                            m.nombre,
+                            cast(i.fecha as date) as mifecha,
+                            count(i.id) as reg
+                from      infraccion i
+                left join municipio m ON m.id = i.municipio_id
+                group by  i.municipio_id, m.nombre
+                          cast(i.fecha as date)
+                order by cast(i.fecha as date) desc';
+
+        $rsm = new ResultSetMappingBuilder;
+
+/*        $sql = 'select      i.municipio_id,
                             i.ubicacion_id,
                             i.tipo_infraccion_id,
                             m.nombre,
                             u.referencia,
                             t.nombre,
-                            cast(i.fecha as date), count(i.id) as reg
+                            cast(i.fecha as date) as mifecha,
+                            count(i.id) as reg
                 from      infraccion i
                 left join municipio m ON m.id = i.municipio_id
                 left join tipoinfraccion t ON t.id = i.tipo_infraccion_id
@@ -71,13 +84,15 @@ class InfraccionRepository extends EntityRepository
                           i.ubicacion_id, u.referencia,
                           i.tipo_infraccion_id, t.nombre,
                           cast(i.fecha as date)
-                order by cast(i.fecha as date) desc';
+                order by cast(i.fecha as date) desc';*/
+
+/*
         $rsm = new ResultSetMapping;
         $rsm->addEntityResult('InfraccionBundle:Infraccion', 'i');
 
-        $rsm->addMetaResult('i', 'municipio_id', 'municipio_id');
-        $rsm->addMetaResult('i', 'ubicacion_id', 'ubicacion_id');
-        $rsm->addMetaResult('i', 'tipoInfraccionId', 'tipo_infraccion_id');
+        $rsm->addScalarResult('i', 'municipio_id', 'municipio_id');
+        $rsm->addScalarResult('i', 'ubicacion_id', 'ubicacion_id');
+        $rsm->addScalarResult('i', 'tipo_infraccion_id', 'tipo_infraccion_id');
 
         $rsm->addJoinedEntityResult('InfraccionBundle:Municipio' , 'm', 'i', 'municipio');
         $rsm->addFieldResult('m', 'nombre', 'nombre');
@@ -88,8 +103,9 @@ class InfraccionRepository extends EntityRepository
         $rsm->addJoinedEntityResult('InfraccionBundle:TipoInfraccion' , 't', 'i', 'tipo_infraccion');
         $rsm->addFieldResult('t', 'nombre', 'nombre');
 
+        $rsm->addScalarResult('i',"mifecha","mifecha");
         $rsm->addScalarResult('i',"reg","reg");
-
+*/
 
 
 

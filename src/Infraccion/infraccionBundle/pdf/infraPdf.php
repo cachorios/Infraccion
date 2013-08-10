@@ -246,7 +246,7 @@ class infraPdf extends  tcpdf {
 
         $this->Ln();
         $this->setY($this->getY() +4) ;
-        $this->Cell(0, 0, "QUEDA UD. DEBIDAMENTE NOTIFICAD.-", 0, false, 'L', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 0, "QUEDA UD. DEBIDAMENTE NOTIFICADO.-", 0, false, 'L', 0, '', 0, false, 'M', 'M');
 
         $imgtype = TCPDF_IMAGES::getImageFileType("uploads/".$entity->getMunicipio()->getFirma());
         $this->Image("uploads/".$entity->getMunicipio()->getFirma(), 140 , $this->getY() -22, 50, 25, $imgtype, '', 'M', false, 300, '', false, false, 0, "CM", false, false);
@@ -338,7 +338,7 @@ class infraPdf extends  tcpdf {
     private function fechaText($localidad, $provincia,\DateTime $fecha)
     {
         $meses = array('Enero', 'Febrero','Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre', 'Diciembre');
-        return $localidad.", ".$provincia.', '. $fecha->format('d').' de '. $meses[$fecha->format('n')] . ' de ' . $fecha->format('Y')    ;
+        return $localidad.", ".$provincia.', '. $fecha->format('d').' de '. $meses[$fecha->format('n') -1] . ' de ' . $fecha->format('Y')    ;
     }
 
 
