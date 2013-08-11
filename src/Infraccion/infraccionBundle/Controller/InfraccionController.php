@@ -31,6 +31,8 @@ use Infraccion\InfraccionBundle\pdf\infraPdf;
  */
 class InfraccionController extends Controller
 {
+
+
     /**
      * Lists all Infraccion entities.
      *
@@ -723,6 +725,7 @@ class InfraccionController extends Controller
                     array( "Provincia de " . $infracciones[0]->getMunicipio()->getProvincia(),8, 'B' ),
                     array(  $infracciones[0]->getMunicipio()->getDireccion(),7, 'N' ),
                     array(  $infracciones[0]->getMunicipio()->getCodigoPostal().', '.$infracciones[0]->getMunicipio()->getLocalidad().' - '.$infracciones[0]->getMunicipio()->getProvincia(),7, 'N' ),
+                    array(  $infracciones[0]->getMunicipio()->getEmail(),7,'N' )
                 )
             );
 
@@ -843,6 +846,7 @@ class InfraccionController extends Controller
                 array( "Provincia de " . $entity->getMunicipio()->getProvincia(),8, 'B' ),
                 array(  $entity->getMunicipio()->getDireccion(),7, 'N' ),
                 array(  $entity->getMunicipio()->getCodigoPostal().', '.$entity->getMunicipio()->getLocalidad().' - '.$entity->getMunicipio()->getProvincia(),7, 'N' ),
+                array(  $entity->getMunicipio()->getEmail(),7,'N' )
             )
         );
 

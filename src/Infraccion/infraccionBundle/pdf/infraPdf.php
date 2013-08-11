@@ -20,20 +20,7 @@ class infraPdf extends  tcpdf {
     private $logo_empresa;
     private $posY = 0;
 
-//    public function __construct($orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding='ISO-8859-1', $diskcache=false, $pdfa=false)
-//    {
-//        parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
-//        $this->init("");
-//    }
 
-    /*
-    $this->header_logo = $ln;
-    $this->header_logo_width = $lw;
-    $this->header_title = $ht;
-    $this->header_string = $hs;
-    $this->header_text_color = $tc;
-    $this->header_line_color = $lc;
-    */
     public function Header() {
         // Logo
         $imgtype = TCPDF_IMAGES::getImageFileType($this->header_logo);

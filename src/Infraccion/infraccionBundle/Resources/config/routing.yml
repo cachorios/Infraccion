@@ -25,3 +25,6 @@ InfraccionBundle_infraccion:
     prefix:   /infraccion
 
 
+infraccion_grp:
+    resource: "@InfraccionBundle/Controller/infraccioncntController.php"
+    type:     annotation

@@ -3,6 +3,8 @@
 namespace Infraccion\infraccionBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
+
 
 /**
  * InfraccionRepository
@@ -49,14 +51,66 @@ class InfraccionRepository extends EntityRepository
         return $a;
     }
 
+
+    public function getInfraccionGroupQuery()
+    {
+
+
+        $sql = 'select      i.municipio_id,
+                            i.ubicacion_id,
+                            i.tipo_infraccion_id,
+                            m.nombre,
+                            u.referencia,
+                            t.nombre,
+                            cast(i.fecha as date), count(i.id) as reg
+                from      infraccion i
+                left join municipio m ON m.id = i.municipio_id
+                left join tipoinfraccion t ON t.id = i.tipo_infraccion_id
+                left join ubicacion u ON u.id = i.ubicacion_id
+                group by  i.municipio_id, m.nombre,
+                          i.ubicacion_id, u.referencia,
+                          i.tipo_infraccion_id, t.nombre,
+                          cast(i.fecha as date)
+                order by cast(i.fecha as date) desc';
+        $rsm = new ResultSetMapping;
+        $rsm->addEntityResult('InfraccionBundle:Infraccion', 'i');
+
+        $rsm->addMetaResult('i', 'municipio_id', 'municipio_id');
+        $rsm->addMetaResult('i', 'ubicacion_id', 'ubicacion_id');
+        $rsm->addMetaResult('i', 'tipoInfraccionId', 'tipo_infraccion_id');
+
+        $rsm->addJoinedEntityResult('InfraccionBundle:Municipio' , 'm', 'i', 'municipio');
+        $rsm->addFieldResult('m', 'nombre', 'nombre');
+
+        $rsm->addJoinedEntityResult('InfraccionBundle:Ubicacion' , 'u', 'i', 'ubicacion');
+        $rsm->addFieldResult('u', 'referencia', 'referencia');
+
+        $rsm->addJoinedEntityResult('InfraccionBundle:TipoInfraccion' , 't', 'i', 'tipo_infraccion');
+        $rsm->addFieldResult('t', 'nombre', 'nombre');
+
+        $rsm->addScalarResult('i',"reg","reg");
+
+
+
+
+        $query = $this->_em->createNativeQuery($sql, $rsm);
+
+
+
+
+        return $query;
+
+
+    }
+
     public function getInfraccionToCedula($muni, $desde, $hasta){
-        $res = $this->_em->createQuery("
+        $res = $this->_em->createQuery('
             SELECT  i
             FROM    InfraccionBundle:Infraccion i
             WHERE   i.municipio = :muni
             AND     i.fecha BETWEEN :desde AND :hasta
             AND     i.etapa = 1
-            ORDER BY i.fecha")
+            ORDER BY i.fecha')
             ->setParameter("muni",$muni)
             ->setParameter('desde',$desde->setTime(0,0))
             ->setParameter('hasta',$hasta->setTime(23,59))
