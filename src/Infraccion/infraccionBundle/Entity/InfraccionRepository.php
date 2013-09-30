@@ -4,6 +4,7 @@ namespace Infraccion\infraccionBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+USE Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 
 /**
@@ -57,24 +58,12 @@ class InfraccionRepository extends EntityRepository
 
 
         $sql = 'select      i.municipio_id,
-                            m.nombre,
-                            cast(i.fecha as date) as mifecha,
-                            count(i.id) as reg
-                from      infraccion i
-                left join municipio m ON m.id = i.municipio_id
-                group by  i.municipio_id, m.nombre
-                          cast(i.fecha as date)
-                order by cast(i.fecha as date) desc';
-
-        $rsm = new ResultSetMappingBuilder;
-
-/*        $sql = 'select      i.municipio_id,
+                            m.nombre as municipio,
                             i.ubicacion_id,
-                            i.tipo_infraccion_id,
-                            m.nombre,
                             u.referencia,
+                            i.tipo_infraccion_id,
                             t.nombre,
-                            cast(i.fecha as date) as mifecha,
+                            cast(i.fecha as date) as fecha,
                             count(i.id) as reg
                 from      infraccion i
                 left join municipio m ON m.id = i.municipio_id
@@ -84,38 +73,24 @@ class InfraccionRepository extends EntityRepository
                           i.ubicacion_id, u.referencia,
                           i.tipo_infraccion_id, t.nombre,
                           cast(i.fecha as date)
-                order by cast(i.fecha as date) desc';*/
+                order by cast(i.fecha as date) desc';
 
-/*
+
         $rsm = new ResultSetMapping;
-        $rsm->addEntityResult('InfraccionBundle:Infraccion', 'i');
+        //$rsm->addEntityResult('InfraccionBundle:Infraccion', 'i');
 
-        $rsm->addScalarResult('i', 'municipio_id', 'municipio_id');
-        $rsm->addScalarResult('i', 'ubicacion_id', 'ubicacion_id');
-        $rsm->addScalarResult('i', 'tipo_infraccion_id', 'tipo_infraccion_id');
-
-        $rsm->addJoinedEntityResult('InfraccionBundle:Municipio' , 'm', 'i', 'municipio');
-        $rsm->addFieldResult('m', 'nombre', 'nombre');
-
-        $rsm->addJoinedEntityResult('InfraccionBundle:Ubicacion' , 'u', 'i', 'ubicacion');
-        $rsm->addFieldResult('u', 'referencia', 'referencia');
-
-        $rsm->addJoinedEntityResult('InfraccionBundle:TipoInfraccion' , 't', 'i', 'tipo_infraccion');
-        $rsm->addFieldResult('t', 'nombre', 'nombre');
-
-        $rsm->addScalarResult('i',"mifecha","mifecha");
-        $rsm->addScalarResult('i',"reg","reg");
-*/
-
-
+        $rsm->addScalarResult('municipio_id', 'municipio_id', 'integer');
+        $rsm->addScalarResult('municipio', 'municipio', 'string');
+        $rsm->addScalarResult('ubicacion_id', 'ubicacion_id', 'integer');
+        $rsm->addScalarResult('referencia', 'ubicacion', 'string');
+        $rsm->addScalarResult('tipo_infraccion_id', 'tipo_infraccion_id',"integer");
+        $rsm->addScalarResult('nombre', 'infraccion', 'string');
+        $rsm->addScalarResult('fecha', 'fecha', 'date');
+        $rsm->addScalarResult('reg', 'reg', 'integer');
 
         $query = $this->_em->createNativeQuery($sql, $rsm);
 
-
-
-
         return $query;
-
 
     }
 

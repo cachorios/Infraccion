@@ -34,13 +34,13 @@ class infraccioncntController extends Controller
      */
     /**
      * @Route("/infracciongrp")
-     * @Template()
+     *
      */
     public function indexAction()
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("home_page"));
-        $breadcrumbs->addItem("Lista Infracciones", $this->get("router")->generate("infraccion"));
+        $breadcrumbs->addItem("Fechas de Infracciones", $this->get("router")->generate("infraccion"));
 
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -64,7 +64,7 @@ class infraccioncntController extends Controller
         list($entities, $pagerHtml) = $this->paginator($this->queryBuilder);
 
 
-        return $this->render('InfraccionBundle:Infraccion:index.html.twig', array(
+        return $this->render('InfraccionBundle:Infraccioncnt:index.html.twig', array(
             'entities' => $entities,
             'pagerHtml' => $pagerHtml,
             'filterForm' => $filterForm->createView(),
@@ -139,8 +139,7 @@ class infraccioncntController extends Controller
 
 
         //ladybug_dump_die( $this->queryBuilder);
-        ladybug_dump( $this->queryBuilder->getResult());
-        ladybug_dump_die( $this->queryBuilder->getArrayResult() );
+        //ladybug_dump_die( $this->queryBuilder->getArrayResult() );
         return $this->queryBuilder->getResult();
 
     }
@@ -175,7 +174,7 @@ class infraccioncntController extends Controller
             'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
         ));
 
-        ladybug_dump_die($entities);
+        //ladybug_dump_die($pagerHtml);
         return array($entities, $pagerHtml);
     }
 }

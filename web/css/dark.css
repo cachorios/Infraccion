@@ -81,13 +81,13 @@ body {
   border-left: 1px solid #bababa;
 }
 
-.table-striped tbody tr:nth-child(odd) td,
-.table-striped tbody tr:nth-child(odd) th {
-	background-color: #dedede;
-}
+/*.table-striped tbody tr:nth-child(odd) td,*/
+/*.table-striped tbody tr:nth-child(odd) th {*/
+	/*background-color: #dedede;*/
+/*}*/
 .table tbody tr:hover td,
 .table tbody tr:hover th {
-	background-color: #dfdfdf;
+	/*background-color: #dfdfdf;*/
 }
 
 .table tbody tr:hover td a,
